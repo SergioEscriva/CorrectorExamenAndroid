@@ -35,8 +35,11 @@ dependencies {
 
 //    implementation(libs.appcompat)
 //    implementation(libs.material)
-//    implementation(files("cosas/opencv-490.jar"))
-//    implementation(files("cosas/tess4j-4.0.0.jar"))
+    implementation(files("cosas/opencv-490.jar"))
+
+        implementation ("com.rmtheis:tess-two:9.1.0")
+
+   // implementation(files("cosas/tess4j-4.0.0.jar"))
 //    implementation(libs.activity)
 //    implementation(libs.constraintlayout)
 //    testImplementation(libs.junit)

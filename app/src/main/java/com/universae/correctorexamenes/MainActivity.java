@@ -165,6 +165,8 @@ public class MainActivity extends AppCompatActivity {
         byte[] bytes = new byte[buffer.remaining()];
         buffer.get(bytes);
         System.out.println(bytes);
+        BuscarCirculos buscarCirculos = new BuscarCirculos();
+        buscarCirculos.buscarRespuestas(bytes);
         return bytes;
     }
 
