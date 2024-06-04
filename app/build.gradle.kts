@@ -35,11 +35,14 @@ dependencies {
 
 //    implementation(libs.appcompat)
 //    implementation(libs.material)
-    implementation(files("cosas/opencv-490.jar"))
+    implementation(files("libs/opencv-490.jar"))
+    implementation(files("libs/libopencv_java490.so"))
 
-        implementation ("com.rmtheis:tess-two:9.1.0")
 
-   // implementation(files("cosas/tess4j-4.0.0.jar"))
+    implementation("com.rmtheis:tess-two:9.1.0")
+
+
+    // implementation(files("cosas/tess4j-4.0.0.jar"))
 //    implementation(libs.activity)
 //    implementation(libs.constraintlayout)
 //    testImplementation(libs.junit)
@@ -56,8 +59,7 @@ dependencies {
 //    implementation ("androidx.camera:camera-lifecycle:1.0.0-beta04")
 //    implementation ("androidx.camera:camera-view:1.0.0-alpha11")
 
-   // implementation("com.google.android.gms:play-services-vision:19.2.0")
-
+    // implementation("com.google.android.gms:play-services-vision:19.2.0")
 
 
     implementation(libs.appcompat)
@@ -68,9 +70,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation ("androidx.camera:camera-camera2:1.0.0-beta04")
-    implementation ("androidx.camera:camera-lifecycle:1.0.0-beta04")
-    implementation ("androidx.camera:camera-view:1.0.0-alpha11")
+    implementation("androidx.camera:camera-camera2:1.0.0-beta04")
+    implementation("androidx.camera:camera-lifecycle:1.0.0-beta04")
+    implementation("androidx.camera:camera-view:1.0.0-alpha11")
 
-    }
+}
 
