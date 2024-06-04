@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Corrector Examenes"
 include(":app")
-include (":OpenCV")
+include(":OpenCV")

@@ -1,63 +1,45 @@
 package com.universae.correctorexamenes;
 
-import android.content.Intent;
+import android.Manifest;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ImageReader;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.ImageCaptureException;
-import androidx.camera.core.ImageProxy;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.Preview;
-import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.view.PreviewView;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LifecycleOwner;
-
-import com.google.common.util.concurrent.ListenableFuture;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfByte;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.android.Utils;
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureException;
+import androidx.camera.core.ImageProxy;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LifecycleOwner;
 
-import java.util.AbstractCollection;
+import com.google.common.util.concurrent.ListenableFuture;
+
+import org.opencv.android.Utils;
+import org.opencv.core.Mat;
+
+import java.nio.ByteBuffer;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
 
 public class MainActivity extends AppCompatActivity {
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     PreviewView previewView;
+    int codigo_permiso = 200;
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
     private Button image_capture_button;
-
-    int codigo_permiso = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
         byte[] bytes = new byte[buffer.remaining()];
         buffer.get(bytes);
         System.out.println(bytes);
-
-        Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);           //(new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
+        Mat mat = processImageData(bytes);
+        //Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);           //(new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
 
         BuscarCirculos buscarCirculos = new BuscarCirculos();
         buscarCirculos.rebuscarCirculos(mat, "all");
@@ -188,15 +170,15 @@ public class MainActivity extends AppCompatActivity {
         return bytes;
     }
 
-    private void processImageData(byte[] imageData) {
+    private Mat processImageData(byte[] imageData) {
         // Process the image data (e.g., convert to Bitmap, save to file, etc.)
         // Here, you can save the imageData to a buffer or perform other operations
         // For example, to convert to a Bitmap:
+        Mat mat = new Mat();
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
         //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.your_image);
-        Mat mat = Utils.bitmapToMat(bitmap);
-
-
+        Utils.bitmapToMat(bitmap, mat);
+        return mat;
         // You can now use the bitmap for further processing
         // For instance, saving it to a file or displaying it in an ImageView
     }
