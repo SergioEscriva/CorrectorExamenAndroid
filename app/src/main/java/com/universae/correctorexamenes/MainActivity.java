@@ -3,11 +3,11 @@ package com.universae.correctorexamenes;
 import android.Manifest;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -41,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
     private Button image_capture_button;
+    private Button btnCorrecto;
+    private Button btnIncorrecto;
+    private ImageView imagePreview;
+    private ImageView imageViewMuestra;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +58,20 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         OpenCVLoader.initDebug();
-//        {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                System.loadLibrary("opencv_jni");
-//            } else {
-//                System.loadLibrary("opencv");
-//            }
-//        }
+        //        {
+        //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        //                System.loadLibrary("opencv_jni");
+        //            } else {
+        //                System.loadLibrary("opencv");
+        //            }
+        //        }
         verificarPermisos();
         previewView = findViewById(R.id.preview_view);
+        btnCorrecto = findViewById(R.id.BttnCorrecto);
+        btnIncorrecto = findViewById(R.id.BttnRepetir);
+        imagePreview = findViewById(R.id.imageView2);
+        imageViewMuestra = findViewById(R.id.imgViewMuestra);
+
 
         image_capture_button = findViewById(R.id.image_capture_button);
 
@@ -108,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 takePhoto();
+                image_capture_button.setText("Procesando...");
+                previewView.setVisibility(View.INVISIBLE);
+                imagePreview.setVisibility(View.INVISIBLE);
 
             }
 
@@ -149,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
                 //processImageData(imageData);
 
                 image.close();
+
+
             }
 
             @Override
@@ -168,6 +183,18 @@ public class MainActivity extends AppCompatActivity {
 
         BuscarCirculos buscarCirculos = new BuscarCirculos();
         buscarCirculos.rebuscarCirculos(mat, "all");
+        String imagePath = "/data/data/com.universae.correctorexamenes/files/muestra.jpg";
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+
+        imageViewMuestra.setImageBitmap(bitmap);
+        image_capture_button.setVisibility(View.INVISIBLE);
+        previewView.setVisibility(View.INVISIBLE);
+        imagePreview.setVisibility(View.INVISIBLE);
+        btnCorrecto.setVisibility(View.VISIBLE);
+        btnIncorrecto.setVisibility(View.VISIBLE);
+        imageViewMuestra.setVisibility(View.VISIBLE);
+
+
         //buscarCirculos.buscarRespuestas(bytes);
         return bytes;
     }
@@ -184,5 +211,6 @@ public class MainActivity extends AppCompatActivity {
         // You can now use the bitmap for further processing
         // For instance, saving it to a file or displaying it in an ImageView
     }
+
 
 }

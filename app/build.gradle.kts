@@ -32,11 +32,11 @@ android {
 }
 
 dependencies {
-
-//    implementation(libs.appcompat)
-//    implementation(libs.material)
-    implementation(files("libs/opencv-490.jar"))
-    implementation(files("libs/libopencv_java490.so"))
+//
+////    implementation(libs.appcompat)
+////    implementation(libs.material)
+//    implementation(files("libs/opencv-490.jar"))
+//    implementation(files("libs/libopencv_java490.so"))
 
 
     implementation("com.rmtheis:tess-two:9.1.0")
