@@ -6,17 +6,26 @@ import static android.content.ContentValues.TAG;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
 import android.util.Log;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,61 +139,6 @@ public class BuscarCirculos {
     }
 
 
-    //	File input = new File(imagePath);
-
-    // Leer el archivo de imagen y convertirlo a BufferedImage
-    //	image = ImageIO.read(input);
-
-    //Crear una instancia de Tesseract
-    //		Map<Integer, String> blancoMap = new HashMap<Integer, String>();
-    //		Tesseract tesseract = new Tesseract();
-    //
-    //		// Configurar la ruta del idioma (opcional)
-    //		String datapath = "src/resources/tessdata_best";
-    //		tesseract.setDatapath(new File(datapath).getPath());
-    //
-    //		// Configurar el idioma
-    //		tesseract.setLanguage("eng");
-    //
-    //
-    //		tesseract. imageToText(image);
-    //		tesseract.setImage(image);
-    //		// Configurar para buscar solo números
-    //		tesseract.setTessVariable("tessedit_char_whitelist", "RESPUESTAS");
-    //		int y = 0;
-    //		int x = 0;
-    //		int tamanoImagen = 0;
-    //		tamanoImagen = image.get getWidth();
-    //		// Realizar OCR en la imagen y obtener las palabras
-    //		List<Word> words = tesseract.getWords(image, TessAPI.TessPageIteratorLevel.RIL_WORD);
-    //
-    //		// Imprimir las coordenadas de cada palabra
-    //		for (Word word : words) {
-    //		    String text = word.getText();
-    //		    if (text.equals("RESPUESTAS")) {
-    //			x = word.getBoundingBox().x;
-    //			y = word.getBoundingBox().y;
-    //			int width = word.getBoundingBox().width;
-    //			int height = word.getBoundingBox().height;
-    //		    }
-
-
-    //	// Comprueba que la imagen esté centrada según la palabra Respuestas.
-    //	int referenciaRespuesta = tamanoImagen - 234;
-    //	int tamanoReferenciaDerecha = referenciaRespuesta - x;
-    //	int comparacion = tamanoReferenciaDerecha - x;
-    //	if (comparacion >= 60 || comparacion <= -60) {
-    //
-    //	} else {
-    //	    invertirOscurecer(image, y);
-    //	    examenAlumno = buscarCirculos(y, x);
-    //
-    //	    return examenAlumno;
-    //	}
-    //	return blancoMap;
-    //    }
-
-
     public Map<String, String> calcularNota(JSONArray plantillaString, Double penalizacion)
             throws JSONException, IOException {
 
@@ -226,7 +180,7 @@ public class BuscarCirculos {
         return notas;
     }
 
-}
+
 
 //	private void copyTessDataFiles(String path) {
 //
@@ -265,16 +219,16 @@ public class BuscarCirculos {
 
 
 
-/*
-    public static List<Par> rebuscarCirculos(Mat src, String circulos) {
+
+    public  List<Par> rebuscarCirculos(Mat src, String circulos) {
 
 	double radio = 0.0;
-	String rutaCirculos = "./blancos.jpg";
+	String rutaCirculos = "/data/data/com.universae.correctorexamenes/files/blancos.jpg";    //"./blancos.jpg";
 	radio = 0.8;
 	List<Par> lista = new ArrayList<>();
 	if (circulos.equals("all")) {
 	    radio = 0.0;
-	    rutaCirculos = "./todos.jpg";
+	    rutaCirculos = "/data/data/com.universae.correctorexamenes/files/todos.jpg";    //"./todos.jpg";
 	}
 	Mat gray = new Mat();
 	Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);
@@ -356,6 +310,6 @@ public class BuscarCirculos {
 
     }
 
- */
+ }
 
 

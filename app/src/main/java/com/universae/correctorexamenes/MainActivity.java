@@ -3,7 +3,9 @@ package com.universae.correctorexamenes;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ImageReader;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -42,6 +44,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.android.Utils;
+
 import java.util.AbstractCollection;
 
 public class MainActivity extends AppCompatActivity {
@@ -62,6 +69,13 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                System.loadLibrary("opencv_jni");
+            } else {
+                System.loadLibrary("opencv");
+            }
+        }
         verificarPermisos();
         previewView = findViewById(R.id.preview_view);
 
@@ -148,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 byte[] imageData = imageToByteArray(image);
 
                 // Process the image data as needed
-                processImageData(imageData);
+                //processImageData(imageData);
 
                 image.close();
             }
@@ -165,8 +179,12 @@ public class MainActivity extends AppCompatActivity {
         byte[] bytes = new byte[buffer.remaining()];
         buffer.get(bytes);
         System.out.println(bytes);
+
+        Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);           //(new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
+
         BuscarCirculos buscarCirculos = new BuscarCirculos();
-        buscarCirculos.buscarRespuestas(bytes);
+        buscarCirculos.rebuscarCirculos(mat, "all");
+        //buscarCirculos.buscarRespuestas(bytes);
         return bytes;
     }
 
@@ -175,6 +193,9 @@ public class MainActivity extends AppCompatActivity {
         // Here, you can save the imageData to a buffer or perform other operations
         // For example, to convert to a Bitmap:
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.your_image);
+        Mat mat = Utils.bitmapToMat(bitmap);
+
 
         // You can now use the bitmap for further processing
         // For instance, saving it to a file or displaying it in an ImageView
