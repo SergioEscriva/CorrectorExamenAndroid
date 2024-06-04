@@ -27,6 +27,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
+import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 
@@ -51,13 +52,14 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                System.loadLibrary("opencv_jni");
-            } else {
-                System.loadLibrary("opencv");
-            }
-        }
+        OpenCVLoader.initDebug();
+//        {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                System.loadLibrary("opencv_jni");
+//            } else {
+//                System.loadLibrary("opencv");
+//            }
+//        }
         verificarPermisos();
         previewView = findViewById(R.id.preview_view);
 

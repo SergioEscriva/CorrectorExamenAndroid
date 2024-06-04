@@ -4,6 +4,11 @@ package com.universae.correctorexamenes; //src/correctorExamenes/examen2.jpg
 
 import static android.content.ContentValues.TAG;
 
+import static org.opencv.imgproc.Imgproc.CV_HOUGH_GRADIENT;
+import static org.opencv.imgproc.Imgproc.GaussianBlur;
+import static org.opencv.imgproc.Imgproc.HoughCircles;
+import static org.opencv.imgproc.Imgproc.cvtColor;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -221,6 +226,7 @@ public class BuscarCirculos {
 
 
     public  List<Par> rebuscarCirculos(Mat src, String circulos) {
+        String rutaCirculos1 = "/data/data/com.universae.correctorexamenes/files/todos1.jpg";
 
 	double radio = 0.0;
 	String rutaCirculos = "/data/data/com.universae.correctorexamenes/files/blancos.jpg";    //"./blancos.jpg";
@@ -230,24 +236,35 @@ public class BuscarCirculos {
 	    radio = 0.0;
 	    rutaCirculos = "/data/data/com.universae.correctorexamenes/files/todos.jpg";    //"./todos.jpg";
 	}
-	Mat gray = new Mat();
+    Imgcodecs.imwrite(rutaCirculos, src);
+    Mat gray = new Mat();
 	Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);
-	// Aplicar desenfoque para reducir el ruido
+//	// Aplicar desenfoque para reducir el ruido
 	Imgproc.GaussianBlur(gray, gray, new Size(9, 9), 2, 2);
 
-	// Detectar círculos utilizando la transformada de Hough
+
+
+
+
+
+//
+//	// Detectar círculos utilizando la transformada de Hough
 	Mat circles = new Mat();
-	Imgproc.HoughCircles(gray, circles, Imgproc.HOUGH_GRADIENT, 1, gray.rows() / 25, 100, 25, 15, 50); // números
-	// que hay
-	// que jugar
-	// para que
-	// localize
-	// los
-	// circulos
+    HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 2, gray.rows()/2, 200, 100 );
 
-	// Crear una lista para almacenar los círculos blancos detectados
+//	Imgproc.HoughCircles(gray, circles, Imgproc.HOUGH_GRADIENT, 1, gray.rows() / 10, 100, 25, 0, 50); // números
+//	// que hay
+//	// que jugar
+//	// para que
+//	// localize
+//	// los
+//	// circulos
+//
+//
+//
+//	// Crear una lista para almacenar los círculos blancos detectados
 	List<Point> whiteCircles = new ArrayList<>();
-
+//
 	// Verificar cada círculo detectado
 	for (int i = 0; i < circles.cols(); i++) {
 	    double[] circle = circles.get(0, i);
@@ -279,7 +296,7 @@ public class BuscarCirculos {
 		// pille más
 		whiteCircles.add(center);
 		// Dibujar el círculo detectado en la imagen original
-		Imgproc.circle(src, center, radius, new Scalar(0, 255, 0), 3);
+		Imgproc.circle(gray, center, radius, new Scalar(0, 255, 0), 3);
 	    }
 
 	    // Ordenar los círculos detectados de izquierda a derecha y de arriba a abajo
@@ -296,10 +313,12 @@ public class BuscarCirculos {
 		}
 	    });
 	}
-
+//
 	// Guardar la imagen resultante con los círculos detectados
-	Imgcodecs.imwrite(rutaCirculos, src);
-
+	    Imgcodecs.imwrite(rutaCirculos1, gray);
+//
+//
+//
 	// Mostrar resultados
 	for (Point p : whiteCircles) {
 	    Par pares = new Par(p.x, p.y);
