@@ -208,69 +208,33 @@ public class BuscarCirculos {
         String rutaMuestra = "/data/data/com.universae.correctorexamenes/files/muestra.jpg";
         String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
         double radio = 0.0;
-        String rutaCirculos = "/data/data/com.universae.correctorexamenes/files/blancos.jpg";    //"./blancos.jpg";
+        String rutaCirculos = "/data/data/com.universae.correctorexamenes/files/blancos.jpg";
         radio = 0.8;
         List<Par> lista = new ArrayList<>();
         if (circulos.equals("all")) {
             radio = 0.0;
-            rutaCirculos = "/data/data/com.universae.correctorexamenes/files/todos.jpg";    //"./todos.jpg";
+            rutaCirculos = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         }
 
-
         Mat imgEscalaGrises = new Mat();
-
-        // Escala de Grises
         Imgproc.cvtColor(imgOriginal, imgEscalaGrises, Imgproc.COLOR_BGR2GRAY);
-
-        //Aplicar desenfoque para reducir el ruido
         Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
-
-        // Imagen muestra guardada
         Imgcodecs.imwrite(rutaMuestra, imgEscalaGrises);
 
-        // Colores Invertidos
         Mat imgInverted = new Mat();
         Core.bitwise_not(imgEscalaGrises, imgInverted);
 
-        // SE CONSIDERA SRC o IMAGEN ORIGINAL
-        // Convertir a blanco y negro usando un umbral
         Mat imgBW = new Mat();
-        Imgproc.threshold(imgInverted, imgBW, 128, 255, Imgproc.THRESH_BINARY);
-
-        // Imagen Invertida Guardada
+        Imgproc.threshold(imgInverted, imgBW, 100, 255, Imgproc.THRESH_BINARY);
         Imgcodecs.imwrite(rutaInvertido, imgBW);
 
-
-        //	// Detectar círculos utilizando la transformada de Hough
-        //Mat imgCirculosDetectados = new Mat();
-        //HoughCircles(imgInverted, imgCirculosDetectados, CV_HOUGH_GRADIENT, 2, imgInverted.rows() / 25, 100, 25);
-
-
-        // Detectar círculos con HoughCircles
         Mat imgCirculosDetectados = new Mat();
         Imgproc.HoughCircles(imgBW, imgCirculosDetectados, Imgproc.HOUGH_GRADIENT, 1.0,
-                (double) imgBW.rows() / 55, // cambiar este valor para detectar círculos más cercanos entre sí
-                100.0, 25.0, 8, 40); // cambiar los parámetros para ajustar mejor la detección
+                (double) imgBW.rows() / 55,
+                100.0, 25.0, 10, 40);
 
-
-        //Imgcodecs.imwrite(rutaCirculos, imgCirculosDetectados);
-
-        //Imgproc.HoughCircles(imgInverted, imgCirculosDetectados, Imgproc.HOUGH_GRADIENT, 1, imgInverted.rows() / 25, 100, 25, 15, 50); // números
-
-        //	// que hay
-        //	// que jugar
-        //	// para que
-        //	// localize
-        //	// los
-        //	// circulos
-        //
-        //
-        //
-        //	// Crear una lista para almacenar los círculos blancos detectados
+        System.out.println("Circulos detectados: " + imgCirculosDetectados.size());
         List<Point> listaCirculosDetectados = new ArrayList<>();
-        System.out.println("detectados " + imgCirculosDetectados.size());
-        //
-        // Verificar cada círculo detectado
         for (int i = 0; i < imgCirculosDetectados.cols(); i++) {
             double[] circle = imgCirculosDetectados.get(0, i);
             if (circle == null)
@@ -278,62 +242,59 @@ public class BuscarCirculos {
             Point center = new Point(Math.round(circle[0]), Math.round(circle[1]));
             int radius = (int) Math.round(circle[2]);
 
-            // Crear una máscara para el círculo
             Mat mask = Mat.zeros(imgBW.size(), CvType.CV_8UC1);
             Imgproc.circle(mask, center, radius, new Scalar(255, 255, 255), - 1);
 
-            // Extraer la región del círculo de la imagen original
             Mat circleROI = new Mat();
             imgBW.copyTo(circleROI, mask);
-            //Imgcodecs.imwrite(rutaCirculos, circleROI);
 
-
-            //            // Convertir la región del círculo a escala de grises y umbralizar
-            //            Mat circleGray = new Mat();
-            //            Imgproc.cvtColor(circleROI, circleGray, Imgproc.COLOR_BGR2GRAY);
-            //            Imgproc.threshold(circleGray, circleGray, 200, 255, Imgproc.THRESH_BINARY);
-
-            // Calcular la cantidad de píxeles blancos en el círculo
             int whitePixels = Core.countNonZero(circleROI);
 
-            // Si la mayoría de los píxeles son blancos, añadimos el círculo a la lista de
-            // círculos blancos
-            if (whitePixels > (Math.PI * radius * radius * radio)) { // 70% de los píxeles son blancos Poner 0.6 para
-                // que 0.8
-                // pille más
+            if (whitePixels > (Math.PI * radius * radius * radio)) {
                 listaCirculosDetectados.add(center);
-                // Dibujar el círculo detectado en la imagen original
-                Imgproc.circle(imgBW, center, radius, new Scalar(0, 255, 0), 3);
+                Imgproc.circle(imgOriginal, center, radius, new Scalar(0, 255, 0), 3);
             }
-
-            // Ordenar los círculos detectados de izquierda a derecha y de arriba a abajo
-            Collections.sort(listaCirculosDetectados, new Comparator<Point>() {
-                @Override
-                public int compare(Point p1, Point p2) {
-                    if (p1.x > p2.x) {
-                        return - 1;
-                    } else if (p1.x < p2.x) {
-                        return 1;
-                    } else {
-                        return Double.compare(p1.y, p2.x);
-                    }
-                }
-            });
         }
-        // Guarda los circulos encontrados.
-        Imgcodecs.imwrite(rutaCirculos, imgBW);
 
-        // Mostrar resultados
+        Collections.sort(listaCirculosDetectados, new Comparator<Point>() {
+            @Override
+            public int compare(Point p1, Point p2) {
+                if (p1.x > p2.x) {
+                    return - 1;
+                } else if (p1.x < p2.x) {
+                    return 1;
+                } else {
+                    return Double.compare(p1.y, p2.x);
+                }
+            }
+        });
+
+        Imgcodecs.imwrite(rutaCirculos, imgOriginal);
+
         for (Point p : listaCirculosDetectados) {
             Par pares = new Par(p.x, p.y);
             lista.add(pares);
         }
+
         System.out.println("Circulos blancos: " + listaCirculosDetectados.size());
         System.out.println("Circulos blancos: " + lista.size());
         return lista;
+    }
+
+    class Par {
+        double x, y;
+
+        Par(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public String toString() {
+            return "(" + x + ", " + y + ")";
+        }
 
     }
-    //return null;
 
 
 }
