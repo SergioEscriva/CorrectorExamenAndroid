@@ -297,6 +297,7 @@ public class BuscarCirculos {
         String rutaCirculos = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Imgcodecs.imwrite(rutaCirculos, imgReduced);
 
+
         for (Point p : listaCirculosDetectados) {
             Par pares = new Par(p.x, p.y);
             lista.add(pares);
