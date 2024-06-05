@@ -212,7 +212,7 @@ public class BuscarCirculos {
         radio = 0.8;
         List<Par> lista = new ArrayList<>();
         if (circulos.equals("all")) {
-            radio = 0.0;
+            radio = 1;
             rutaCirculos = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         }
 
@@ -221,15 +221,16 @@ public class BuscarCirculos {
         Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
         Imgcodecs.imwrite(rutaMuestra, imgEscalaGrises);
 
+
         Mat imgInverted = new Mat();
         Core.bitwise_not(imgEscalaGrises, imgInverted);
 
         //        Mat imgBW = new Mat();
-        //        Imgproc.threshold(imgInverted, imgBW, 100, 255, Imgproc.THRESH_BINARY);
+        //        Imgproc.threshold(imgInverted, imgBW, 105, 235, Imgproc.THRESH_BINARY);
         //        Imgcodecs.imwrite(rutaInvertido, imgBW);
 
         Mat imgBW = imgInverted;
-
+        Imgcodecs.imwrite(rutaInvertido, imgInverted);
         Mat imgCirculosDetectados = new Mat();
         Imgproc.HoughCircles(imgBW, imgCirculosDetectados, Imgproc.HOUGH_GRADIENT, 1.0,
                 (double) imgBW.rows() / 60,

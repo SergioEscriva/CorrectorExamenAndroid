@@ -163,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
                 image.close();
 
-
             }
 
             @Override
@@ -183,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
         BuscarCirculos buscarCirculos = new BuscarCirculos();
         buscarCirculos.rebuscarCirculos(mat, "all");
-        String imagePath = "/data/data/com.universae.correctorexamenes/files/muestra.jpg";
+        String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
 
         imageViewMuestra.setImageBitmap(bitmap);
