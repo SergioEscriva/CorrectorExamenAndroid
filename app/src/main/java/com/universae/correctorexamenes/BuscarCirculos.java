@@ -203,7 +203,7 @@ public class BuscarCirculos {
     //	}
 
 
-    public List<Par> rebuscarCirculos(Mat imgOriginal, String circulos) {
+    public List<Par> rebuscarCirculos(Mat imgOriginal1, String circulos) {
 
         String rutaMuestra = "/data/data/com.universae.correctorexamenes/files/muestra.jpg";
         String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
@@ -212,35 +212,43 @@ public class BuscarCirculos {
         radio = 0.8;
         List<Par> lista = new ArrayList<>();
         if (circulos.equals("all")) {
-            radio = 0.8;
+            radio = 0.99;
             rutaCirculos = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         }
+        String imagePath = "/data/data/com.universae.correctorexamenes/files/muestra1.jpg";
+        // Cargar la imagen desde el almacenamiento interno
 
+        Mat imgOriginal = Imgcodecs.imread(imagePath);
+        //
         // Reducción de la resolución
-        Mat imgReduced = new Mat();
-        Size size = new Size(imgOriginal.width() / 2, imgOriginal.height() / 2);
-        Imgproc.resize(imgOriginal, imgReduced, size);
+        //        Mat imgReduced = new Mat();
+        //        Size size = new Size(imgOriginal.width() / 2, imgOriginal.height() / 2);
+        //        Imgproc.resize(imgOriginal, imgReduced, size);
 
+        Mat imgReduced = imgOriginal;
         Mat imgEscalaGrises = new Mat();
         Imgproc.cvtColor(imgReduced, imgEscalaGrises, Imgproc.COLOR_BGR2GRAY);
         Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
         Imgcodecs.imwrite(rutaMuestra, imgEscalaGrises);
 
+
         // Invertir los colores
         Mat imgInverted = new Mat();
         Core.bitwise_not(imgEscalaGrises, imgInverted);
 
-        // blanco y negro
-        Mat imgBW = new Mat();
-        Imgproc.threshold(imgInverted, imgBW, 105, 235, Imgproc.THRESH_BINARY);
-        Imgcodecs.imwrite(rutaInvertido, imgBW);
+        //        // blanco y negro
+        //        Mat imgBW = new Mat();
+        //        Imgproc.threshold(imgInverted, imgBW, 120, 255, Imgproc.THRESH_BINARY);
+        //        Imgcodecs.imwrite(rutaInvertido, imgBW);
 
-        //Mat imgBW = imgInverted;
+        Mat imgBW = imgInverted;
         Imgcodecs.imwrite(rutaInvertido, imgBW);
         Mat imgCirculosDetectados = new Mat();
+
+        // Busca círculos
         Imgproc.HoughCircles(imgBW, imgCirculosDetectados, Imgproc.HOUGH_GRADIENT, 1.0,
                 (double) imgBW.rows() / 60,
-                100.0, 25.0, 15, 50);
+                100.0, 25, 25, 50);
 
         System.out.println("Circulos detectados: " + imgCirculosDetectados.size());
         List<Point> listaCirculosDetectados = new ArrayList<>();
