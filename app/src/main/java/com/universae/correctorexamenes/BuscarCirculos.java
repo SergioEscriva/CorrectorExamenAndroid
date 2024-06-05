@@ -224,14 +224,16 @@ public class BuscarCirculos {
         Mat imgInverted = new Mat();
         Core.bitwise_not(imgEscalaGrises, imgInverted);
 
-        Mat imgBW = new Mat();
-        Imgproc.threshold(imgInverted, imgBW, 100, 255, Imgproc.THRESH_BINARY);
-        Imgcodecs.imwrite(rutaInvertido, imgBW);
+        //        Mat imgBW = new Mat();
+        //        Imgproc.threshold(imgInverted, imgBW, 100, 255, Imgproc.THRESH_BINARY);
+        //        Imgcodecs.imwrite(rutaInvertido, imgBW);
+
+        Mat imgBW = imgInverted;
 
         Mat imgCirculosDetectados = new Mat();
         Imgproc.HoughCircles(imgBW, imgCirculosDetectados, Imgproc.HOUGH_GRADIENT, 1.0,
-                (double) imgBW.rows() / 55,
-                100.0, 25.0, 10, 40);
+                (double) imgBW.rows() / 60,
+                100.0, 25.0, 25, 40);
 
         System.out.println("Circulos detectados: " + imgCirculosDetectados.size());
         List<Point> listaCirculosDetectados = new ArrayList<>();
@@ -276,8 +278,8 @@ public class BuscarCirculos {
             lista.add(pares);
         }
 
-        System.out.println("Circulos blancos: " + listaCirculosDetectados.size());
-        System.out.println("Circulos blancos: " + lista.size());
+        System.out.println("Circulos detectados: " + listaCirculosDetectados.size());
+        System.out.println("Circulos detectados: " + lista.size());
         return lista;
     }
 
