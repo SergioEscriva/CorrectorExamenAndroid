@@ -182,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
         BuscarCirculos buscarCirculos = new BuscarCirculos();
         buscarCirculos.rebuscarCirculos(mat, "all");
+        buscarCirculos.rebuscarCirculos(mat, "blancos");
         String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
 

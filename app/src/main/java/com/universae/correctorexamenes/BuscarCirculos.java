@@ -204,20 +204,12 @@ public class BuscarCirculos {
 
 
     public List<Par> rebuscarCirculos(Mat imgOriginal1, String circulos) {
-
-        String rutaMuestra = "/data/data/com.universae.correctorexamenes/files/muestra.jpg";
-        String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
-        double radio = 0.0;
-        String rutaCirculos = "/data/data/com.universae.correctorexamenes/files/blancos.jpg";
-        radio = 0.8;
+        Mat imgAnalizada = new Mat();
         List<Par> lista = new ArrayList<>();
-        if (circulos.equals("all")) {
-            radio = 0.99;
-            rutaCirculos = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
-        }
-        String imagePath = "/data/data/com.universae.correctorexamenes/files/muestra1.jpg";
+        double radio = 0.8;
         // Cargar la imagen desde el almacenamiento interno
 
+        String imagePath = "/data/data/com.universae.correctorexamenes/files/muestra1.jpg";
         Mat imgOriginal = Imgcodecs.imread(imagePath);
         //
         // Reducción de la resolución
@@ -229,26 +221,38 @@ public class BuscarCirculos {
         Mat imgEscalaGrises = new Mat();
         Imgproc.cvtColor(imgReduced, imgEscalaGrises, Imgproc.COLOR_BGR2GRAY);
         Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
-        Imgcodecs.imwrite(rutaMuestra, imgEscalaGrises);
 
+        // Guarda Imagen en Gris
+        // String rutaMuestra = "/data/data/com.universae.correctorexamenes/files/muestra.jpg";
+        // Imgcodecs.imwrite(rutaMuestra, imgEscalaGrises);
 
         // Invertir los colores
         Mat imgInverted = new Mat();
         Core.bitwise_not(imgEscalaGrises, imgInverted);
+        imgAnalizada = imgInverted;
 
-        //        // blanco y negro
-        //        Mat imgBW = new Mat();
-        //        Imgproc.threshold(imgInverted, imgBW, 120, 255, Imgproc.THRESH_BINARY);
-        //        Imgcodecs.imwrite(rutaInvertido, imgBW);
 
-        Mat imgBW = imgInverted;
-        Imgcodecs.imwrite(rutaInvertido, imgBW);
-        Mat imgCirculosDetectados = new Mat();
+        if (circulos.equals("blancos")) {
+            radio = 0.0;
+            System.out.println("Radio " + radio);
+
+            //        // blanco y negro
+            Mat imgBW = new Mat();
+            Imgproc.threshold(imgInverted, imgBW, 150, 255, Imgproc.THRESH_BINARY);
+
+            // Guarda imagen Blanco y negro
+            Imgproc.GaussianBlur(imgBW, imgBW, new Size(9, 9), 2, 2);
+            String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
+            Imgcodecs.imwrite(rutaInvertido, imgBW);
+            imgAnalizada = imgBW;
+        }
+
 
         // Busca círculos
-        Imgproc.HoughCircles(imgBW, imgCirculosDetectados, Imgproc.HOUGH_GRADIENT, 1.0,
-                (double) imgBW.rows() / 60,
-                100.0, 25, 25, 50);
+        Mat imgCirculosDetectados = new Mat();
+        Imgproc.HoughCircles(imgAnalizada, imgCirculosDetectados, Imgproc.HOUGH_GRADIENT, 1.0,
+                (double) imgAnalizada.rows() / 60,
+                100, 25, 25, 50);
 
         System.out.println("Circulos detectados: " + imgCirculosDetectados.size());
         List<Point> listaCirculosDetectados = new ArrayList<>();
@@ -259,11 +263,11 @@ public class BuscarCirculos {
             Point center = new Point(Math.round(circle[0]), Math.round(circle[1]));
             int radius = (int) Math.round(circle[2]);
 
-            Mat mask = Mat.zeros(imgBW.size(), CvType.CV_8UC1);
+            Mat mask = Mat.zeros(imgAnalizada.size(), CvType.CV_8UC1);
             Imgproc.circle(mask, center, radius, new Scalar(255, 255, 255), - 1);
 
             Mat circleROI = new Mat();
-            imgBW.copyTo(circleROI, mask);
+            imgAnalizada.copyTo(circleROI, mask);
 
             int whitePixels = Core.countNonZero(circleROI);
 
@@ -288,6 +292,9 @@ public class BuscarCirculos {
             }
         });
 
+
+        // Guarda todos los circulos.
+        String rutaCirculos = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Imgcodecs.imwrite(rutaCirculos, imgReduced);
 
         for (Point p : listaCirculosDetectados) {

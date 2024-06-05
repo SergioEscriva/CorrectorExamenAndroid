@@ -35,8 +35,8 @@ dependencies {
 //
 ////    implementation(libs.appcompat)
 ////    implementation(libs.material)
-//    implementation(files("libs/opencv-490.jar"))
-//    implementation(files("libs/libopencv_java490.so"))
+    implementation(files("libs/opencv-490.jar"))
+    implementation(files("libs/libopencv_java490.so"))
 
 
     implementation("com.rmtheis:tess-two:9.1.0")
@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.sceneform.base)
     implementation(project(":OpenCV"))
+    //implementation(project(":OpenCV"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
