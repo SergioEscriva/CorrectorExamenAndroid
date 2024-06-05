@@ -206,7 +206,8 @@ public class BuscarCirculos {
     public List<Par> rebuscarCirculos(Mat imgOriginal1, String circulos) {
         Mat imgAnalizada = new Mat();
         List<Par> lista = new ArrayList<>();
-        double radio = 0.8;
+        double radio = 0.0;
+        System.out.println("Radio Todos " + radio);
         // Cargar la imagen desde el almacenamiento interno
 
         String imagePath = "/data/data/com.universae.correctorexamenes/files/muestra1.jpg";
@@ -233,8 +234,8 @@ public class BuscarCirculos {
 
 
         if (circulos.equals("blancos")) {
-            radio = 0.0;
-            System.out.println("Radio " + radio);
+            radio = 0.8;
+            System.out.println("Radio Blancos" + radio);
 
             //        // blanco y negro
             Mat imgBW = new Mat();
@@ -252,7 +253,7 @@ public class BuscarCirculos {
         Mat imgCirculosDetectados = new Mat();
         Imgproc.HoughCircles(imgAnalizada, imgCirculosDetectados, Imgproc.HOUGH_GRADIENT, 1.0,
                 (double) imgAnalizada.rows() / 60,
-                100, 25, 25, 50);
+                100, 25, 30, 50);
 
         System.out.println("Circulos detectados: " + imgCirculosDetectados.size());
         List<Point> listaCirculosDetectados = new ArrayList<>();

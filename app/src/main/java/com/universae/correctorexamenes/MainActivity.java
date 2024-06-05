@@ -32,6 +32,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 
 import java.nio.ByteBuffer;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnIncorrecto;
     private ImageView imagePreview;
     private ImageView imageViewMuestra;
+    private List<BuscarCirculos.Par> listaBlancos;
+    private List<BuscarCirculos.Par> listaTodos;
 
 
     @Override
@@ -87,6 +90,19 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }, getExecutor());
+
+
+        btnCorrecto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Map<Integer, String> resultados = compararListas();
+
+            }
+
+            ;
+
+        });
 
 
     }
@@ -181,8 +197,8 @@ public class MainActivity extends AppCompatActivity {
         //Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);           //(new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
 
         BuscarCirculos buscarCirculos = new BuscarCirculos();
-        buscarCirculos.rebuscarCirculos(mat, "blancos");
-        buscarCirculos.rebuscarCirculos(mat, "all");
+        listaBlancos = buscarCirculos.rebuscarCirculos(mat, "blancos");
+        listaTodos = buscarCirculos.rebuscarCirculos(mat, "all");
         String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
 
