@@ -88,6 +88,7 @@ public class NumerarCirculos {
                 int number = numeroPregunta(circulosList.get(i), y);
                 String valorLetra = String.valueOf(number) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
+                System.out.println(valorLetra + " A " + parNumeradosPar);
 
             }
             for (int i = a1 + 40; i <= a2 + 40; i++) {
@@ -95,6 +96,7 @@ public class NumerarCirculos {
                 int number = numeroPregunta(circulosList.get(i), y);
                 String valorLetra = String.valueOf(number + 10) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
+                System.out.println(valorLetra + " B " + parNumeradosPar);
 
             }
 
@@ -103,6 +105,7 @@ public class NumerarCirculos {
                 int number = numeroPregunta(circulosList.get(i), y);
                 String valorLetra = String.valueOf(number + 20) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
+                System.out.println(valorLetra + " C " + parNumeradosPar);
 
             }
             for (int i = a1 + 120; i <= a2 + 120; i++) {
@@ -110,6 +113,7 @@ public class NumerarCirculos {
                 int number = numeroPregunta(circulosList.get(i), y);
                 String valorLetra = String.valueOf(number + 30) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
+                System.out.println(valorLetra + " D " + parNumeradosPar);
 
             }
         }
@@ -119,8 +123,8 @@ public class NumerarCirculos {
 
     public Integer numeroPregunta(Par fila, int y) {
 
-        int horquillaInicial = (y + 155);// (y + 155); // Altura de "A" normalmente y+55
-        int horquillaSize = 95; // es la media de separación entre filas 95
+        int horquillaInicial = 2600;// (y + 155); // Altura de "A" normalmente y+55
+        int horquillaSize = 95; //95 // es la media de separación entre filas 95
 
         double numero = fila.getNumeroY();
         int horquilla = (int) Math.ceil((numero - horquillaInicial) / horquillaSize) + 1;

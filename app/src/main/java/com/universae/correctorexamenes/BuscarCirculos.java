@@ -305,24 +305,8 @@ public class BuscarCirculos {
         }
 
         System.out.println("Circulos detectados: " + listaCirculosDetectados.size());
-        System.out.println("Circulos detectados: " + lista.size());
+        System.out.println("Circulos detectados: " + lista);
         return lista;
-    }
-
-    class Par {
-        double x, y;
-
-        Par(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public String toString() {
-            return "(" + x + ", " + y + ")";
-
-        }
-
     }
 
 

@@ -62,7 +62,7 @@
         android:layout_width="134dp"
         android:layout_height="54dp"
         android:layout_marginStart="24dp"
-        android:text="Correcto"
+        android:text="Corregir"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />

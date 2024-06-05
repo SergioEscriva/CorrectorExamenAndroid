@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ import org.opencv.core.Mat;
 
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
@@ -46,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
     private Button btnIncorrecto;
     private ImageView imagePreview;
     private ImageView imageViewMuestra;
-    private List<BuscarCirculos.Par> listaBlancos;
-    private List<BuscarCirculos.Par> listaTodos;
+    private List<Par> listaBlancos;
+    private List<Par> listaTodos;
+    private BuscarCirculos buscarCirculos = new BuscarCirculos();
+    private NumerarCirculos numerarCirculos = new NumerarCirculos();
+    private ProgressBar progressBar;
 
 
     @Override
@@ -95,9 +100,14 @@ public class MainActivity extends AppCompatActivity {
         btnCorrecto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int y = 2500;
 
-                // Map<Integer, String> resultados = compararListas();
+                NumerarMarcados numerarMarcados = new NumerarMarcados();
 
+                Map<Integer, String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, 0, y);
+
+
+                System.out.println(listaMarcadosNumerados);
             }
 
             ;
@@ -195,13 +205,10 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(bytes);
         Mat mat = processImageData(bytes);
         //Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);           //(new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
-
-        BuscarCirculos buscarCirculos = new BuscarCirculos();
         listaBlancos = buscarCirculos.rebuscarCirculos(mat, "blancos");
         listaTodos = buscarCirculos.rebuscarCirculos(mat, "all");
         String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-
         imageViewMuestra.setImageBitmap(bitmap);
         image_capture_button.setVisibility(View.INVISIBLE);
         previewView.setVisibility(View.INVISIBLE);
