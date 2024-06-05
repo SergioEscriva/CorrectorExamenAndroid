@@ -203,7 +203,7 @@ public class BuscarCirculos {
     //	}
 
 
-    public List<Par> rebuscarCirculos(Mat src, String circulos) {
+    public List<Par> rebuscarCirculos(Mat imgOriginal, String circulos) {
 
         String rutaMuestra = "/data/data/com.universae.correctorexamenes/files/muestra.jpg";
         String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
@@ -217,21 +217,22 @@ public class BuscarCirculos {
         }
 
 
-        Mat imgOriginal = new Mat();
+        Mat imgEscalaGrises = new Mat();
 
         // Escala de Grises
-        Imgproc.cvtColor(src, imgOriginal, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.cvtColor(imgOriginal, imgEscalaGrises, Imgproc.COLOR_BGR2GRAY);
 
         //Aplicar desenfoque para reducir el ruido
-        Imgproc.GaussianBlur(imgOriginal, imgOriginal, new Size(9, 9), 2, 2);
+        Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
 
         // Imagen muestra guardada
-        Imgcodecs.imwrite(rutaMuestra, imgOriginal);
+        Imgcodecs.imwrite(rutaMuestra, imgEscalaGrises);
 
         // Colores Invertidos
         Mat imgInverted = new Mat();
-        Core.bitwise_not(imgOriginal, imgInverted);
+        Core.bitwise_not(imgEscalaGrises, imgInverted);
 
+        // SE CONSIDERA SRC o IMAGEN ORIGINAL
         // Convertir a blanco y negro usando un umbral
         Mat imgBW = new Mat();
         Imgproc.threshold(imgInverted, imgBW, 128, 255, Imgproc.THRESH_BINARY);
@@ -267,6 +268,7 @@ public class BuscarCirculos {
         //
         //	// Crear una lista para almacenar los círculos blancos detectados
         List<Point> listaCirculosDetectados = new ArrayList<>();
+        System.out.println("detectados " + imgCirculosDetectados.size());
         //
         // Verificar cada círculo detectado
         for (int i = 0; i < imgCirculosDetectados.cols(); i++) {
@@ -282,7 +284,7 @@ public class BuscarCirculos {
 
             // Extraer la región del círculo de la imagen original
             Mat circleROI = new Mat();
-            src.copyTo(circleROI, mask);
+            imgBW.copyTo(circleROI, mask);
             //Imgcodecs.imwrite(rutaCirculos, circleROI);
 
 
