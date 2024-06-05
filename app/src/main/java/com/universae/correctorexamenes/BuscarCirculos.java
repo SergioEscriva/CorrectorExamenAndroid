@@ -212,29 +212,35 @@ public class BuscarCirculos {
         radio = 0.8;
         List<Par> lista = new ArrayList<>();
         if (circulos.equals("all")) {
-            radio = 1;
+            radio = 0.8;
             rutaCirculos = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         }
 
+        // Reducción de la resolución
+        Mat imgReduced = new Mat();
+        Size size = new Size(imgOriginal.width() / 2, imgOriginal.height() / 2);
+        Imgproc.resize(imgOriginal, imgReduced, size);
+
         Mat imgEscalaGrises = new Mat();
-        Imgproc.cvtColor(imgOriginal, imgEscalaGrises, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.cvtColor(imgReduced, imgEscalaGrises, Imgproc.COLOR_BGR2GRAY);
         Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
         Imgcodecs.imwrite(rutaMuestra, imgEscalaGrises);
 
-
+        // Invertir los colores
         Mat imgInverted = new Mat();
         Core.bitwise_not(imgEscalaGrises, imgInverted);
 
-        //        Mat imgBW = new Mat();
-        //        Imgproc.threshold(imgInverted, imgBW, 105, 235, Imgproc.THRESH_BINARY);
-        //        Imgcodecs.imwrite(rutaInvertido, imgBW);
+        // blanco y negro
+        Mat imgBW = new Mat();
+        Imgproc.threshold(imgInverted, imgBW, 105, 235, Imgproc.THRESH_BINARY);
+        Imgcodecs.imwrite(rutaInvertido, imgBW);
 
-        Mat imgBW = imgInverted;
-        Imgcodecs.imwrite(rutaInvertido, imgInverted);
+        //Mat imgBW = imgInverted;
+        Imgcodecs.imwrite(rutaInvertido, imgBW);
         Mat imgCirculosDetectados = new Mat();
         Imgproc.HoughCircles(imgBW, imgCirculosDetectados, Imgproc.HOUGH_GRADIENT, 1.0,
                 (double) imgBW.rows() / 60,
-                100.0, 25.0, 25, 40);
+                100.0, 25.0, 15, 50);
 
         System.out.println("Circulos detectados: " + imgCirculosDetectados.size());
         List<Point> listaCirculosDetectados = new ArrayList<>();
@@ -255,8 +261,10 @@ public class BuscarCirculos {
 
             if (whitePixels > (Math.PI * radius * radius * radio)) {
                 listaCirculosDetectados.add(center);
-                Imgproc.circle(imgOriginal, center, radius, new Scalar(0, 255, 0), 3);
+                Imgproc.circle(imgReduced, center, radius, new Scalar(0, 255, 0), 3);
             }
+            mask.release();
+            circleROI.release();
         }
 
         Collections.sort(listaCirculosDetectados, new Comparator<Point>() {
@@ -272,7 +280,7 @@ public class BuscarCirculos {
             }
         });
 
-        Imgcodecs.imwrite(rutaCirculos, imgOriginal);
+        Imgcodecs.imwrite(rutaCirculos, imgReduced);
 
         for (Point p : listaCirculosDetectados) {
             Par pares = new Par(p.x, p.y);
@@ -295,6 +303,7 @@ public class BuscarCirculos {
         @Override
         public String toString() {
             return "(" + x + ", " + y + ")";
+
         }
 
     }
