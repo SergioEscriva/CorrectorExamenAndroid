@@ -35,8 +35,10 @@ public class NumerarMarcados {
         System.out.println("Superior Marcados: " + listaSuperiorMarcados.size() + " --> " + listaSuperiorMarcados);
         System.out.println("Inferior Todo Tamaño: " + listaInferiorTodos.size() + " --> " + listaInferiorTodos);
         System.out.println("Inferior Marcado Tamaño: " + listaInferiorMarcados.size() + " --> " + listaInferiorMarcados);
+
+
         NumerarCirculos numerarTodos = new NumerarCirculos();
-        Map<String, Par> todosNumeradosMap = numerarTodos.busquedaLetras(allCircles, y); // Todos los circulos
+        Map<String, Par> todosNumeradosMap = numerarTodos.busquedaLetras(listaInferiorTodos, y); // Todos los circulos
 
         int u = 0;
         Map<Integer, String> circulosMarcados = new HashMap<>();
