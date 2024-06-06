@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class NumerarMarcados {
-    public Map<Integer, String> busquedaLetras(List<Par> allCircles, List<Par> whiteCircles, int x, int y) {
+    public Map<Integer, String> busquedaLetras(List<Par> allCircles, List<Par> whiteCircles, int x, int y, String arribaAbajo) {
 
         List<Par> listaSuperiorMarcados = new java.util.ArrayList<>();
         List<Par> listaInferiorMarcados = new java.util.ArrayList<>();
@@ -29,14 +29,40 @@ public class NumerarMarcados {
                 listaSuperiorTodos.add(allCircles.get(n));
 
             }
+
+
         }
 
-        System.out.println("Superior Todo Tamaño: " + listaSuperiorTodos.size() + " --> " + listaSuperiorTodos);
-        System.out.println("Superior Marcados: " + listaSuperiorMarcados.size() + " --> " + listaSuperiorMarcados);
-        System.out.println("Inferior Todo Tamaño: " + listaInferiorTodos.size() + " --> " + listaInferiorTodos);
-        System.out.println("Inferior Marcado Tamaño: " + listaInferiorMarcados.size() + " --> " + listaInferiorMarcados);
+//        System.out.println("Superior Todo Tamaño: " + listaSuperiorTodos.size() + " --> " + listaSuperiorTodos);
+//        System.out.println("Superior Marcados: " + listaSuperiorMarcados.size() + " --> " + listaSuperiorMarcados);
+//        System.out.println("Inferior Todo Tamaño: " + listaInferiorTodos.size() + " --> " + listaInferiorTodos);
+//        System.out.println("Inferior Marcado Tamaño: " + listaInferiorMarcados.size() + " --> " + listaInferiorMarcados);
+
+        Map<Integer, String> listaMarcada = new HashMap<>();
+        switch (arribaAbajo){
+            case "arriba":
 
 
+
+                break;
+            case "abajo":
+
+            listaMarcada = metodoAbajo(listaInferiorTodos, listaInferiorMarcados, y);
+
+
+
+            break;
+
+
+
+
+        }
+
+
+        return listaMarcada;
+    }
+        public Map<Integer, String> metodoAbajo(List<Par> listaInferiorTodos, List<Par> listaInferiorMarcados, int y ){
+        System.out.println(listaInferiorTodos.size() + " tamaño");
         NumerarCirculos numerarTodos = new NumerarCirculos();
         Map<String, Par> todosNumeradosMap = numerarTodos.busquedaLetras(listaInferiorTodos, y); // Todos los circulos
 
@@ -61,14 +87,21 @@ public class NumerarMarcados {
 
             }
 
-            Par value = entry.getValue();
-            for (Par respuestas : whiteCircles) {
 
+            Par value = entry.getValue();
+            for (Par respuestas : listaInferiorMarcados) {
+//
+
+                System.out.println("1  " + value.toString());
+                System.out.println("respuestas " + respuestas.toString());
                 if (respuestas.toString().contains(value.toString())) {
+
                     if (circulosMarcados.get(Integer.valueOf(llaveNumero)).equals("Empty")) {
                         circulosMarcados.put(Integer.valueOf(llaveNumero), llaveLetra);
+                        System.out.println("entra");
 
                     } else {
+                        System.out.println("2  " + value.toString());
                         circulosMarcados.put(Integer.valueOf(llaveNumero), "Nula");
                         System.out.println("No Marcado " + llaveNumero + " " + llaveLetra);
                     }
@@ -81,6 +114,6 @@ public class NumerarMarcados {
         System.out.println("NumMarc: " + circulosMarcados.size() + " Marcados --> " + circulosMarcados);
         return circulosMarcados;
 
+     }
     }
 
-}

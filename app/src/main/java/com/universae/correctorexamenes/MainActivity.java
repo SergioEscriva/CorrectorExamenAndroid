@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
                 NumerarMarcados numerarMarcados = new NumerarMarcados();
 
-                Map<Integer, String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, 0, y);
+                Map<Integer, String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, 0, y, "abajo");
 
 
                 System.out.println(listaMarcadosNumerados);
