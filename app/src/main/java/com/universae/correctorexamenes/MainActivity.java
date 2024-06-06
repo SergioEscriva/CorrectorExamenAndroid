@@ -100,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
         btnCorrecto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int y = 2500;
+
 
                 NumerarMarcados numerarMarcados = new NumerarMarcados();
 
-                Map<Integer, String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, 0, y, "abajo");
+                Map<Integer, String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
 
 
                 System.out.println(listaMarcadosNumerados);

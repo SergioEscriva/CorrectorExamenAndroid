@@ -9,7 +9,7 @@ import java.util.Map;
 public class NumerarCirculos {
     private int numero1 = 0;
 
-    public Map<String, Par> busquedaLetras(List<Par> allCircles, int y) {
+    public Map<String, Par> busquedaLetras(List<Par> allCircles) {
         List<Par> listaFinal = new ArrayList<>();
 
         // Convertir la lista de pares a un array bidimensional
@@ -47,13 +47,13 @@ public class NumerarCirculos {
 
         Map<String, Par> listaNumerosLetras = new HashMap<>();
 
-        listaNumerosLetras = numeroRespuesta(circulosList, y);
+        listaNumerosLetras = numeroRespuesta(circulosList);
         return listaNumerosLetras;
         // return null;
 
     }
 
-    public Map<String, Par> numeroRespuesta(List<Par> circulosList, int y) {
+    public Map<String, Par> numeroRespuesta(List<Par> circulosList) {
 
         Map<String, Par> listaNumerosLetras = new HashMap<>();
 
@@ -85,7 +85,7 @@ public class NumerarCirculos {
 
             for (int i = a1; i <= a2; i++) {
                 Par parNumeradosPar = circulosList.get(i);
-                int number = numeroPregunta(circulosList.get(i), y);
+                int number = numeroPregunta(circulosList.get(i), "Respuestas");
                 String valorLetra = String.valueOf(number) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
 
@@ -93,7 +93,7 @@ public class NumerarCirculos {
             }
             for (int i = a1 + 40; i <= a2 + 40; i++) {
                 Par parNumeradosPar = circulosList.get(i);
-                int number = numeroPregunta(circulosList.get(i), y);
+                int number = numeroPregunta(circulosList.get(i), "Respuestas");
                 String valorLetra = String.valueOf(number + 10) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
 
@@ -102,7 +102,7 @@ public class NumerarCirculos {
 
             for (int i = a1 + 80; i <= a2 + 80; i++) {
                 Par parNumeradosPar = circulosList.get(i);
-                int number = numeroPregunta(circulosList.get(i), y);
+                int number = numeroPregunta(circulosList.get(i), "Respuestas");
                 String valorLetra = String.valueOf(number + 20) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
 
@@ -110,7 +110,7 @@ public class NumerarCirculos {
             }
             for (int i = a1 + 120; i <= a2 + 120; i++) {
                 Par parNumeradosPar = circulosList.get(i);
-                int number = numeroPregunta(circulosList.get(i), y);
+                int number = numeroPregunta(circulosList.get(i), "Respuestas");
                 String valorLetra = String.valueOf(number + 30) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
 
@@ -118,20 +118,38 @@ public class NumerarCirculos {
             }
         }
         System.out.println(listaNumerosLetras);
+
         return listaNumerosLetras;
 
 
 
     }
 
-    public Integer numeroPregunta(Par fila, int y) {
+    public Integer numeroPregunta(Par fila, String indice) {
+        int horquillaInicial = 0;
+        int horquillaSize = 0;
 
-        int horquillaInicial = 2600;// (y + 155); // Altura de "A" normalmente y+55
-        int horquillaSize = 135; //95 // es la media de separación entre filas 95
+        switch (indice){
+            case "Respuestas":
+                    horquillaInicial = 2600; // (y + 155); // Altura de "A" normalmente y+55
+                    horquillaSize = 135; //95 // es la media de separación entre filas 95
+                    break;
+
+            case "DNI":
+                horquillaInicial = 1400;
+                horquillaSize = 135;
+                break;
+
+        }
 
         double numero = fila.getNumeroY();
         int horquilla = (int) Math.ceil((numero - horquillaInicial) / horquillaSize) + 1;
         return horquilla;
     }
+
+
+
+
+
 
 }

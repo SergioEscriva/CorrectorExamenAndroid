@@ -28,16 +28,16 @@ public class BuscarCirculos {
     private List<Par> allCircles;
 
 
-    public Map<Integer, String> buscarCirculos(int y, int x) throws JSONException, IOException {
-        // Cargar la imagen
-        String imagePathInv = "./bnarchivo-negro.jpg";//
-        Mat srcBlack = Imgcodecs.imread(imagePathInv);
-        Mat srcWhite = Imgcodecs.imread(imagePathInv);
-
-        if (srcBlack.empty()) {
-            System.out.println("No se pudo cargar la imagen");
-            return null;
-        }
+//    public Map<Integer, String> buscarCirculos(int y, int x) throws JSONException, IOException {
+//        // Cargar la imagen
+//        String imagePathInv = "./bnarchivo-negro.jpg";//
+//        Mat srcBlack = Imgcodecs.imread(imagePathInv);
+//        Mat srcWhite = Imgcodecs.imread(imagePathInv);
+//
+//        if (srcBlack.empty()) {
+//            System.out.println("No se pudo cargar la imagen");
+//            return null;
+//        }
 
         //allCircles = rebuscarCirculos(srcBlack, "all");
 
@@ -46,9 +46,9 @@ public class BuscarCirculos {
         //NumerarMarcados numerarMarcados = new NumerarMarcados();
         //examenAlumno = numerarMarcados.busquedaLetras(allCircles, white1Circles, x, y);
 
-        return examenAlumno;
-
-    }
+//        return examenAlumno;
+//
+//    }
 
     //        public static void invertirOscurecer(BufferedImage img, int intY) throws IOException, JSONException {
 
@@ -210,7 +210,7 @@ public class BuscarCirculos {
         System.out.println("Radio Todos " + radio);
         // Cargar la imagen desde el almacenamiento interno
         String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
-        String imagePath = "/data/data/com.universae.correctorexamenes/files/marcadosE.jpg";
+        String imagePath = "/data/data/com.universae.correctorexamenes/files/dniCodigo.jpg";
         Mat imgOriginal = Imgcodecs.imread(imagePath);
         //
         // Reducción de la resolución
@@ -222,6 +222,8 @@ public class BuscarCirculos {
         Mat imgEscalaGrises = new Mat();
         Imgproc.cvtColor(imgReduced, imgEscalaGrises, Imgproc.COLOR_BGR2GRAY);
         Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
+
+
 
 
 
