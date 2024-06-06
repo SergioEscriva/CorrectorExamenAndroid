@@ -7,25 +7,34 @@ import java.util.Map;
 public class NumerarMarcados {
     public Map<Integer, String> busquedaLetras(List<Par> allCircles, List<Par> whiteCircles, int x, int y) {
 
-
-        List<Par> listaEliminadosBlancos = new java.util.ArrayList<>();
+        List<Par> listaSuperiorMarcados = new java.util.ArrayList<>();
+        List<Par> listaInferiorMarcados = new java.util.ArrayList<>();
         // Elimina de respuestas por arriba 2565
         for (int n = 0; n < whiteCircles.size(); n++) {
-            if (whiteCircles.get(n).getNumeroY() <= 2500) {
-                listaEliminadosBlancos.add(whiteCircles.get(n));
-                System.out.println("Eliminado: " + listaEliminadosBlancos);
+            if (whiteCircles.get(n).getNumeroY() >= 2500) {
+                listaInferiorMarcados.add(whiteCircles.get(n));
+
+            } else {
+                listaSuperiorMarcados.add(whiteCircles.get(n));
+
             }
         }
-        List<Par> listaEliminadosTodos = new java.util.ArrayList<>();
+        List<Par> listaSuperiorTodos = new java.util.ArrayList<>();
+        List<Par> listaInferiorTodos = new java.util.ArrayList<>();
         for (int n = 0; n < allCircles.size(); n++) {
-            if (allCircles.get(n).getNumeroY() <= 2500) {
-                listaEliminadosTodos.add(allCircles.get(n));
+            if (allCircles.get(n).getNumeroY() >= 2500) {
+                listaInferiorTodos.add(allCircles.get(n));
+
+            } else {
+                listaSuperiorTodos.add(allCircles.get(n));
+
             }
         }
 
-
-        System.out.println("Tamaño: " + listaEliminadosTodos.size() + " TODOS" + listaEliminadosTodos);
-        System.out.println("Tamaño: " + listaEliminadosBlancos.size() + " Marcados" + listaEliminadosBlancos);
+        System.out.println("Superior Todo Tamaño: " + listaSuperiorTodos.size() + " --> " + listaSuperiorTodos);
+        System.out.println("Superior Marcados: " + listaSuperiorMarcados.size() + " --> " + listaSuperiorMarcados);
+        System.out.println("Inferior Todo Tamaño: " + listaInferiorTodos.size() + " --> " + listaInferiorTodos);
+        System.out.println("Inferior Marcado Tamaño: " + listaInferiorMarcados.size() + " --> " + listaInferiorMarcados);
         NumerarCirculos numerarTodos = new NumerarCirculos();
         Map<String, Par> todosNumeradosMap = numerarTodos.busquedaLetras(allCircles, y); // Todos los circulos
 
