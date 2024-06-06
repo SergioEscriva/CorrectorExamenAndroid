@@ -209,8 +209,8 @@ public class BuscarCirculos {
         double radio = 0.0;
         System.out.println("Radio Todos " + radio);
         // Cargar la imagen desde el almacenamiento interno
-
-        String imagePath = "/data/data/com.universae.correctorexamenes/files/muestra1.jpg";
+        String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
+        String imagePath = "/data/data/com.universae.correctorexamenes/files/marcadosE.jpg";
         Mat imgOriginal = Imgcodecs.imread(imagePath);
         //
         // Reducción de la resolución
@@ -223,30 +223,38 @@ public class BuscarCirculos {
         Imgproc.cvtColor(imgReduced, imgEscalaGrises, Imgproc.COLOR_BGR2GRAY);
         Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
 
+
+
         // Guarda Imagen en Gris
         // String rutaMuestra = "/data/data/com.universae.correctorexamenes/files/muestra.jpg";
         // Imgcodecs.imwrite(rutaMuestra, imgEscalaGrises);
 
-        // Invertir los colores
-        Mat imgInverted = new Mat();
-        Core.bitwise_not(imgEscalaGrises, imgInverted);
-        imgAnalizada = imgInverted;
+        imgAnalizada = imgEscalaGrises;
 
 
         if (circulos.equals("blancos")) {
             radio = 0.8;
             System.out.println("Radio Blancos" + radio);
+            Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
+            Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
+            Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
 
-            //        // blanco y negro
-            Mat imgBW = new Mat();
-            Imgproc.threshold(imgInverted, imgBW, 150, 255, Imgproc.THRESH_BINARY);
-
-            // Guarda imagen Blanco y negro
-            Imgproc.GaussianBlur(imgBW, imgBW, new Size(9, 9), 2, 2);
-            String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
+//            //        // blanco y negro
+//            Mat imgBW = new Mat();
+//            Imgproc.threshold(imgInverted, imgBW, 150, 255, Imgproc.THRESH_BINARY);
+//
+//            // Guarda imagen Blanco y negro
+//            Imgproc.GaussianBlur(imgBW, imgBW, new Size(9, 9), 2, 2);
+            Mat imgBW = imgEscalaGrises;
             Imgcodecs.imwrite(rutaInvertido, imgBW);
             imgAnalizada = imgBW;
         }
+        // Invertir los colores
+        Mat imgInverted = new Mat();
+        Core.bitwise_not(imgAnalizada, imgInverted);
+        rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
+        Imgcodecs.imwrite(rutaInvertido, imgInverted);
+        imgAnalizada = imgInverted;
 
 
         // Busca círculos
@@ -280,18 +288,18 @@ public class BuscarCirculos {
             circleROI.release();
         }
 
-        Collections.sort(listaCirculosDetectados, new Comparator<Point>() {
-            @Override
-            public int compare(Point p1, Point p2) {
-                if (p1.x > p2.x) {
-                    return - 1;
-                } else if (p1.x < p2.x) {
-                    return 1;
-                } else {
-                    return Double.compare(p1.y, p2.x);
-                }
-            }
-        });
+//        Collections.sort(listaCirculosDetectados, new Comparator<Point>() {
+//            @Override
+//            public int compare(Point p1, Point p2) {
+//                if (p1.x > p2.x) {
+//                    return - 1;
+//                } else if (p1.x < p2.x) {
+//                    return 1;
+//                } else {
+//                    return Double.compare(p1.y, p2.x);
+//                }
+//            }
+//        });
 
 
         // Guarda todos los circulos.

@@ -90,19 +90,21 @@ public class NumerarMarcados {
 
             Par value = entry.getValue();
             for (Par respuestas : listaInferiorMarcados) {
+                System.out.println(respuestas + " respuestas");
 //
 
 //                System.out.println("1  " + value.toString());
 //                System.out.println("respuestas " + respuestas.toString());
 
-                double miny = respuestas.getNumeroY() - 5;
-                double maxy = respuestas.getNumeroY() + 5;
-                double minx = respuestas.getNumeroX() - 2;
-                double maxx = respuestas.getNumeroX() + 2;
+                double miny = respuestas.getNumeroY() - 15;
+                double maxy = respuestas.getNumeroY() + 15;
+                double minx = respuestas.getNumeroX() - 10;
+                double maxx = respuestas.getNumeroX() + 10;
 
 
                 if( value.getNumeroX() <= maxx && value.getNumeroX() >= minx && value.getNumeroY() <= maxy && value.getNumeroY() >= miny ){
 //                if (respuestas.toString().contains(value.toString())) {
+
 
 
                     if (circulosMarcados.get(Integer.valueOf(llaveNumero)).equals("Empty")) {

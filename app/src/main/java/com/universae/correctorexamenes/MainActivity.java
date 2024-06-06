@@ -205,8 +205,8 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(bytes);
         Mat mat = processImageData(bytes);
         //Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);           //(new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
-        listaBlancos = buscarCirculos.rebuscarCirculos(mat, "blancos");
         listaTodos = buscarCirculos.rebuscarCirculos(mat, "all");
+        listaBlancos = buscarCirculos.rebuscarCirculos(mat, "blancos");
         String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imageViewMuestra.setImageBitmap(bitmap);
