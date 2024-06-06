@@ -92,18 +92,27 @@ public class NumerarMarcados {
             for (Par respuestas : listaInferiorMarcados) {
 //
 
-                System.out.println("1  " + value.toString());
-                System.out.println("respuestas " + respuestas.toString());
-                if (respuestas.toString().contains(value.toString())) {
+//                System.out.println("1  " + value.toString());
+//                System.out.println("respuestas " + respuestas.toString());
+
+                double miny = respuestas.getNumeroY() - 5;
+                double maxy = respuestas.getNumeroY() + 5;
+                double minx = respuestas.getNumeroX() - 2;
+                double maxx = respuestas.getNumeroX() + 2;
+
+
+                if( value.getNumeroX() <= maxx && value.getNumeroX() >= minx && value.getNumeroY() <= maxy && value.getNumeroY() >= miny ){
+//                if (respuestas.toString().contains(value.toString())) {
+
 
                     if (circulosMarcados.get(Integer.valueOf(llaveNumero)).equals("Empty")) {
                         circulosMarcados.put(Integer.valueOf(llaveNumero), llaveLetra);
-                        System.out.println("entra");
+
 
                     } else {
                         System.out.println("2  " + value.toString());
                         circulosMarcados.put(Integer.valueOf(llaveNumero), "Nula");
-                        System.out.println("No Marcado " + llaveNumero + " " + llaveLetra);
+
                     }
 
                 }
@@ -111,7 +120,7 @@ public class NumerarMarcados {
             }
 
         }
-        System.out.println("NumMarc: " + circulosMarcados.size() + " Marcados --> " + circulosMarcados);
+            System.out.println("NumMarc: " + circulosMarcados.size() + " Marcados --> " + circulosMarcados);
         return circulosMarcados;
 
      }

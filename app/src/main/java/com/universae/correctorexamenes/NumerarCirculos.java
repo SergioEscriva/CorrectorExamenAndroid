@@ -117,7 +117,10 @@ public class NumerarCirculos {
 
             }
         }
+        System.out.println(listaNumerosLetras);
         return listaNumerosLetras;
+
+
 
     }
 
