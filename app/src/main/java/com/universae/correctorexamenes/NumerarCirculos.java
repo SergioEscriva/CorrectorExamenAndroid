@@ -138,35 +138,35 @@ public class NumerarCirculos {
         // numera columnas
         switch (columna) {
             case "Nie":
-                empieza = 1000;
+                empieza = 1020;
                 termina = 1250;
                 letrasAutomaticas = new String[]{"A", "B", "C"};
-                a1 = empieza;
-                a2 = termina;
+                a1 = 0;
+                a2 = 2;
                 //columnaNum = 0;
                 break;
             case "DNI":
-                empieza = 1255;
-                termina = 1600;
-                letrasAutomaticas = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
-                a1 = empieza;
-                a2 = termina;
+                empieza = 1300;
+                termina = 1800;
+                letrasAutomaticas = new String[]{"Aa", "Bb", "Cc", "Dd", "Ee", "Ff", "Gg", "Hh"};
+                a1 = 3;
+                a2 = 10;
                 columnaNum = 10;
                 break;
             case "Letra DNI":
-                empieza = 1700;
-                termina = 2000;
-                letrasAutomaticas = new String[]{"A", "B", "C"};
-                a1 = empieza;
-                a2 = termina;
+                empieza = 2000;
+                termina = 2200;
+                letrasAutomaticas = new String[]{"Alp", "Bet", "Cha"};
+                a1 = 11;
+                a2 = 13;
                 columnaNum = 20;
                 break;
             case "Código Examen":
-                empieza = 2300;
+                empieza = 2400;
                 termina = 2800;
-                letrasAutomaticas = new String[]{"A", "B", "C"};
-                a1 = empieza;
-                a2 = termina;
+                letrasAutomaticas = new String[]{"alpha", "bravo", "charlie"};
+                a1 = 14;
+                a2 = 16;
                 columnaNum = 30;
                 break;
 
@@ -175,42 +175,42 @@ public class NumerarCirculos {
 
 
         for (String letra : letrasAutomaticas) {
-
-            switch (letra) {
-
-                case "A":
-                    a1 = 0;
-                    a2 = 9;
-                    break;
-                case "B":
-                    a1 = 10;
-                    a2 = 19;
-                    break;
-                case "C":
-                    a1 = 20;
-                    a2 = 29;
-                    break;
-                case "D":
-                    a1 = 30;
-                    a2 = 39;
-                    break;
-                case "E":
-                    a1 = 40;
-                    a2 = 49;
-                    break;
-                case "F":
-                    a1 = 50;
-                    a2 = 59;
-                    break;
-                case "G":
-                    a1 = 60;
-                    a2 = 69;
-                    break;
-                case "H":
-                    a1 = 70;
-                    a2 = 79;
-                    break;
-            }
+            //
+            //                        switch (letra) {
+            //
+            //                            case "A":
+            //                                a1 = 0;
+            //                                a2 = 9;
+            //                                break;
+            //                            case "B":
+            //                                a1 = 10;
+            //                                a2 = 19;
+            //                                break;
+            //                            case "C":
+            //                                a1 = 20;
+            //                                a2 = 29;
+            //                                break;
+            //                            case "D":
+            //                                a1 = 30;
+            //                                a2 = 39;
+            //                                break;
+            //                            case "E":
+            //                                a1 = 40;
+            //                                a2 = 49;
+            //                                break;
+            //                            case "F":
+            //                                a1 = 50;
+            //                                a2 = 59;
+            //                                break;
+            //                            case "G":
+            //                                a1 = 60;
+            //                                a2 = 69;
+            //                                break;
+            //                            case "H":
+            //                                a1 = 70;
+            //                                a2 = 79;
+            //                                break;
+            //                        }
 
             for (int i = a1; i <= a2; i++) {
                 Par parNumeradosPar = circulosList.get(i);
@@ -246,27 +246,27 @@ public class NumerarCirculos {
 
             }
 
-            for (int i = a1 + 140; i <= a2 + 140; i++) {
+            for (int i = a1 + 160; i <= a2 + 160; i++) {
                 Par parNumeradosPar = circulosList.get(i);
                 int number = numeroPregunta(circulosList.get(i), "DNI");
                 String valorLetra = String.valueOf(number + columnaNum) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
 
             }
-            for (int i = a1 + 180; i <= a2 + 180; i++) {
+            for (int i = a1 + 200; i <= a2 + 200; i++) {
                 Par parNumeradosPar = circulosList.get(i);
                 int number = numeroPregunta(circulosList.get(i), "DNI");
                 String valorLetra = String.valueOf(number + columnaNum) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
 
             }
-            for (int i = a1 + 220; i <= a2 + 220; i++) {
+            for (int i = a1 + 240; i <= a2 + 240; i++) {
                 Par parNumeradosPar = circulosList.get(i);
                 int number = numeroPregunta(circulosList.get(i), "DNI");
                 String valorLetra = String.valueOf(number) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
             }
-            for (int i = a1 + 260; i <= a2 + 260; i++) {
+            for (int i = a1 + 280; i <= a2 + 280; i++) {
                 Par parNumeradosPar = circulosList.get(i);
                 int number = numeroPregunta(circulosList.get(i), "DNI");
                 String valorLetra = String.valueOf(number + columnaNum) + letra;
@@ -277,7 +277,7 @@ public class NumerarCirculos {
         }
 
 
-        System.out.println(listaNumerosLetras);
+        System.out.println("Superior: " + listaNumerosLetras);
 
         return listaNumerosLetras;
 
@@ -302,7 +302,7 @@ public class NumerarCirculos {
         }
         double numero = fila.getNumeroY();
         int horquilla = (int) Math.ceil((numero - horquillaInicial) / horquillaSize) + 1;
-        System.out.println("Horquilla " + (horquilla - 1) + " <> " + fila);
+        //        System.out.println("Horquilla " + (horquilla - 1) + " <> " + fila);
         return horquilla;
     }
 
