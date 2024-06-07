@@ -9,7 +9,7 @@ import java.util.Map;
 public class NumerarCirculos {
     private int numero1 = 0;
 
-    public Map<String, Par> busquedaLetras(List<Par> allCircles) {
+    public Map<String, Par> busquedaLetras(List<Par> allCircles, String arribaAbajo) {
         List<Par> listaFinal = new ArrayList<>();
 
         // Convertir la lista de pares a un array bidimensional
@@ -47,11 +47,158 @@ public class NumerarCirculos {
 
         Map<String, Par> listaNumerosLetras = new HashMap<>();
 
-        listaNumerosLetras = numerarInferior(circulosList);
+        switch (arribaAbajo) {
+            case "Superior":
+                listaNumerosLetras = numerarSuperior(circulosList);
+                break;
+            case "Inferior":
+
+                listaNumerosLetras = numerarInferior(circulosList);
+                break;
+            // return null;
+
+        }
         return listaNumerosLetras;
-        // return null;
 
     }
+
+
+    public Map<String, Par> busquedaLetras1(List<Par> allCircles, String arribaAbajo) {
+        List<Par> listaFinal = new ArrayList<>();
+
+        // Convertir la lista de pares a un array bidimensional
+        double[][] puntos = new double[allCircles.size()][2];
+        for (int i = 0; i < allCircles.size(); i++) {
+            puntos[i][0] = allCircles.get(i).getNumeroX();
+            puntos[i][1] = allCircles.get(i).getNumeroY();
+        }
+
+        //        // Ordenar el array de puntos x primero
+        //        Arrays.sort(puntos, (double[] punto1, double[] punto2) -> {
+        //            // Comparar por valor de x y luego por valor de y
+        //            if (punto1[0] < punto2[0]) {
+        //                return - 1;
+        //            } else if (punto1[0] > punto2[0]) {
+        //                return 1;
+        //            } else {
+        //                if (punto1[1] < punto2[1]) {
+        //                    return - 1;
+        //                } else if (punto1[1] > punto2[1]) {
+        //                    return 1;
+        //                } else {
+        //                    return 0; // Los puntos son iguales
+        //                }
+        //            }
+        //        });
+
+        // Ordenar el array de puntos x primero
+        //        Arrays.sort(puntos, (double[] punto1, double[] punto2) -> {
+        //            // Comparar por valor de x y luego por valor de y
+        //            if (punto1[1] < punto2[1]) {
+        //                return - 1;
+        //            } else if (punto1[1] > punto2[1]) {
+        //                return 1;
+        //            } else {
+        //                if (punto1[0] < punto2[0]) {
+        //                    return - 1;
+        //                } else if (punto1[0] > punto2[0]) {
+        //                    return 1;
+        //                } else {
+        //                    return 0; // Los puntos son iguales
+        //                }
+        //            }
+        //        });
+        //
+        //
+        //        // Ordenar el array de puntos x primero
+        //        Arrays.sort(puntos, (double[] punto1, double[] punto2) -> {
+        //            // Comparar por valor de x y luego por valor de y
+        //            if (punto1[1] < punto2[1]) {
+        //                return - 1;
+        //            } else if (punto1[1] > punto2[1]) {
+        //                return 1;
+        //            } else {
+        //                if (punto1[0] < punto2[0]) {
+        //                    return - 1;
+        //                } else if (punto1[0] > punto2[0]) {
+        //                    return 1;
+        //                } else {
+        //                    return 0; // Los puntos son iguales
+        //                }
+        //            }
+        //        });
+
+        //        Collections.sort(allCircles, new Comparator<Par>() {
+        //            @Override
+        //            public int compare(Par p1, Par p2) {
+        //                if (p1.getNumeroY() != p2.getNumeroY()) {
+        //                    return Double.compare(p1.getNumeroY(), p2.getNumeroY());
+        //                } else {
+        //                    return Double.compare(p1.getNumeroX(), p2.getNumeroX());
+        //                }
+        //            }
+        //        });
+
+
+        // Ordenar la lista
+        //        Collections.sort(allCircles, new Comparator<Par>() {
+        //            @Override
+        //            public int compare(Par p1, Par p2) {
+        //                if (p1.getNumeroY() != p2.getNumeroY()) {
+        //                    return Double.compare(p1.getNumeroY(), p2.getNumeroY()); // Primero ordena por y
+        //                } else {
+        //                    return Double.compare(p1.getNumeroX(), p2.getNumeroX()); // Luego ordena por x si y es igual
+        //                }
+        //            }
+        //        });
+
+        // Ordenar la lista
+
+        //
+        //        Collections.sort(allCircles, (Par t1, Par t2) -> { //AQUI INVERTIR PARA  QUE SEA PRIMERO Y
+        //            int result = Double.compare(t1.getNumeroY(), t2.getNumeroY());
+        //            if (result == 0)
+        //                result = Double.compare(t1.getNumeroX(), t2.getNumeroX());
+        //            return result;
+        //        });
+
+
+        //        List<Par> circulosList = new ArrayList<Par>();
+        //        for (double[] puntossDoubles : puntos) {
+        //            double xx = puntossDoubles[0];
+        //            double yy = puntossDoubles[1];
+        //            Par fila = new Par(xx, yy);
+        //            circulosList.add(fila);
+        //        }
+
+
+        //                Par[] puntoss = allCircles.toArray(new Par[0]);
+        //
+        //
+        //                Arrays.sort(puntoss,
+        //                        Comparator.comparingDouble(Par::getNumeroX).thenComparingDouble(Par::getNumeroY));
+        //
+        //
+        //                System.out.println("puntoss " + Arrays.asList(puntoss));
+
+
+        Map<String, Par> listaNumerosLetras = new HashMap<>();
+
+        switch (arribaAbajo) {
+            case "Superior":
+                listaNumerosLetras = numerarSuperior(allCircles);
+                break;
+            case "Inferior":
+
+                listaNumerosLetras = numerarInferior(allCircles);
+                break;
+            // return null;
+
+        }
+        return listaNumerosLetras;
+
+    }
+
 
     public Map<String, Par> numerarInferior(List<Par> circulosList) {
 
@@ -117,7 +264,7 @@ public class NumerarCirculos {
 
             }
         }
-        System.out.println(listaNumerosLetras);
+        System.out.println("Inferior: " + listaNumerosLetras);
 
         return listaNumerosLetras;
 
@@ -125,50 +272,7 @@ public class NumerarCirculos {
     }
 
 
-    public Map<String, Par> busquedaLetrasSuperior(List<Par> allCircles, String columna) {
-        List<Par> listaFinal = new ArrayList<>();
-
-        // Convertir la lista de pares a un array bidimensional
-        double[][] puntos = new double[allCircles.size()][2];
-        for (int i = 0; i < allCircles.size(); i++) {
-            puntos[i][0] = allCircles.get(i).getNumeroX();
-            puntos[i][1] = allCircles.get(i).getNumeroY();
-        }
-
-        // Ordenar el array de puntos x primero
-        Arrays.sort(puntos, (double[] punto1, double[] punto2) -> {
-            // Comparar por valor de x y luego por valor de y
-            if (punto1[0] < punto2[0]) {
-                return - 1;
-            } else if (punto1[0] > punto2[0]) {
-                return 1;
-            } else {
-                if (punto1[1] < punto2[1]) {
-                    return - 1;
-                } else if (punto1[1] > punto2[1]) {
-                    return 1;
-                } else {
-                    return 0; // Los puntos son iguales
-                }
-            }
-        });
-
-        List<Par> circulosList = new ArrayList<Par>();
-        for (double[] puntossDoubles : puntos) {
-            double xx = puntossDoubles[0];
-            double yy = puntossDoubles[1];
-            Par fila = new Par(xx, yy);
-            circulosList.add(fila);
-        }
-
-        Map<String, Par> listaNumerosLetras = new HashMap<>();
-
-        listaNumerosLetras = numerarSuperior(circulosList, columna);
-        return listaNumerosLetras;
-
-    }
-
-    public Map<String, Par> numerarSuperior(List<Par> circulosList, String columna) {
+    public Map<String, Par> numerarSuperior(List<Par> circulosList) {
         Map<String, Par> listaNumerosLetras = new HashMap<>();
 
         // Inicializamos Variables
@@ -181,6 +285,7 @@ public class NumerarCirculos {
 
 
         String[] columnas = {"Nie", "DNI", "Letra DNI", "Código Examen"};
+        System.out.println(numeroPregunta(circulosList.get(0), "DNI") + " circulosList" + circulosList);
         for (String columnaIndividual : columnas) {
             // numera columnas
             switch (columnaIndividual) {
@@ -243,22 +348,28 @@ public class NumerarCirculos {
     public Integer numeroPregunta(Par fila, String indice) {
         int horquillaInicial = 0;
         int horquillaSize = 0;
+        int numeroInicio = 0;
 
         switch (indice) {
             case "Respuestas":
                 horquillaInicial = 2600; // (y + 155); // Altura de "A" normalmente y+55
                 horquillaSize = 135; //95 // es la media de separación entre filas 95
+                numeroInicio = 1;
+                System.out.println("Respuestas");
                 break;
 
             case "DNI":
-                horquillaInicial = 1505;
+                horquillaInicial = 1450;
                 horquillaSize = 81;
+                // numeroInicio = 1;
+                System.out.println("DNI");
                 break;
 
         }
         double numero = fila.getNumeroY();
-        int horquilla = (int) Math.ceil((numero - horquillaInicial) / horquillaSize) + 1;
-        //        System.out.println("Horquilla " + (horquilla - 1) + " <> " + fila);
+        int horquilla = (int) Math.ceil((numero - horquillaInicial) / horquillaSize) - 1;
+        System.out.println("Horquilla " + (horquilla) + " <> " + fila);
+
         return horquilla;
     }
 
