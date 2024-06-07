@@ -122,34 +122,29 @@ public class NumerarCirculos {
         return listaNumerosLetras;
 
 
-
     }
 
     public Integer numeroPregunta(Par fila, String indice) {
         int horquillaInicial = 0;
         int horquillaSize = 0;
 
-        switch (indice){
+        switch (indice) {
             case "Respuestas":
-                    horquillaInicial = 2600; // (y + 155); // Altura de "A" normalmente y+55
-                    horquillaSize = 135; //95 // es la media de separación entre filas 95
-                    break;
+                horquillaInicial = 2600; // (y + 155); // Altura de "A" normalmente y+55
+                horquillaSize = 135; //95 // es la media de separación entre filas 95
+                break;
 
             case "DNI":
-                horquillaInicial = 1400;
-                horquillaSize = 135;
+                horquillaInicial = 1505;
+                horquillaSize = 81;
                 break;
 
         }
-
         double numero = fila.getNumeroY();
         int horquilla = (int) Math.ceil((numero - horquillaInicial) / horquillaSize) + 1;
+        System.out.println("Horquilla " + (horquilla - 1) + " <> " + fila);
         return horquilla;
     }
-
-
-
-
 
 
 }
