@@ -140,7 +140,7 @@ public class NumerarMarcados {
         //        for (Par par :listaSuperiorTodos ){
         NumerarCirculos numerarCirculos = new NumerarCirculos();
         //numerarCirculos.numeroPregunta(par,"DNI");
-        System.out.println("print " + numerarCirculos.numerarSuperior(listaSuperiorTodos, "DNI"));
+        System.out.println("print " + numerarCirculos.busquedaLetrasSuperior(listaSuperiorTodos, "DNI"));
         //        }
 
 
