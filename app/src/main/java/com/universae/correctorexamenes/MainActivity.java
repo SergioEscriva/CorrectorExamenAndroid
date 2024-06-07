@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 Map<Integer, String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
 
 
-                System.out.println(listaMarcadosNumerados);
+                // System.out.println(listaMarcadosNumerados);
             }
 
             ;
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
         byte[] bytes = new byte[buffer.remaining()];
         buffer.get(bytes);
-        System.out.println(bytes);
+        // System.out.println(bytes);
         Mat mat = processImageData(bytes);
         //Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);           //(new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
         listaTodos = buscarCirculos.rebuscarCirculos(mat, "all");

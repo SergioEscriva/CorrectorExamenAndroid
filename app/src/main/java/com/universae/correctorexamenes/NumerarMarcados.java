@@ -88,7 +88,7 @@ public class NumerarMarcados {
 
             Par value = entry.getValue();
             for (Par respuestas : listaInferiorMarcados) {
-                System.out.println(respuestas + " respuestas");
+                //  System.out.println(respuestas + " respuestas");
                 //
 
                 //                System.out.println("1  " + value.toString());
@@ -109,7 +109,7 @@ public class NumerarMarcados {
 
 
                     } else {
-                        System.out.println("2  " + value.toString());
+                        // System.out.println("2  " + value.toString());
                         circulosMarcados.put(Integer.valueOf(llaveNumero), "Nula");
 
                     }
@@ -119,13 +119,13 @@ public class NumerarMarcados {
             }
 
         }
-        System.out.println("NumMarc: " + circulosMarcados.size() + " Marcados --> " + circulosMarcados);
+        //  System.out.println("NumMarc: " + circulosMarcados.size() + " Marcados --> " + circulosMarcados);
         return circulosMarcados;
 
     }
 
     public Map<Integer, String> metodoArriba(List<Par> listaSuperiorTodos, List<Par> listaSuperiorMarcados) {
-        System.out.println(listaSuperiorTodos.size() + " tamaño");
+        //System.out.println(listaSuperiorTodos.size() + " tamaño");
         NumerarCirculos numerarTodos = new NumerarCirculos();
         // Map<String, Par> todosNumeradosMap = numerarTodos.busquedaLetrasTodos(listaSuperiorTodos); // Todos los circulos
 

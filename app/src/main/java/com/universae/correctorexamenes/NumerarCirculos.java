@@ -9,7 +9,20 @@ import java.util.List;
 import java.util.Map;
 
 public class NumerarCirculos {
+    String[] abc = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     private int numero1 = 0;
+
+    private static String getValueFromPair(double[] pair) {
+        // Assuming the first value is the letter and the second is the number
+        String value = (char) pair[0] + String.valueOf((int) pair[1]);
+        return value;
+    }
+
+    private static String getValueFromPair(double x, double y) {
+        // Assuming the first value is the letter and the second is the number
+        String value = (char) x + String.valueOf((int) y);
+        return value;
+    }
 
     public Map<String, Par> busquedaLetrasAbajo(List<Par> allCircles) {
         List<Par> listaFinal = new ArrayList<>();
@@ -56,7 +69,6 @@ public class NumerarCirculos {
 
     }
 
-
     public Map<String, Par> busquedaLetrasArriba(List<Par> allCircles) {
         List<Par> listaFinal = new ArrayList<>();
         int num1 = 0;
@@ -65,7 +77,7 @@ public class NumerarCirculos {
         int ymayor = 1519;
         int incremento = 80;
 
-        String[] opciones = {"1f", "2f","3f", "4f","5f", "6f","7f", "8f","9f", "10f",};
+        String[] opciones = {"1f", "2f", "3f", "4f", "5f", "6f", "7f", "8f", "9f", "10f",};
 
         // Convertir la lista de pares a un array bidimensional
         double[][] puntos = new double[allCircles.size()][2];
@@ -73,7 +85,7 @@ public class NumerarCirculos {
             puntos[i][0] = allCircles.get(i).getNumeroX();
             puntos[i][1] = allCircles.get(i).getNumeroY();
             for (String casos : opciones) {
-                switch (casos){
+                switch (casos) {
                     case "1f":
                         num1 = ymenor;
                         num2 = ymayor;
@@ -126,16 +138,16 @@ public class NumerarCirculos {
         }
 
 
-                Collections.sort(listaFinal, new Comparator<Par>() {
-                    @Override
-                    public int compare(Par p1, Par p2) {
-                        if (p1.getNumeroY() != p2.getNumeroY()) {
-                            return Double.compare(p1.getNumeroY(), p2.getNumeroY());
-                        } else {
-                            return Double.compare(p1.getNumeroX(), p2.getNumeroX());
-                        }
-                    }
-                });
+        Collections.sort(listaFinal, new Comparator<Par>() {
+            @Override
+            public int compare(Par p1, Par p2) {
+                if (p1.getNumeroY() != p2.getNumeroY()) {
+                    return Double.compare(p1.getNumeroY(), p2.getNumeroY());
+                } else {
+                    return Double.compare(p1.getNumeroX(), p2.getNumeroX());
+                }
+            }
+        });
         //System.out.println("lista final " + listaFinal);
 
         Map<String, Par> listaNumerosLetras = new HashMap<>();
@@ -145,7 +157,6 @@ public class NumerarCirculos {
         return listaNumerosLetras;
 
     }
-
 
     public Map<String, Par> numerarInferior(List<Par> circulosList) {
 
@@ -211,15 +222,60 @@ public class NumerarCirculos {
 
             }
         }
-        System.out.println("Inferior: " + listaNumerosLetras);
+        //System.out.println("Inferior: " + listaNumerosLetras);
 
         return listaNumerosLetras;
 
 
     }
 
-
     public Map<String, Par> numerarSuperior(List<Par> circulosList) {
+
+/*
+        /////////////////////////////////////////////////////////////////
+        //////////  gpt
+        List<Par> circulos = circulosList;
+        // Definir letras y números
+        String[] letras = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+        String[] numeros = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        System.out.println(circulosList.size() + " circulosList " + circulosList);
+        // Ordenar la lista primero por Y (ascendente) y luego por X (ascendente)
+        circulos.sort(Comparator.comparingDouble(Par::getNumeroY).thenComparingDouble(Par::getNumeroX));
+
+        // Crear un mapa para almacenar la asociación de coordenadas con letras/números
+        Map<Par, String> coordenadasAsignadas = new HashMap<>();
+
+        // Variable para iterar sobre letras y números
+        int letraIndex = 0;
+        int numeroIndex = 0;
+        int totalLetras = letras.length;
+        int totalNumeros = numeros.length;
+
+        // Asignar letras y números a los círculos detectados
+        for (int i = 0; i < circulos.size(); i++) {
+            Par par = circulos.get(i);
+
+            if (letraIndex < totalLetras) {
+                coordenadasAsignadas.put(par, letras[letraIndex++]);
+            } else if (numeroIndex < totalNumeros) {
+                coordenadasAsignadas.put(par, numeros[numeroIndex++]);
+            }
+
+            // Si ambos índices alcanzan sus límites, resetear
+            if (letraIndex == totalLetras && numeroIndex == totalNumeros) {
+                letraIndex = 0;
+                numeroIndex = 0;
+            }
+        }
+
+        // Imprimir las coordenadas con las letras/números asignados
+        for (Map.Entry<Par, String> entry : coordenadasAsignadas.entrySet()) {
+            System.out.println(coordenadasAsignadas.size() + " Coordenada: " + entry.getKey() + " Asignado: " + entry.getValue());
+        }
+        //////////// GPT
+        ////////////////////////////////////////////////////////
+*/
+
         Map<String, Par> listaNumerosLetras = new HashMap<>();
         Map<String, Par> dniFinal = new HashMap<>();
         int num1 = 0;
@@ -234,8 +290,8 @@ public class NumerarCirculos {
         int i = numletra;
 
 
-        String[] abc = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
-        String[] num = {"0","1","2","3","4","5","6","7","8","9" };
+        String[] abc = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+        String[] num = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
         // Inicializamos Variables
         String[] letrasAutomaticas = {""};
@@ -247,11 +303,10 @@ public class NumerarCirculos {
 
 
         String[] columnas = {"Nie"};     //, "DNI", "Letra DNI", "Código Examen"};
-        System.out.println(numeroPregunta(circulosList.get(0), "DNI") + " circulosList" + circulosList);
-        for ( i =0; i< circulosList.size(); i++){
+        //System.out.println(numeroPregunta(circulosList.get(0), "DNI") + " circulosList" + circulosList);
+        for (i = 0; i < circulosList.size(); i++) {
             listaNumerosLetras.put(String.valueOf(i), circulosList.get(i));
         }
-
 
 
         //System.out.println("listaNumerosLetras " + listaNumerosLetras);
@@ -262,24 +317,23 @@ public class NumerarCirculos {
                 case "1":
 
                 case "2":
-                     num1 = 0;
-                     num2 = 2;
-                     num3 = 3;
-                     num4 = 10;
-                     num5 = 11;
-                     num6 = 13;
-                     num7 = 14;
-                     num8 = 16;
-                     numletra = 0;
-
+                    num1 = 0; //nie
+                    num2 = 2; // nie
+                    num3 = 3; // numeDni
+                    num4 = 10; // numDni
+                    num5 = 11; // dniLetra
+                    num6 = 13; // DniLetra
+                    num7 = 14; // codExamen
+                    num8 = 16; // codExamen
+                    numletra = 0;
 
 
                 case "Nie":
-//                    String [] numeros1 = {"0", "17", "34", "51", "68", "85", "102", "119", "136", "153"};
-//                    String [] numeros2 = {"2", "19", "36", "53", "70", "87", "105", "121", "138", "155"};
-                    for ( i= 0; i<9;i++) {
-//                        a1 = Integer.valueOf(numeros1[i]);
-//                        a2 = Integer.valueOf(numeros2[i]);
+                    //                    String [] numeros1 = {"0", "17", "34", "51", "68", "85", "102", "119", "136", "153"};
+                    //                    String [] numeros2 = {"2", "19", "36", "53", "70", "87", "105", "121", "138", "155"};
+                    for (i = 0; i < 9; i++) {
+                        //                        a1 = Integer.valueOf(numeros1[i]);
+                        //                        a2 = Integer.valueOf(numeros2[i]);
 
                     }
 
@@ -289,7 +343,7 @@ public class NumerarCirculos {
 
                     letrasAutomaticas = new String[]{"Aa", "Bb", "Cc", "Dd", "Ee", "Ff", "Gg", "Hh"};
                     a1 = 3;
-                    a2 =10 ;
+                    a2 = 10;
                     columnaNum = 26;
                     break;
                 case "Letra DNI":
@@ -308,40 +362,40 @@ public class NumerarCirculos {
 
 
             }
+            int n = 0;
+            for (i = num1; i <= num2; i++) {
 
-            for ( i = num1; i <= num2; i++){
                 Par parNumeradosPar = circulosList.get(i);
-                String valorLetra = String.valueOf(i) + abc[numletra];
-                dniFinal.put(valorLetra, parNumeradosPar);
-            }
+                String valorLetra = abc[n];
 
-            for ( i = num3; i <= num4; i++){
-                Par parNumeradosPar = circulosList.get(i);
-                String valorLetra = String.valueOf(i) + num[numletra];
                 dniFinal.put(valorLetra, parNumeradosPar);
+                n++;
 
             }
-            for ( i = num5; i <= num6; i++){
+
+            for (i = num3; i <= num4; i++) {
                 Par parNumeradosPar = circulosList.get(i);
-                String valorLetra = String.valueOf(i) + abc[numletra];
-                dniFinal.put(valorLetra, parNumeradosPar);
-            }
-            for ( i = num7; i <= num8; i++){
-                Par parNumeradosPar = circulosList.get(i);
-                String valorLetra = String.valueOf(i) + num[numletra];
+                String valorLetra = String.valueOf(i) + num[n];
                 dniFinal.put(valorLetra, parNumeradosPar);
 
             }
-
-
-
-
+            for (i = num5; i <= num6; i++) {
+                Par parNumeradosPar = circulosList.get(i);
+                String valorLetra = abc[n];
+                dniFinal.put(valorLetra, parNumeradosPar);
+            }
+            for (i = num7; i <= num8; i++) {
+                Par parNumeradosPar = circulosList.get(i);
+                String valorLetra = num[n];
+                dniFinal.put(valorLetra, parNumeradosPar);
 
             }
 
 
+        }
 
 
+        System.out.println("ESTE ES El Bueno " + dniFinal);
 
 
         return listaNumerosLetras;
@@ -363,11 +417,11 @@ public class NumerarCirculos {
                 break;
 
             case "DNI":
-//                horquillaInicial = 1450;
-//                horquillaSize = 81;
-//                // numeroInicio = 1;
-//                System.out.println("DNI");
-//                break;
+                //                horquillaInicial = 1450;
+                //                horquillaSize = 81;
+                //                // numeroInicio = 1;
+                //                System.out.println("DNI");
+                //                break;
 
         }
         double numero = fila.getNumeroY();
