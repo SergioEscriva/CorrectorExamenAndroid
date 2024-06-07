@@ -2,6 +2,8 @@ package com.universae.correctorexamenes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ public class NumerarCirculos {
         for (int i = 0; i < allCircles.size(); i++) {
             puntos[i][0] = allCircles.get(i).getNumeroX();
             puntos[i][1] = allCircles.get(i).getNumeroY();
+
         }
 
         // Ordenar el array de puntos x primero
@@ -65,31 +68,89 @@ public class NumerarCirculos {
 
     public Map<String, Par> busquedaLetras1(List<Par> allCircles, String arribaAbajo) {
         List<Par> listaFinal = new ArrayList<>();
+        int num1 = 0;
+        int num2 = 0;
+        int ymenor = 1438;
+        int ymayor = 1519;
+        int incremento = 80;
+
+        String[] opciones = {"1f", "2f","3f", "4f","5f", "6f","7f", "8f","9f", "10f",};
 
         // Convertir la lista de pares a un array bidimensional
         double[][] puntos = new double[allCircles.size()][2];
         for (int i = 0; i < allCircles.size(); i++) {
             puntos[i][0] = allCircles.get(i).getNumeroX();
             puntos[i][1] = allCircles.get(i).getNumeroY();
+            for (String casos : opciones) {
+                switch (casos){
+                    case "1f":
+                        num1 = ymenor;
+                        num2 = ymayor;
+                        break;
+                    case "2f":
+                        num1 = ymenor + incremento;
+                        num2 = ymayor + incremento;
+                        break;
+                    case "3f":
+                        num1 = ymenor + incremento * 2;
+                        num2 = ymayor + incremento * 2;
+                        break;
+                    case "4f":
+                        num1 = ymenor + incremento * 3;
+                        num2 = ymayor + incremento * 3;
+                        break;
+                    case "5f":
+                        num1 = ymenor + incremento * 4;
+                        num2 = ymayor + incremento * 4;
+                        break;
+                    case "6f":
+                        num1 = ymenor + incremento * 5;
+                        num2 = ymayor + incremento * 5;
+                        break;
+                    case "7f":
+                        num1 = ymenor + incremento * 6;
+                        num2 = ymayor + incremento * 6;
+                        break;
+                    case "8f":
+                        num1 = ymenor + incremento * 7;
+                        num2 = ymayor + incremento * 7;
+                        break;
+                    case "9f":
+                        num1 = ymenor + incremento * 8;
+                        num2 = ymayor + incremento * 8;
+                        break;
+                    case "10f":
+                        num1 = ymenor + incremento * 9;
+                        num2 = ymayor + incremento * 9;
+                        break;
+
+
+                }
+                if (puntos[i][1] < num2 && puntos[i][1] > num1) {
+                    Par puntofinal = new Par(puntos[i][0], num1);
+                    listaFinal.add(puntofinal);
+                }
+            }
+
         }
 
-        //        // Ordenar el array de puntos x primero
-        //        Arrays.sort(puntos, (double[] punto1, double[] punto2) -> {
-        //            // Comparar por valor de x y luego por valor de y
-        //            if (punto1[0] < punto2[0]) {
-        //                return - 1;
-        //            } else if (punto1[0] > punto2[0]) {
-        //                return 1;
-        //            } else {
-        //                if (punto1[1] < punto2[1]) {
-        //                    return - 1;
-        //                } else if (punto1[1] > punto2[1]) {
-        //                    return 1;
-        //                } else {
-        //                    return 0; // Los puntos son iguales
-        //                }
-        //            }
-        //        });
+//                // Ordenar el array de puntos x primero
+//                Arrays.sort(puntos, (double[] punto1, double[] punto2) -> {
+//                    // Comparar por valor de x y luego por valor de y
+//                    if (punto1[0] < punto2[0]) {
+//                        return - 1;
+//                    } else if (punto1[0] > punto2[0]) {
+//                        return 1;
+//                    } else {
+//                        if (punto1[1] < punto2[1]) {
+//                            return - 1;
+//                        } else if (punto1[1] > punto2[1]) {
+//                            return 1;
+//                        } else {
+//                            return 0; // Los puntos son iguales
+//                        }
+//                    }
+//                });
 
         // Ordenar el array de puntos x primero
         //        Arrays.sort(puntos, (double[] punto1, double[] punto2) -> {
@@ -128,16 +189,17 @@ public class NumerarCirculos {
         //            }
         //        });
 
-        //        Collections.sort(allCircles, new Comparator<Par>() {
-        //            @Override
-        //            public int compare(Par p1, Par p2) {
-        //                if (p1.getNumeroY() != p2.getNumeroY()) {
-        //                    return Double.compare(p1.getNumeroY(), p2.getNumeroY());
-        //                } else {
-        //                    return Double.compare(p1.getNumeroX(), p2.getNumeroX());
-        //                }
-        //            }
-        //        });
+                Collections.sort(listaFinal, new Comparator<Par>() {
+                    @Override
+                    public int compare(Par p1, Par p2) {
+                        if (p1.getNumeroY() != p2.getNumeroY()) {
+                            return Double.compare(p1.getNumeroY(), p2.getNumeroY());
+                        } else {
+                            return Double.compare(p1.getNumeroX(), p2.getNumeroX());
+                        }
+                    }
+                });
+        System.out.println("lista final " + listaFinal);
 
 
         // Ordenar la lista

@@ -4,6 +4,15 @@ public class Par {
     private double numeroX;
     private double numeroY;
 
+    public void setNumeroX(double numeroX) {
+        this.numeroX = numeroX;
+    }
+
+    public double setNumeroY(double numeroY) {
+        this.numeroY = numeroY;
+        return numeroY;
+    }
+
     public Par(double numeroX, double numeroY) {
 	this.numeroX = numeroX;
 	this.numeroY = numeroY;
