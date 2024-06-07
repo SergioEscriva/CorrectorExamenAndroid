@@ -62,7 +62,7 @@ public class NumerarMarcados {
     public Map<Integer, String> metodoAbajo(List<Par> listaInferiorTodos, List<Par> listaInferiorMarcados) {
         System.out.println(listaInferiorTodos.size() + " tamaño");
         NumerarCirculos numerarTodos = new NumerarCirculos();
-        Map<String, Par> todosNumeradosMap = numerarTodos.busquedaLetras(listaInferiorTodos, "Inferior"); // Todos los circulos
+        Map<String, Par> todosNumeradosMap = numerarTodos.busquedaLetrasAbajo(listaInferiorTodos); // Todos los circulos
 
         int u = 0;
         Map<Integer, String> circulosMarcados = new HashMap<>();
@@ -140,7 +140,7 @@ public class NumerarMarcados {
         //        for (Par par :listaSuperiorTodos ){
         NumerarCirculos numerarCirculos = new NumerarCirculos();
         //numerarCirculos.numeroPregunta(par,"DNI");
-        System.out.println("print " + numerarCirculos.busquedaLetras1(listaSuperiorTodos, "Superior"));
+        System.out.println("print " + numerarCirculos.busquedaLetrasArriba(listaSuperiorTodos));
         //        }
 
 

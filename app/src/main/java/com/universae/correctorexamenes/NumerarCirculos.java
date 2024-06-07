@@ -11,7 +11,7 @@ import java.util.Map;
 public class NumerarCirculos {
     private int numero1 = 0;
 
-    public Map<String, Par> busquedaLetras(List<Par> allCircles, String arribaAbajo) {
+    public Map<String, Par> busquedaLetrasAbajo(List<Par> allCircles) {
         List<Par> listaFinal = new ArrayList<>();
 
         // Convertir la lista de pares a un array bidimensional
@@ -50,23 +50,14 @@ public class NumerarCirculos {
 
         Map<String, Par> listaNumerosLetras = new HashMap<>();
 
-        switch (arribaAbajo) {
-            case "Superior":
-                listaNumerosLetras = numerarSuperior(circulosList);
-                break;
-            case "Inferior":
+        listaNumerosLetras = numerarInferior(circulosList);
 
-                listaNumerosLetras = numerarInferior(circulosList);
-                break;
-            // return null;
-
-        }
         return listaNumerosLetras;
 
     }
 
 
-    public Map<String, Par> busquedaLetras1(List<Par> allCircles, String arribaAbajo) {
+    public Map<String, Par> busquedaLetrasArriba(List<Par> allCircles) {
         List<Par> listaFinal = new ArrayList<>();
         int num1 = 0;
         int num2 = 0;
@@ -134,60 +125,6 @@ public class NumerarCirculos {
 
         }
 
-//                // Ordenar el array de puntos x primero
-//                Arrays.sort(puntos, (double[] punto1, double[] punto2) -> {
-//                    // Comparar por valor de x y luego por valor de y
-//                    if (punto1[0] < punto2[0]) {
-//                        return - 1;
-//                    } else if (punto1[0] > punto2[0]) {
-//                        return 1;
-//                    } else {
-//                        if (punto1[1] < punto2[1]) {
-//                            return - 1;
-//                        } else if (punto1[1] > punto2[1]) {
-//                            return 1;
-//                        } else {
-//                            return 0; // Los puntos son iguales
-//                        }
-//                    }
-//                });
-
-        // Ordenar el array de puntos x primero
-        //        Arrays.sort(puntos, (double[] punto1, double[] punto2) -> {
-        //            // Comparar por valor de x y luego por valor de y
-        //            if (punto1[1] < punto2[1]) {
-        //                return - 1;
-        //            } else if (punto1[1] > punto2[1]) {
-        //                return 1;
-        //            } else {
-        //                if (punto1[0] < punto2[0]) {
-        //                    return - 1;
-        //                } else if (punto1[0] > punto2[0]) {
-        //                    return 1;
-        //                } else {
-        //                    return 0; // Los puntos son iguales
-        //                }
-        //            }
-        //        });
-        //
-        //
-        //        // Ordenar el array de puntos x primero
-        //        Arrays.sort(puntos, (double[] punto1, double[] punto2) -> {
-        //            // Comparar por valor de x y luego por valor de y
-        //            if (punto1[1] < punto2[1]) {
-        //                return - 1;
-        //            } else if (punto1[1] > punto2[1]) {
-        //                return 1;
-        //            } else {
-        //                if (punto1[0] < punto2[0]) {
-        //                    return - 1;
-        //                } else if (punto1[0] > punto2[0]) {
-        //                    return 1;
-        //                } else {
-        //                    return 0; // Los puntos son iguales
-        //                }
-        //            }
-        //        });
 
                 Collections.sort(listaFinal, new Comparator<Par>() {
                     @Override
@@ -199,64 +136,12 @@ public class NumerarCirculos {
                         }
                     }
                 });
-        System.out.println("lista final " + listaFinal);
-
-
-        // Ordenar la lista
-        //        Collections.sort(allCircles, new Comparator<Par>() {
-        //            @Override
-        //            public int compare(Par p1, Par p2) {
-        //                if (p1.getNumeroY() != p2.getNumeroY()) {
-        //                    return Double.compare(p1.getNumeroY(), p2.getNumeroY()); // Primero ordena por y
-        //                } else {
-        //                    return Double.compare(p1.getNumeroX(), p2.getNumeroX()); // Luego ordena por x si y es igual
-        //                }
-        //            }
-        //        });
-
-        // Ordenar la lista
-
-        //
-        //        Collections.sort(allCircles, (Par t1, Par t2) -> { //AQUI INVERTIR PARA  QUE SEA PRIMERO Y
-        //            int result = Double.compare(t1.getNumeroY(), t2.getNumeroY());
-        //            if (result == 0)
-        //                result = Double.compare(t1.getNumeroX(), t2.getNumeroX());
-        //            return result;
-        //        });
-
-
-        //        List<Par> circulosList = new ArrayList<Par>();
-        //        for (double[] puntossDoubles : puntos) {
-        //            double xx = puntossDoubles[0];
-        //            double yy = puntossDoubles[1];
-        //            Par fila = new Par(xx, yy);
-        //            circulosList.add(fila);
-        //        }
-
-
-        //                Par[] puntoss = allCircles.toArray(new Par[0]);
-        //
-        //
-        //                Arrays.sort(puntoss,
-        //                        Comparator.comparingDouble(Par::getNumeroX).thenComparingDouble(Par::getNumeroY));
-        //
-        //
-        //                System.out.println("puntoss " + Arrays.asList(puntoss));
-
+        //System.out.println("lista final " + listaFinal);
 
         Map<String, Par> listaNumerosLetras = new HashMap<>();
 
-        switch (arribaAbajo) {
-            case "Superior":
-                listaNumerosLetras = numerarSuperior(allCircles);
-                break;
-            case "Inferior":
+        listaNumerosLetras = numerarSuperior(listaFinal);
 
-                listaNumerosLetras = numerarInferior(allCircles);
-                break;
-            // return null;
-
-        }
         return listaNumerosLetras;
 
     }
@@ -336,6 +221,21 @@ public class NumerarCirculos {
 
     public Map<String, Par> numerarSuperior(List<Par> circulosList) {
         Map<String, Par> listaNumerosLetras = new HashMap<>();
+        Map<String, Par> dniFinal = new HashMap<>();
+        int num1 = 0;
+        int num2 = 2;
+        int num3 = 3;
+        int num4 = 10;
+        int num5 = 11;
+        int num6 = 13;
+        int num7 = 14;
+        int num8 = 16;
+        int numletra = 0;
+        int i = numletra;
+
+
+        String[] abc = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+        String[] num = {"0","1","2","3","4","5","6","7","8","9" };
 
         // Inicializamos Variables
         String[] letrasAutomaticas = {""};
@@ -346,61 +246,103 @@ public class NumerarCirculos {
         int columnaNum = 0;
 
 
-        String[] columnas = {"Nie", "DNI", "Letra DNI", "Código Examen"};
+        String[] columnas = {"Nie"};     //, "DNI", "Letra DNI", "Código Examen"};
         System.out.println(numeroPregunta(circulosList.get(0), "DNI") + " circulosList" + circulosList);
+        for ( i =0; i< circulosList.size(); i++){
+            listaNumerosLetras.put(String.valueOf(i), circulosList.get(i));
+        }
+
+
+
+        //System.out.println("listaNumerosLetras " + listaNumerosLetras);
         for (String columnaIndividual : columnas) {
             // numera columnas
             switch (columnaIndividual) {
+
+                case "1":
+
+                case "2":
+                     num1 = 0;
+                     num2 = 2;
+                     num3 = 3;
+                     num4 = 10;
+                     num5 = 11;
+                     num6 = 13;
+                     num7 = 14;
+                     num8 = 16;
+                     numletra = 0;
+
+
+
                 case "Nie":
-                    empieza = 1020;
-                    termina = 1250;
-                    letrasAutomaticas = new String[]{"A", "B", "C"};
-                    a1 = 0;
-                    a2 = 25;
+//                    String [] numeros1 = {"0", "17", "34", "51", "68", "85", "102", "119", "136", "153"};
+//                    String [] numeros2 = {"2", "19", "36", "53", "70", "87", "105", "121", "138", "155"};
+                    for ( i= 0; i<9;i++) {
+//                        a1 = Integer.valueOf(numeros1[i]);
+//                        a2 = Integer.valueOf(numeros2[i]);
+
+                    }
+
                     //columnaNum = 0;
                     break;
                 case "DNI":
-                    empieza = 1300;
-                    termina = 1800;
+
                     letrasAutomaticas = new String[]{"Aa", "Bb", "Cc", "Dd", "Ee", "Ff", "Gg", "Hh"};
-                    a1 = 26;
-                    a2 = 105;
+                    a1 = 3;
+                    a2 =10 ;
                     columnaNum = 26;
                     break;
                 case "Letra DNI":
-                    empieza = 2000;
-                    termina = 2200;
+
                     letrasAutomaticas = new String[]{"Alp", "Bet", "Cha"};
-                    a1 = 106;
-                    a2 = 131;
+                    a1 = 11;
+                    a2 = 13;
                     columnaNum = 106;
                     break;
                 case "Código Examen":
-                    empieza = 2400;
-                    termina = 2800;
                     letrasAutomaticas = new String[]{"alpha", "bravo", "charlie"};
-                    a1 = 132;
-                    a2 = 161;
+                    a1 = 14;
+                    a2 = 16;
                     columnaNum = 132;
                     break;
 
 
             }
 
-
-            for (int i = a1; i <= a2; i++) {
+            for ( i = num1; i <= num2; i++){
                 Par parNumeradosPar = circulosList.get(i);
-                int number = numeroPregunta(circulosList.get(i), "DNI");
-                String valorLetra = String.valueOf((number + columnaNum) + columnaIndividual);
-                listaNumerosLetras.put(valorLetra, parNumeradosPar);
+                String valorLetra = String.valueOf(i) + abc[numletra];
+                dniFinal.put(valorLetra, parNumeradosPar);
+            }
+
+            for ( i = num3; i <= num4; i++){
+                Par parNumeradosPar = circulosList.get(i);
+                String valorLetra = String.valueOf(i) + num[numletra];
+                dniFinal.put(valorLetra, parNumeradosPar);
+
+            }
+            for ( i = num5; i <= num6; i++){
+                Par parNumeradosPar = circulosList.get(i);
+                String valorLetra = String.valueOf(i) + abc[numletra];
+                dniFinal.put(valorLetra, parNumeradosPar);
+            }
+            for ( i = num7; i <= num8; i++){
+                Par parNumeradosPar = circulosList.get(i);
+                String valorLetra = String.valueOf(i) + num[numletra];
+                dniFinal.put(valorLetra, parNumeradosPar);
+
+            }
+
+
+
 
 
             }
 
-        }
 
 
-        System.out.println("Superior: " + listaNumerosLetras);
+
+
 
         return listaNumerosLetras;
 
@@ -421,16 +363,16 @@ public class NumerarCirculos {
                 break;
 
             case "DNI":
-                horquillaInicial = 1450;
-                horquillaSize = 81;
-                // numeroInicio = 1;
-                System.out.println("DNI");
-                break;
+//                horquillaInicial = 1450;
+//                horquillaSize = 81;
+//                // numeroInicio = 1;
+//                System.out.println("DNI");
+//                break;
 
         }
         double numero = fila.getNumeroY();
         int horquilla = (int) Math.ceil((numero - horquillaInicial) / horquillaSize) - 1;
-        System.out.println("Horquilla " + (horquilla) + " <> " + fila);
+        //System.out.println("Horquilla " + (horquilla) + " <> " + fila);
 
         return horquilla;
     }
