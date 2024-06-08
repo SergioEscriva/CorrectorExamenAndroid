@@ -128,7 +128,7 @@ public class NumerarMarcados {
         //System.out.println(listaSuperiorTodos.size() + " tamaño");
         NumerarCirculos numerarTodos = new NumerarCirculos();
         Map<String, Par> todosNumeradosMap = numerarTodos.busquedaLetrasArriba(listaSuperiorTodos); // Todos los circulos numerados
-        List<Par> superiormarcados = numerarTodos.igualarYArriba(listaSuperiorMarcados);
+        List<Par> superiormarcados = numerarTodos.igualarXYArriba(listaSuperiorMarcados);
 //        int u = 0;
         Map<Integer, String> circulosMarcados = new HashMap<>();
         for (int i = 0; i <= 12; i++) {
@@ -162,6 +162,7 @@ public class NumerarMarcados {
 
 
                     Par value = entry.getValue();
+                    //System.out.println(superiormarcados + " superior");
                     for (Par respuestas : superiormarcados) {
 //                        System.out.println(respuestas + " respuestas");
 //                        System.out.println(value.toString() + " value");
@@ -175,12 +176,9 @@ public class NumerarMarcados {
                         double minx = respuestas.getNumeroX() - 10;
                         double maxx = respuestas.getNumeroX() + 10;
 
+//                        System.out.println(respuestas.toString() + " respuestaTS ");
 
-
-                        if( value.getNumeroX() <= maxx && value.getNumeroX() >= minx && value.getNumeroY() <= maxy && value.getNumeroY() >= miny ) {
-                            if (respuestas.toString().contains(value.toString())) {
-                                System.out.println("Entraaaaaaa");
-//                                System.out.println(respuestas.toString() + " respuestaTS " + value.toString() + " vTS");
+                        if( value.getNumeroX() <= maxx && value.getNumeroX() >= minx && value.getNumeroY() <= maxy && value.getNumeroY() >= miny  ) {
 
                                             if (value.getNumeroX() < 1300 && circulosMarcados.get(0).equals("Empty")) {
                                                 circulosMarcados.put(0, llaveLetra);
@@ -209,20 +207,13 @@ public class NumerarMarcados {
                                             } else if (value.getNumeroX() > 2600  && circulosMarcados.get(12).equals("Empty")) {
                                                 circulosMarcados.put(12, llaveLetra);
                                             }
-
-
-
-
-
-
-
                             }
                         }
 
                     }
 
 
-                }
+//                }
                 System.out.println("NumMarc: " + circulosMarcados.size() + " Marcados --> " + circulosMarcados);
         return circulosMarcados;
 

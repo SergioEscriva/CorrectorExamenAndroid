@@ -161,15 +161,21 @@ public class NumerarCirculos {
 
     }
 
-    public  List<Par> igualarYArriba(List<Par> allCircles) {
+    public  List<Par> igualarXYArriba(List<Par> allCircles) {
         List<Par> listaFinal = new ArrayList<>();
         int num1 = 0;
         int num2 = 0;
         int ymenor = 1438;
         int ymayor = 1519;
         int incremento = 80;
+        int xmenor = 1028;
+        int xmayor = 1300;
+        int cambiocuadricula = 68;
+        
 
-        String[] opciones = {"1f", "2f", "3f", "4f", "5f", "6f", "7f", "8f", "9f", "10f",};
+        String[] opciones = {"1f", "2f", "3f", "4f", "5f", "6f", "7f", "8f", "9f", "10f"};
+        String[] opcionesC = { "1c", "2c", "3c", "4c", "5c", "6c", "7c", "8c", "9c", "10c","11c","12c","13c","14c","15c","16c","17c",};
+        
 
         // Convertir la lista de pares a un array bidimensional
         double[][] puntos = new double[allCircles.size()][2];
@@ -228,25 +234,9 @@ public class NumerarCirculos {
                     listaFinal.add(puntofinal);
                 }
             }
-
         }
 
-        //Comparamos los pares y obtenemos la nueva lista
-        Collections.sort(listaFinal, new Comparator<Par>() {
-            @Override
-            public int compare(Par p1, Par p2) {
-                if (p1.getNumeroY() != p2.getNumeroY()) {
-                    return Double.compare(p1.getNumeroY(), p2.getNumeroY());
-                } else {
-                    return Double.compare(p1.getNumeroX(), p2.getNumeroX());
-                }
-            }
-        });
-
-
-
-
-
+        
         return listaFinal;
 
     }
