@@ -278,127 +278,33 @@ public class NumerarCirculos {
 
         Map<String, Par> listaNumerosLetras = new HashMap<>();
         Map<String, Par> dniFinal = new HashMap<>();
-        int num1 = 0;
-        int num2 = 2;
-        int num3 = 3;
-        int num4 = 10;
-        int num5 = 11;
-        int num6 = 13;
-        int num7 = 14;
-        int num8 = 16;
-        int numletra = 0;
-        int i = numletra;
 
 
-        String[] abc = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-        String[] num = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        String[] dni = {"A","B","C","0","0","0","0","0","0","0","0","A","B","C","0","0","0",
+                        "D","E","F","1","1","1","1","1","1","1","1","D","E","F","1","1","1",
+                        "G","H","I","2","2","2","2","2","2","2","2","G","H","I","2","2","2",
+                        "J","K","L","3","3","3","3","3","3","3","3","J","K","L","3","3","3",
+                        "M","N","O","4","4","4","4","4","4","4","4","M","N","O","4","4","4",
+                        "P","Q","R","5","5","5","5","5","5","5","5","P","Q","R","5","5","5",
+                        "S","T","U","6","6","6","6","6","6","6","6","S","T","U","6","6","6",
+                        "V","W","X","7","7","7","7","7","7","7","7","V","W","X","7","7","7",
+                        "Y","Z",    "8","8","8","8","8","8","8","8","Y","Z",    "8","8","8",
+                                    "9","9","9","9","9","9","9","9",            "9","9","9",};
 
-        // Inicializamos Variables
-        String[] letrasAutomaticas = {""};
-        int empieza = 0;
-        int termina = 0;
-        int a1 = 0;
-        int a2 = 0;
-        int columnaNum = 0;
-
-
-        String[] columnas = {"Nie"};     //, "DNI", "Letra DNI", "Código Examen"};
-        //System.out.println(numeroPregunta(circulosList.get(0), "DNI") + " circulosList" + circulosList);
-        for (i = 0; i < circulosList.size(); i++) {
+        for (int i = 0; i < circulosList.size(); i++) {
             listaNumerosLetras.put(String.valueOf(i), circulosList.get(i));
         }
-
-
-        //System.out.println("listaNumerosLetras " + listaNumerosLetras);
-        for (String columnaIndividual : columnas) {
-            // numera columnas
-            switch (columnaIndividual) {
-
-                case "1":
-
-                case "2":
-                    num1 = 0; //nie
-                    num2 = 2; // nie
-                    num3 = 3; // numeDni
-                    num4 = 10; // numDni
-                    num5 = 11; // dniLetra
-                    num6 = 13; // DniLetra
-                    num7 = 14; // codExamen
-                    num8 = 16; // codExamen
-                    numletra = 0;
-
-
-                case "Nie":
-                    //                    String [] numeros1 = {"0", "17", "34", "51", "68", "85", "102", "119", "136", "153"};
-                    //                    String [] numeros2 = {"2", "19", "36", "53", "70", "87", "105", "121", "138", "155"};
-                    for (i = 0; i < 9; i++) {
-                        //                        a1 = Integer.valueOf(numeros1[i]);
-                        //                        a2 = Integer.valueOf(numeros2[i]);
-
-                    }
-
-                    //columnaNum = 0;
-                    break;
-                case "DNI":
-
-                    letrasAutomaticas = new String[]{"Aa", "Bb", "Cc", "Dd", "Ee", "Ff", "Gg", "Hh"};
-                    a1 = 3;
-                    a2 = 10;
-                    columnaNum = 26;
-                    break;
-                case "Letra DNI":
-
-                    letrasAutomaticas = new String[]{"Alp", "Bet", "Cha"};
-                    a1 = 11;
-                    a2 = 13;
-                    columnaNum = 106;
-                    break;
-                case "Código Examen":
-                    letrasAutomaticas = new String[]{"alpha", "bravo", "charlie"};
-                    a1 = 14;
-                    a2 = 16;
-                    columnaNum = 132;
-                    break;
-
-
-            }
-            int n = 0;
-            for (i = num1; i <= num2; i++) {
-
+        for (int i = 0; i < circulosList.size(); i++) {
                 Par parNumeradosPar = circulosList.get(i);
-                String valorLetra = abc[n];
-
-                dniFinal.put(valorLetra, parNumeradosPar);
-                n++;
-
-            }
-
-            for (i = num3; i <= num4; i++) {
-                Par parNumeradosPar = circulosList.get(i);
-                String valorLetra = String.valueOf(i) + num[n];
+                String valorLetra = String.valueOf(i) + dni[i];
                 dniFinal.put(valorLetra, parNumeradosPar);
 
             }
-            for (i = num5; i <= num6; i++) {
-                Par parNumeradosPar = circulosList.get(i);
-                String valorLetra = abc[n];
-                dniFinal.put(valorLetra, parNumeradosPar);
-            }
-            for (i = num7; i <= num8; i++) {
-                Par parNumeradosPar = circulosList.get(i);
-                String valorLetra = num[n];
-                dniFinal.put(valorLetra, parNumeradosPar);
-
-            }
-
-
-        }
-
 
         System.out.println("ESTE ES El Bueno " + dniFinal);
 
 
-        return listaNumerosLetras;
+        return dniFinal;
 
 
     }
