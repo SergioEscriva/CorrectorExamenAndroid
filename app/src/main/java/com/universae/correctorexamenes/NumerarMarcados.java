@@ -180,32 +180,84 @@ public class NumerarMarcados {
 
                         if( value.getNumeroX() <= maxx && value.getNumeroX() >= minx && value.getNumeroY() <= maxy && value.getNumeroY() >= miny  ) {
 
-                                            if (value.getNumeroX() < 1300 && circulosMarcados.get(0).equals("Empty")) {
-                                                circulosMarcados.put(0, llaveLetra);
-                                            } else if (value.getNumeroX() > 1300 && value.getNumeroX() < 1400 && circulosMarcados.get(1).equals("Empty")) {
-                                                circulosMarcados.put(1, llaveLetra);
-                                            } else  if (value.getNumeroX() > 1400 && value.getNumeroX() < 1485 && circulosMarcados.get(2).equals("Empty")) {
-                                                circulosMarcados.put(2, llaveLetra);
-                                            } else if (value.getNumeroX() > 1485 && value.getNumeroX() < 1550 && circulosMarcados.get(3).equals("Empty")) {
-                                                circulosMarcados.put(3, llaveLetra);
-                                            } else if (value.getNumeroX() > 1550 && value.getNumeroX() < 1650 && circulosMarcados.get(4).equals("Empty")) {
-                                                circulosMarcados.put(4, llaveLetra);
-                                            } else  if (value.getNumeroX() > 1650 && value.getNumeroX() < 1700 && circulosMarcados.get(5).equals("Empty")) {
-                                                circulosMarcados.put(5, llaveLetra);
-                                            } else if (value.getNumeroX() > 1700 && value.getNumeroX() < 1800 && circulosMarcados.get(6).equals("Empty")) {
-                                                circulosMarcados.put(6, llaveLetra);
-                                            } else   if (value.getNumeroX() > 1800 && value.getNumeroX() < 1870 && circulosMarcados.get(7).equals("Empty")) {
-                                                circulosMarcados.put(7, llaveLetra);
-                                            } else   if (value.getNumeroX() > 1870 && value.getNumeroX() < 2020 && circulosMarcados.get(8).equals("Empty")) {
-                                                circulosMarcados.put(8, llaveLetra);
-                                            } else  if (value.getNumeroX() > 2020 && value.getNumeroX() < 2430 && circulosMarcados.get(9).equals("Empty")) {
-                                                circulosMarcados.put(9, llaveLetra);
-                                            } else if (value.getNumeroX() > 2430 && value.getNumeroX() < 2500 && circulosMarcados.get(10).equals("Empty")) {
-                                                circulosMarcados.put(10, llaveLetra);
-                                            } else if (value.getNumeroX() > 2500 && value.getNumeroX() < 2600 && circulosMarcados.get(11).equals("Empty")) {
-                                                circulosMarcados.put(11, llaveLetra);
-                                            } else if (value.getNumeroX() > 2600  && circulosMarcados.get(12).equals("Empty")) {
-                                                circulosMarcados.put(12, llaveLetra);
+                                            if (value.getNumeroX() < 1300) {
+                                                if(circulosMarcados.get(0).equals("Empty")){
+                                                    circulosMarcados.put(0, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(0, "Nula");
+                                                }
+                                            } else if (value.getNumeroX() > 1300 && value.getNumeroX() < 1400 ) {
+                                                if(circulosMarcados.get(1).equals("Empty")){
+                                                    circulosMarcados.put(1, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(1, "Nula");
+                                                }
+                                            } else  if (value.getNumeroX() > 1400 && value.getNumeroX() < 1485) {
+                                                if(circulosMarcados.get(2).equals("Empty")){
+                                                    circulosMarcados.put(2, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(2, "Nula");
+                                                }
+                                            } else if (value.getNumeroX() > 1485 && value.getNumeroX() < 1550 ) {
+                                                if(circulosMarcados.get(3).equals("Empty")){
+                                                    circulosMarcados.put(3, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(3, "Nula");
+                                                }
+                                            } else if (value.getNumeroX() > 1550 && value.getNumeroX() < 1650) {
+                                                if(circulosMarcados.get(4).equals("Empty")){
+                                                    circulosMarcados.put(4, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(4, "Nula");
+                                                }
+                                            } else  if (value.getNumeroX() > 1650 && value.getNumeroX() < 1700) {
+                                                if(circulosMarcados.get(5).equals("Empty")){
+                                                    circulosMarcados.put(5, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(5, "Nula");
+                                                }
+                                            } else if (value.getNumeroX() > 1700 && value.getNumeroX() < 1800) {
+                                                if(circulosMarcados.get(6).equals("Empty")){
+                                                    circulosMarcados.put(6, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(6, "Nula");
+                                                }
+                                            } else   if (value.getNumeroX() > 1800 && value.getNumeroX() < 1870) {
+                                                if(circulosMarcados.get(7).equals("Empty")){
+                                                    circulosMarcados.put(7, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(7, "Nula");
+                                                }
+                                            } else   if (value.getNumeroX() > 1870 && value.getNumeroX() < 2020) {
+                                                if(circulosMarcados.get(8).equals("Empty")){
+                                                    circulosMarcados.put(8, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(8, "Nula");
+                                                }
+                                            } else  if (value.getNumeroX() > 2020 && value.getNumeroX() < 2430) {
+                                                if(circulosMarcados.get(9).equals("Empty")){
+                                                    circulosMarcados.put(9, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(9, "Nula");
+                                                }
+                                            } else if (value.getNumeroX() > 2430 && value.getNumeroX() < 2500) {
+                                                if(circulosMarcados.get(10).equals("Empty")){
+                                                    circulosMarcados.put(10, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(10, "Nula");
+                                                }
+                                            } else if (value.getNumeroX() > 2500 && value.getNumeroX() < 2600) {
+                                                if(circulosMarcados.get(11).equals("Empty")){
+                                                    circulosMarcados.put(11, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(11, "Nula");
+                                                }
+                                            } else if (value.getNumeroX() > 2600 ) {
+                                                if(circulosMarcados.get(12).equals("Empty")){
+                                                    circulosMarcados.put(12, llaveLetra);
+                                                }else{
+                                                    circulosMarcados.put(12, "Nula");
+                                                }
                                             }
                             }
                         }
