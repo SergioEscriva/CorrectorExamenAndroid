@@ -2,7 +2,6 @@ package com.universae.correctorexamenes; //src/correctorExamenes/examen2.jpg
 
 //import java.awt.image.BufferedImage;
 
-import org.json.JSONException;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -12,10 +11,7 @@ import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,27 +24,27 @@ public class BuscarCirculos {
     private List<Par> allCircles;
 
 
-//    public Map<Integer, String> buscarCirculos(int y, int x) throws JSONException, IOException {
-//        // Cargar la imagen
-//        String imagePathInv = "./bnarchivo-negro.jpg";//
-//        Mat srcBlack = Imgcodecs.imread(imagePathInv);
-//        Mat srcWhite = Imgcodecs.imread(imagePathInv);
-//
-//        if (srcBlack.empty()) {
-//            System.out.println("No se pudo cargar la imagen");
-//            return null;
-//        }
+    //    public Map<Integer, String> buscarCirculos(int y, int x) throws JSONException, IOException {
+    //        // Cargar la imagen
+    //        String imagePathInv = "./bnarchivo-negro.jpg";//
+    //        Mat srcBlack = Imgcodecs.imread(imagePathInv);
+    //        Mat srcWhite = Imgcodecs.imread(imagePathInv);
+    //
+    //        if (srcBlack.empty()) {
+    //            System.out.println("No se pudo cargar la imagen");
+    //            return null;
+    //        }
 
-        //allCircles = rebuscarCirculos(srcBlack, "all");
+    //allCircles = rebuscarCirculos(srcBlack, "all");
 
-        //List<Par> white1Circles = rebuscarCirculos(srcWhite, "white");
+    //List<Par> white1Circles = rebuscarCirculos(srcWhite, "white");
 
-        //NumerarMarcados numerarMarcados = new NumerarMarcados();
-        //examenAlumno = numerarMarcados.busquedaLetras(allCircles, white1Circles, x, y);
+    //NumerarMarcados numerarMarcados = new NumerarMarcados();
+    //examenAlumno = numerarMarcados.busquedaLetras(allCircles, white1Circles, x, y);
 
-//        return examenAlumno;
-//
-//    }
+    //        return examenAlumno;
+    //
+    //    }
 
     //        public static void invertirOscurecer(BufferedImage img, int intY) throws IOException, JSONException {
 
@@ -202,6 +198,34 @@ public class BuscarCirculos {
     //		}
     //	}
 
+    private static double calculateCentroidX(List<Par> pairs) {
+        double sumX = 0;
+        for (Par pair : pairs) {
+            sumX += pair.getNumeroX();
+        }
+        return sumX / pairs.size();
+    }
+
+    private static double calculateCentroidY(List<Par> pairs) {
+        double sumY = 0;
+        for (Par pair : pairs) {
+            sumY += pair.getNumeroY();
+        }
+        return sumY / pairs.size();
+    }
+
+    private static double calculateMaxRadius(List<Par> pairs, double centroidX, double centroidY) {
+        double maxDistance = 0;
+        for (Par pair : pairs) {
+            double currentX = pair.getNumeroX();
+            double currentY = pair.getNumeroY();
+            double distance = Math.sqrt(Math.pow(currentX - centroidX, 2) + Math.pow(currentY - centroidY, 2));
+            if (distance > maxDistance) {
+                maxDistance = distance;
+            }
+        }
+        return maxDistance;
+    }
 
     public List<Par> rebuscarCirculos(Mat imgOriginal1, String circulos) {
         Mat imgAnalizada = new Mat();
@@ -224,9 +248,6 @@ public class BuscarCirculos {
         Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
 
 
-
-
-
         // Guarda Imagen en Gris
         // String rutaMuestra = "/data/data/com.universae.correctorexamenes/files/muestra.jpg";
         // Imgcodecs.imwrite(rutaMuestra, imgEscalaGrises);
@@ -241,12 +262,12 @@ public class BuscarCirculos {
             Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
             Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
 
-//            //        // blanco y negro
-//            Mat imgBW = new Mat();
-//            Imgproc.threshold(imgInverted, imgBW, 150, 255, Imgproc.THRESH_BINARY);
-//
-//            // Guarda imagen Blanco y negro
-//            Imgproc.GaussianBlur(imgBW, imgBW, new Size(9, 9), 2, 2);
+            //            //        // blanco y negro
+            //            Mat imgBW = new Mat();
+            //            Imgproc.threshold(imgInverted, imgBW, 150, 255, Imgproc.THRESH_BINARY);
+            //
+            //            // Guarda imagen Blanco y negro
+            //            Imgproc.GaussianBlur(imgBW, imgBW, new Size(9, 9), 2, 2);
             Mat imgBW = imgEscalaGrises;
             Imgcodecs.imwrite(rutaInvertido, imgBW);
             imgAnalizada = imgBW;
@@ -286,22 +307,24 @@ public class BuscarCirculos {
                 listaCirculosDetectados.add(center);
                 Imgproc.circle(imgReduced, center, radius, new Scalar(0, 255, 0), 3);
             }
+
+
             mask.release();
             circleROI.release();
         }
 
-//        Collections.sort(listaCirculosDetectados, new Comparator<Point>() {
-//            @Override
-//            public int compare(Point p1, Point p2) {
-//                if (p1.x > p2.x) {
-//                    return - 1;
-//                } else if (p1.x < p2.x) {
-//                    return 1;
-//                } else {
-//                    return Double.compare(p1.y, p2.x);
-//                }
-//            }
-//        });
+        //        Collections.sort(listaCirculosDetectados, new Comparator<Point>() {
+        //            @Override
+        //            public int compare(Point p1, Point p2) {
+        //                if (p1.x > p2.x) {
+        //                    return - 1;
+        //                } else if (p1.x < p2.x) {
+        //                    return 1;
+        //                } else {
+        //                    return Double.compare(p1.y, p2.x);
+        //                }
+        //            }
+        //        });
 
 
         // Guarda todos los circulos.
@@ -319,8 +342,65 @@ public class BuscarCirculos {
         return lista;
     }
 
+    // colorea los circulos según la pregunta acertada o no
+    public void correcionCirculos(List<Par> listaDetectados) {
+        //        // Load an image
+        //        String rutaCirculos = "/data/data/com.universae.correctorexamenes/files/dniCodigo.jpg";
+        //        Mat imgOriginal = Imgcodecs.imread(rutaCirculos);
+        //
+        //        // Calculate centroid and maximum radius
+        //        double centroidX = calculateCentroidX(listaDetectados);
+        //        double centroidY = calculateCentroidY(listaDetectados);
+        //        double radius = calculateMaxRadius(listaDetectados, centroidX, centroidY);
+        //
+        //        // Draw the circle (rounding radius)
+        //        Point center = new Point(centroidX, centroidY);
+        //        Imgproc.circle(imgOriginal, center, (int) Math.round(radius), new Scalar(0, 125, 0), 3);
+        //
+        //
+        //        // Guarda todos los circulos.
+        //        String rutaCirculosCorregidos = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
+        //        Imgcodecs.imwrite(rutaCirculosCorregidos, imgOriginal);
+        // Load an image
+        String rutaCirculos = "/data/data/com.universae.correctorexamenes/files/dniCodigo.jpg";
+        Mat imgOriginal = Imgcodecs.imread(rutaCirculos);
+
+        // Iterate through detected points and draw circles
+        for (Par pair : listaDetectados) {
+            double x = pair.getNumeroX();
+            double y = pair.getNumeroY();
+
+            // Calculate radius based on your requirements (e.g., constant radius or dynamic radius calculation)
+            double radius = calculateRadius(x, y); // Replace with your radius calculation logic
+
+            // Draw the circle
+            Point center = new Point(x, y);
+            Imgproc.circle(imgOriginal, center, (int) Math.round(radius + 10), new Scalar(0, 0, 255), 3);
+        }
+
+        // Save the modified image
+        String rutaCirculosCorregidos = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
+        Imgcodecs.imwrite(rutaCirculosCorregidos, imgOriginal);
+    }
+
+    // Implement the radius calculation function
+    private double calculateRadius(double x, double y) {
+        // Replace this placeholder with your actual radius calculation logic
+        // For example, you could use a constant radius or calculate a dynamic radius based on the point's position or other factors
+        double constantRadius = 20; // Replace with your desired constant radius
+        return constantRadius;
+    }
 
 }
+
+
+
+
+
+
+
+
+
 
 
 

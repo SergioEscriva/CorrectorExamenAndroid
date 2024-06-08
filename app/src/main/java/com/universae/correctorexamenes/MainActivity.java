@@ -102,11 +102,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                NumerarMarcados numerarMarcados = new NumerarMarcados();
+                //                NumerarMarcados numerarMarcados = new NumerarMarcados();
+                //
+                //                Map<Integer, String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
 
-                Map<Integer, String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
-
-
+                // muestra la imagen corregida con los circulos por colores.
+                String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
+                Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+                imageViewMuestra.setImageBitmap(bitmap);
                 // System.out.println(listaMarcadosNumerados);
             }
 
@@ -204,12 +207,28 @@ public class MainActivity extends AppCompatActivity {
         buffer.get(bytes);
         // System.out.println(bytes);
         Mat mat = processImageData(bytes);
-        //Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);           //(new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
+        //Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);
+        // (new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
+
+        // Busca los círculos en la imagen
         listaTodos = buscarCirculos.rebuscarCirculos(mat, "all");
         listaBlancos = buscarCirculos.rebuscarCirculos(mat, "blancos");
+
+        // Recupera imagen con todos los círculos y los muesta
         String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imageViewMuestra.setImageBitmap(bitmap);
+
+
+        //Corrige el examen
+        NumerarMarcados numerarMarcados = new NumerarMarcados();
+        Map<Integer, String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
+
+        //Guarda la imagen corregida con los circulos por colores
+        buscarCirculos.correcionCirculos(listaBlancos);
+
+
+        // Reorganiza la pantalla
         image_capture_button.setVisibility(View.INVISIBLE);
         previewView.setVisibility(View.INVISIBLE);
         imagePreview.setVisibility(View.INVISIBLE);
