@@ -84,6 +84,8 @@ public class NumerarCirculos {
         for (int i = 0; i < allCircles.size(); i++) {
             puntos[i][0] = allCircles.get(i).getNumeroX();
             puntos[i][1] = allCircles.get(i).getNumeroY();
+
+            //Seteamos las Y iguales para que podamos compararlos.
             for (String casos : opciones) {
                 switch (casos) {
                     case "1f":
@@ -137,7 +139,7 @@ public class NumerarCirculos {
 
         }
 
-
+        //Comparamos los pares y obtenemos la nueva lista
         Collections.sort(listaFinal, new Comparator<Par>() {
             @Override
             public int compare(Par p1, Par p2) {
@@ -148,7 +150,7 @@ public class NumerarCirculos {
                 }
             }
         });
-        //System.out.println("lista final " + listaFinal);
+
 
         Map<String, Par> listaNumerosLetras = new HashMap<>();
 
@@ -190,7 +192,7 @@ public class NumerarCirculos {
 
             for (int i = a1; i <= a2; i++) {
                 Par parNumeradosPar = circulosList.get(i);
-                int number = numeroPregunta(circulosList.get(i), "Respuestas");
+                int number = numeroPregunta(circulosList.get(i));
                 String valorLetra = String.valueOf(number) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
 
@@ -198,7 +200,7 @@ public class NumerarCirculos {
             }
             for (int i = a1 + 40; i <= a2 + 40; i++) {
                 Par parNumeradosPar = circulosList.get(i);
-                int number = numeroPregunta(circulosList.get(i), "Respuestas");
+                int number = numeroPregunta(circulosList.get(i));
                 String valorLetra = String.valueOf(number + 10) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
 
@@ -207,7 +209,7 @@ public class NumerarCirculos {
 
             for (int i = a1 + 80; i <= a2 + 80; i++) {
                 Par parNumeradosPar = circulosList.get(i);
-                int number = numeroPregunta(circulosList.get(i), "Respuestas");
+                int number = numeroPregunta(circulosList.get(i));
                 String valorLetra = String.valueOf(number + 20) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
 
@@ -215,7 +217,7 @@ public class NumerarCirculos {
             }
             for (int i = a1 + 120; i <= a2 + 120; i++) {
                 Par parNumeradosPar = circulosList.get(i);
-                int number = numeroPregunta(circulosList.get(i), "Respuestas");
+                int number = numeroPregunta(circulosList.get(i));
                 String valorLetra = String.valueOf(number + 30) + letra;
                 listaNumerosLetras.put(valorLetra, parNumeradosPar);
 
@@ -279,7 +281,7 @@ public class NumerarCirculos {
         Map<String, Par> listaNumerosLetras = new HashMap<>();
         Map<String, Par> dniFinal = new HashMap<>();
 
-
+        //Creamos un Array con todos los valores posibles
         String[] dni = {"A","B","C","0","0","0","0","0","0","0","0","A","B","C","0","0","0",
                         "D","E","F","1","1","1","1","1","1","1","1","D","E","F","1","1","1",
                         "G","H","I","2","2","2","2","2","2","2","2","G","H","I","2","2","2",
@@ -291,9 +293,11 @@ public class NumerarCirculos {
                         "Y","Z",    "8","8","8","8","8","8","8","8","Y","Z",    "8","8","8",
                                     "9","9","9","9","9","9","9","9",            "9","9","9",};
 
+        //Asociamos un número a cada Par
         for (int i = 0; i < circulosList.size(); i++) {
             listaNumerosLetras.put(String.valueOf(i), circulosList.get(i));
         }
+        //Asignamos su valor a cada Par
         for (int i = 0; i < circulosList.size(); i++) {
                 Par parNumeradosPar = circulosList.get(i);
                 String valorLetra = String.valueOf(i) + dni[i];
@@ -309,29 +313,16 @@ public class NumerarCirculos {
 
     }
 
-    public Integer numeroPregunta(Par fila, String indice) {
-        int horquillaInicial = 0;
-        int horquillaSize = 0;
-        int numeroInicio = 0;
+    public Integer numeroPregunta(Par fila) {
+        int horquillaInicial = 2600; // (y + 155); // Altura de "A" normalmente y+55
+        int horquillaSize = 135; //95 // es la media de separación entre filas 95
 
-        switch (indice) {
-            case "Respuestas":
-                horquillaInicial = 2600; // (y + 155); // Altura de "A" normalmente y+55
-                horquillaSize = 135; //95 // es la media de separación entre filas 95
-                numeroInicio = 1;
                 System.out.println("Respuestas");
-                break;
 
-            case "DNI":
-                //                horquillaInicial = 1450;
-                //                horquillaSize = 81;
-                //                // numeroInicio = 1;
-                //                System.out.println("DNI");
-                //                break;
 
-        }
+
         double numero = fila.getNumeroY();
-        int horquilla = (int) Math.ceil((numero - horquillaInicial) / horquillaSize) - 1;
+        int horquilla = (int) Math.ceil((numero - horquillaInicial) / horquillaSize) + 1;
         //System.out.println("Horquilla " + (horquilla) + " <> " + fila);
 
         return horquilla;
