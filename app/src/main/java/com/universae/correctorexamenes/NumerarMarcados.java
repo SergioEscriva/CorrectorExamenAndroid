@@ -131,7 +131,7 @@ public class NumerarMarcados {
         List<Par> superiormarcados = numerarTodos.igualarYArriba(listaSuperiorMarcados);
 //        int u = 0;
         Map<Integer, String> circulosMarcados = new HashMap<>();
-        for (int i = 0; i <= 13; i++) {
+        for (int i = 0; i <= 12; i++) {
 
             circulosMarcados.put(i, "Empty");
 //            u = i;
@@ -182,35 +182,32 @@ public class NumerarMarcados {
                                 System.out.println("Entraaaaaaa");
 //                                System.out.println(respuestas.toString() + " respuestaTS " + value.toString() + " vTS");
 
-                                            if (respuestas.getNumeroX() < 1340 && circulosMarcados.get(0).equals("Empty")) {
+                                            if (value.getNumeroX() < 1300 && circulosMarcados.get(0).equals("Empty")) {
                                                 circulosMarcados.put(0, llaveLetra);
-                                                System.out.println("intentando " + circulosMarcados.get(0));
-                                            } else if (respuestas.getNumeroX() > 1340 && respuestas.getNumeroX() < 1420 && circulosMarcados.get(1).equals("Empty")) {
+                                            } else if (value.getNumeroX() > 1300 && value.getNumeroX() < 1400 && circulosMarcados.get(1).equals("Empty")) {
                                                 circulosMarcados.put(1, llaveLetra);
-                                            } else  if (respuestas.getNumeroX() > 1420 && respuestas.getNumeroX() < 1500 && circulosMarcados.get(2).equals("Empty")) {
+                                            } else  if (value.getNumeroX() > 1400 && value.getNumeroX() < 1485 && circulosMarcados.get(2).equals("Empty")) {
                                                 circulosMarcados.put(2, llaveLetra);
-                                            } else if (respuestas.getNumeroX() > 1500 && respuestas.getNumeroX() < 1580 && circulosMarcados.get(3).equals("Empty")) {
+                                            } else if (value.getNumeroX() > 1485 && value.getNumeroX() < 1550 && circulosMarcados.get(3).equals("Empty")) {
                                                 circulosMarcados.put(3, llaveLetra);
-                                            } else if (respuestas.getNumeroX() > 1580 && respuestas.getNumeroX() < 1660 && circulosMarcados.get(4).equals("Empty")) {
+                                            } else if (value.getNumeroX() > 1550 && value.getNumeroX() < 1650 && circulosMarcados.get(4).equals("Empty")) {
                                                 circulosMarcados.put(4, llaveLetra);
-                                            } else  if (respuestas.getNumeroX() > 1660 && respuestas.getNumeroX() < 1740 && circulosMarcados.get(5).equals("Empty")) {
+                                            } else  if (value.getNumeroX() > 1650 && value.getNumeroX() < 1700 && circulosMarcados.get(5).equals("Empty")) {
                                                 circulosMarcados.put(5, llaveLetra);
-                                            } else if (respuestas.getNumeroX() > 1740 && respuestas.getNumeroX() < 1818 && circulosMarcados.get(6).equals("Empty")) {
+                                            } else if (value.getNumeroX() > 1700 && value.getNumeroX() < 1800 && circulosMarcados.get(6).equals("Empty")) {
                                                 circulosMarcados.put(6, llaveLetra);
-                                            } else   if (respuestas.getNumeroX() > 1818 && respuestas.getNumeroX() < 1900 && circulosMarcados.get(7).equals("Empty")) {
+                                            } else   if (value.getNumeroX() > 1800 && value.getNumeroX() < 1870 && circulosMarcados.get(7).equals("Empty")) {
                                                 circulosMarcados.put(7, llaveLetra);
-                                            } else   if (respuestas.getNumeroX() > 1900 && respuestas.getNumeroX() < 2045 && circulosMarcados.get(8).equals("Empty")) {
+                                            } else   if (value.getNumeroX() > 1870 && value.getNumeroX() < 2020 && circulosMarcados.get(8).equals("Empty")) {
                                                 circulosMarcados.put(8, llaveLetra);
-                                            } else  if (respuestas.getNumeroX() > 2045 && respuestas.getNumeroX() < 2135 && circulosMarcados.get(9).equals("Empty")) {
+                                            } else  if (value.getNumeroX() > 2020 && value.getNumeroX() < 2430 && circulosMarcados.get(9).equals("Empty")) {
                                                 circulosMarcados.put(9, llaveLetra);
-                                            } else if (respuestas.getNumeroX() > 2135 && respuestas.getNumeroX() < 2218 && circulosMarcados.get(10).equals("Empty")) {
+                                            } else if (value.getNumeroX() > 2430 && value.getNumeroX() < 2500 && circulosMarcados.get(10).equals("Empty")) {
                                                 circulosMarcados.put(10, llaveLetra);
-                                            } else if (respuestas.getNumeroX() > 2218 && respuestas.getNumeroX() < 2258 && circulosMarcados.get(11).equals("Empty")) {
+                                            } else if (value.getNumeroX() > 2500 && value.getNumeroX() < 2600 && circulosMarcados.get(11).equals("Empty")) {
                                                 circulosMarcados.put(11, llaveLetra);
-                                            } else if (respuestas.getNumeroX() > 2258 && respuestas.getNumeroX() < 2538 && circulosMarcados.get(12).equals("Empty")) {
+                                            } else if (value.getNumeroX() > 2600  && circulosMarcados.get(12).equals("Empty")) {
                                                 circulosMarcados.put(12, llaveLetra);
-                                            } else if (respuestas.getNumeroX() > 2538 && respuestas.getNumeroX() < 2620 && circulosMarcados.get(13).equals("Empty")) {
-                                                circulosMarcados.put(13, llaveLetra);
                                             }
 
 
