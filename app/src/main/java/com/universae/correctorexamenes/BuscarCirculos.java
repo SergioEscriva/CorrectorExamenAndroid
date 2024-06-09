@@ -19,9 +19,10 @@ import java.util.Map;
 //import utilidades.Utilidades;
 
 public class BuscarCirculos {
-    private String imagePath;
+
     private Map<Integer, String> examenAlumno;
     private List<Par> allCircles;
+    private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraValidos.jpg";  /// Imagen principal
 
 
     //    public Map<Integer, String> buscarCirculos(int y, int x) throws JSONException, IOException {
@@ -231,10 +232,10 @@ public class BuscarCirculos {
         Mat imgAnalizada = new Mat();
         List<Par> lista = new ArrayList<>();
         double radio = 0.0;
-        System.out.println("Radio Todos " + radio);
+
         // Cargar la imagen desde el almacenamiento interno
         String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
-        String imagePath = "/data/data/com.universae.correctorexamenes/files/dniCodigo.jpg";
+
         Mat imgOriginal = Imgcodecs.imread(imagePath);
         //
         // Reducción de la resolución
@@ -284,7 +285,7 @@ public class BuscarCirculos {
         Mat imgCirculosDetectados = new Mat();
         Imgproc.HoughCircles(imgAnalizada, imgCirculosDetectados, Imgproc.HOUGH_GRADIENT, 1.0,
                 (double) imgAnalizada.rows() / 60,
-                100, 25, 30, 50);
+                100, 25, 29, 50);
 
         System.out.println("Circulos detectados: " + imgCirculosDetectados.size());
         List<Point> listaCirculosDetectados = new ArrayList<>();
@@ -362,7 +363,7 @@ public class BuscarCirculos {
         //        String rutaCirculosCorregidos = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
         //        Imgcodecs.imwrite(rutaCirculosCorregidos, imgOriginal);
         // Load an image
-        String rutaCirculos = "/data/data/com.universae.correctorexamenes/files/dniCodigo.jpg";
+        String rutaCirculos = imagePath;
         Mat imgOriginal = Imgcodecs.imread(rutaCirculos);
 
         // Iterate through detected points and draw circles
