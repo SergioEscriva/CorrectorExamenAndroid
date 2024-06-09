@@ -22,7 +22,7 @@ public class BuscarCirculos {
 
     private Map<Integer, String> examenAlumno;
     private List<Par> allCircles;
-    private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraValidos.jpg";  /// Imagen principal
+    private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
 
 
     //    public Map<Integer, String> buscarCirculos(int y, int x) throws JSONException, IOException {
@@ -235,6 +235,7 @@ public class BuscarCirculos {
 
         // Cargar la imagen desde el almacenamiento interno
         String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
+        // Imagen principal arriba del código
 
         Mat imgOriginal = Imgcodecs.imread(imagePath);
         //
@@ -340,6 +341,7 @@ public class BuscarCirculos {
 
         System.out.println("Circulos detectados: " + listaCirculosDetectados.size());
         System.out.println("Circulos detectados: " + lista);
+
         return lista;
     }
 
