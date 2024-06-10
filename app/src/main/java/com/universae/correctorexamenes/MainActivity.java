@@ -27,6 +27,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.common.util.concurrent.ListenableFuture;
+import com.universae.correctorexamenes.models.Par;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -106,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 imageViewMuestra.setImageBitmap(bitmap);
 
             }
-
 
 
         });

@@ -1,5 +1,7 @@
 package com.universae.correctorexamenes;
 
+import com.universae.correctorexamenes.models.Par;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -161,7 +163,7 @@ public class NumerarCirculos {
 
     }
 
-    public  List<Par> igualarXYArriba(List<Par> allCircles) {
+    public List<Par> igualarXYArriba(List<Par> allCircles) {
         List<Par> listaFinal = new ArrayList<>();
         int num1 = 0;
         int num2 = 0;
@@ -171,11 +173,11 @@ public class NumerarCirculos {
         int xmenor = 1028;
         int xmayor = 1300;
         int cambiocuadricula = 68;
-        
+
 
         String[] opciones = {"1f", "2f", "3f", "4f", "5f", "6f", "7f", "8f", "9f", "10f"};
-        String[] opcionesC = { "1c", "2c", "3c", "4c", "5c", "6c", "7c", "8c", "9c", "10c","11c","12c","13c","14c","15c","16c","17c",};
-        
+        String[] opcionesC = {"1c", "2c", "3c", "4c", "5c", "6c", "7c", "8c", "9c", "10c", "11c", "12c", "13c", "14c", "15c", "16c", "17c",};
+
 
         // Convertir la lista de pares a un array bidimensional
         double[][] puntos = new double[allCircles.size()][2];
@@ -236,7 +238,7 @@ public class NumerarCirculos {
             }
         }
 
-        
+
         return listaFinal;
 
     }
@@ -318,16 +320,16 @@ public class NumerarCirculos {
         Map<String, Par> dniFinal = new HashMap<>();
 
         //Creamos un Array con todos los valores posibles
-        String[] dni = {"A","B","C","0","0","0","0","0","0","0","0","A","B","C","0","0","0",
-                        "D","E","F","1","1","1","1","1","1","1","1","D","E","F","1","1","1",
-                        "G","H","I","2","2","2","2","2","2","2","2","G","H","I","2","2","2",
-                        "J","K","L","3","3","3","3","3","3","3","3","J","K","L","3","3","3",
-                        "M","N","O","4","4","4","4","4","4","4","4","M","N","O","4","4","4",
-                        "P","Q","R","5","5","5","5","5","5","5","5","P","Q","R","5","5","5",
-                        "S","T","U","6","6","6","6","6","6","6","6","S","T","U","6","6","6",
-                        "V","W","X","7","7","7","7","7","7","7","7","V","W","X","7","7","7",
-                        "Y","Z",    "8","8","8","8","8","8","8","8","Y","Z",    "8","8","8",
-                                    "9","9","9","9","9","9","9","9",            "9","9","9",};
+        String[] dni = {"A", "B", "C", "0", "0", "0", "0", "0", "0", "0", "0", "A", "B", "C", "0", "0", "0",
+                "D", "E", "F", "1", "1", "1", "1", "1", "1", "1", "1", "D", "E", "F", "1", "1", "1",
+                "G", "H", "I", "2", "2", "2", "2", "2", "2", "2", "2", "G", "H", "I", "2", "2", "2",
+                "J", "K", "L", "3", "3", "3", "3", "3", "3", "3", "3", "J", "K", "L", "3", "3", "3",
+                "M", "N", "O", "4", "4", "4", "4", "4", "4", "4", "4", "M", "N", "O", "4", "4", "4",
+                "P", "Q", "R", "5", "5", "5", "5", "5", "5", "5", "5", "P", "Q", "R", "5", "5", "5",
+                "S", "T", "U", "6", "6", "6", "6", "6", "6", "6", "6", "S", "T", "U", "6", "6", "6",
+                "V", "W", "X", "7", "7", "7", "7", "7", "7", "7", "7", "V", "W", "X", "7", "7", "7",
+                "Y", "Z", "8", "8", "8", "8", "8", "8", "8", "8", "Y", "Z", "8", "8", "8",
+                "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9",};
 
         //Asociamos un número a cada Par
         for (int i = 0; i < circulosList.size(); i++) {
@@ -335,11 +337,11 @@ public class NumerarCirculos {
         }
         //Asignamos su valor a cada Par
         for (int i = 0; i < circulosList.size(); i++) {
-                Par parNumeradosPar = circulosList.get(i);
-                String valorLetra = String.valueOf(i) + dni[i];
-                dniFinal.put(valorLetra, parNumeradosPar);
+            Par parNumeradosPar = circulosList.get(i);
+            String valorLetra = String.valueOf(i) + dni[i];
+            dniFinal.put(valorLetra, parNumeradosPar);
 
-            }
+        }
 
         return dniFinal;
 
@@ -349,8 +351,6 @@ public class NumerarCirculos {
     public Integer numeroPregunta(Par fila) {
         int horquillaInicial = 2600; // (y + 155); // Altura de "A" normalmente y+55
         int horquillaSize = 135; //95 // es la media de separación entre filas 95
-
-
 
 
         double numero = fila.getNumeroY();

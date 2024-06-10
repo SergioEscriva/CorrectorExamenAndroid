@@ -1,5 +1,7 @@
 package com.universae.correctorexamenes;
 
+import com.universae.correctorexamenes.models.Par;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
