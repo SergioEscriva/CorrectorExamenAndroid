@@ -66,13 +66,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         OpenCVLoader.initDebug();
-        //        {
-        //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        //                System.loadLibrary("opencv_jni");
-        //            } else {
-        //                System.loadLibrary("opencv");
-        //            }
-        //        }
+
         verificarPermisos();
         previewView = findViewById(R.id.preview_view);
         btnCorrecto = findViewById(R.id.BttnCorrecto);
@@ -110,10 +104,10 @@ public class MainActivity extends AppCompatActivity {
                 String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
                 Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
                 imageViewMuestra.setImageBitmap(bitmap);
-                // System.out.println(listaMarcadosNumerados);
+
             }
 
-            ;
+
 
         });
 
@@ -187,8 +181,6 @@ public class MainActivity extends AppCompatActivity {
                 // Convert ImageProxy to byte array
                 byte[] imageData = imageToByteArray(image);
 
-                // Process the image data as needed
-                //processImageData(imageData);
 
                 image.close();
 

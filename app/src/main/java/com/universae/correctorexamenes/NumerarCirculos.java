@@ -306,7 +306,6 @@ public class NumerarCirculos {
 
             }
         }
-        //System.out.println("Inferior: " + listaNumerosLetras);
 
         return listaNumerosLetras;
 
@@ -342,9 +341,6 @@ public class NumerarCirculos {
 
             }
 
-        System.out.println("ESTE ES El Bueno " + dniFinal);
-
-
         return dniFinal;
 
 
@@ -354,7 +350,6 @@ public class NumerarCirculos {
         int horquillaInicial = 2600; // (y + 155); // Altura de "A" normalmente y+55
         int horquillaSize = 135; //95 // es la media de separación entre filas 95
 
-                System.out.println("Respuestas");
 
 
 

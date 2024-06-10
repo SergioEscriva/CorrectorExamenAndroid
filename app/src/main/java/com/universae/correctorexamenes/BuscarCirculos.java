@@ -26,103 +26,6 @@ public class BuscarCirculos {
     private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraNoValidos.jpg";  /// Imagen principal
 
 
-    //    public Map<Integer, String> buscarCirculos(int y, int x) throws JSONException, IOException {
-    //        // Cargar la imagen
-    //        String imagePathInv = "./bnarchivo-negro.jpg";//
-    //        Mat srcBlack = Imgcodecs.imread(imagePathInv);
-    //        Mat srcWhite = Imgcodecs.imread(imagePathInv);
-    //
-    //        if (srcBlack.empty()) {
-    //            System.out.println("No se pudo cargar la imagen");
-    //            return null;
-    //        }
-
-    //allCircles = rebuscarCirculos(srcBlack, "all");
-
-    //List<Par> white1Circles = rebuscarCirculos(srcWhite, "white");
-
-    //NumerarMarcados numerarMarcados = new NumerarMarcados();
-    //examenAlumno = numerarMarcados.busquedaLetras(allCircles, white1Circles, x, y);
-
-    //        return examenAlumno;
-    //
-    //    }
-
-    //        public static void invertirOscurecer(BufferedImage img, int intY) throws IOException, JSONException {
-
-    // File file = new File(imagePath);
-    // BufferedImage img = ImageIO.read(file);
-
-    //	// Invierte los valores RGB de cada pixel
-    //    	for (int y = 0; y < img.getHeight(); y++) {
-    //    	    for (int x = 0; x < img.getWidth(); x++) {
-    //    		int pixel = img.getRGB(x, y);
-    //    		int r = (pixel >> 16) & 0xff;
-    //    		int g = (pixel >> 8) & 0xff;
-    //    		int b = pixel & 0xff;
-    //    		int nuevoPixel = (255 - r) << 16 | (255 - g) << 8 | (255 - b);
-    //
-    //    		img.setRGB(x, y, nuevoPixel);
-    //    	    }
-    //    	}
-    //
-    //    	// conviert blanco y negro
-    //    	BufferedImage imagenNegra = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
-    //    	List<Double> lista = new ArrayList<>();
-    //    	for (int i = 0; i < img.getWidth(); i++) {
-    //    	    for (int j = 0; j < img.getHeight(); j++) {
-    //    		int pixel = img.getRGB(i, j);
-    //    		int luminosidad = (pixel >> 16) & 0xFF;
-    //    		if (luminosidad > 127) {
-    //    		    imagenNegra.setRGB(i, j, 0xFFFFFFFF);
-    //    		} else {
-    //    		    imagenNegra.setRGB(i, j, 0x00000000);
-    //    		}
-    //    	    }
-    //    	}
-    //
-    //    	ImageIO.write(imagenNegra, "jpg", new File("./bnarchivo-negro.jpg")); // no tocar
-    //
-    //        }
-    //
-    //
-    //    	ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-    //        image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-    //    	byte[] buffer = byteArrayOutputStream.toByteArray();
-
-    //    public void buscarRespuestas(byte[] byteArray) {
-    //
-    //        // Assuming you have a ByteBuffer named `buffer`
-    //        //ByteBuffer buffer = imageBuffer; // Replace with your method to get ByteBuffer
-    //
-    //        // Convert ByteBuffer to Bitmap
-    //        //byte[] byteArray = new byte[buffer.remaining()];
-    //        //buffer.get(byteArray);
-    //        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-    //
-    //        // Perform OCR
-    //        String recognizedText = performOcr(bitmap);
-    //
-    //        // Log recognized text
-    //        Log.d(TAG, "Recognized Text: " + recognizedText);
-    //    }
-
-
-    //    private String performOcr(Bitmap bitmap) {
-    //        //String TESS_DATA = "src/resources/tessdata_best";
-    //        TessBaseAPI tessBaseAPI = new TessBaseAPI();
-    //        String datapath = "/data/data/com.universae.correctorexamenes/files/resources/";//"/mnt/sdcard/tesseract/";// "/data/data/com.universae.correctorexamenes/files/resources/tessdata_best";//getFilesDir() + TESS_DATA;
-    //        tessBaseAPI.init(datapath, "spa"); // Initialize with English language
-    //
-    //        tessBaseAPI.setImage(bitmap);
-    //
-    //        String recognizedText = tessBaseAPI.getUTF8Text();
-    //        tessBaseAPI.end();
-    //        System.out.println("Texto reconocido: " + recognizedText);
-    //        return recognizedText;
-    //    }
-
-
         public Map<String, String> calcularNota(Map<Integer, String> plantillaString, Double penalizacion) {
             examenAlumno = plantillaString;
             Map<String, String> notas = new HashMap<>();
@@ -165,41 +68,6 @@ public class BuscarCirculos {
         }
 
 
-    //	private void copyTessDataFiles(String path) {
-    //
-    //		// Configurar la ruta del idioma (opcional)
-    //			String datapath = "src/resources/tessdata_best";
-    //			tesseract.setDatapath(new File(datapath).getPath());
-    //
-    //
-    //
-    //		try {
-    //			String fileList[] = getAssets().list(path);
-    //			for (String fileName : fileList) {
-    //				String pathToDataFile = path + "/" + fileName;
-    //				if (path.equals(TESS_DATA)) {
-    //					String filePathOnDevice = getFilesDir() + "/" + fileName;
-    //					if (!(new File(filePathOnDevice)).exists()) {
-    //						InputStream in = getAssets().open(pathToDataFile);
-    //						OutputStream out = new FileOutputStream(filePathOnDevice);
-    //						byte[] buffer = new byte[1024];
-    //						int read;
-    //						while ((read = in.read(buffer)) != -1) {
-    //							out.write(buffer, 0, read);
-    //						}
-    //						in.close();
-    //						out.flush();
-    //						out.close();
-    //					}
-    //				} else {
-    //					copyTessDataFiles(pathToDataFile);
-    //				}
-    //			}
-    //		} catch (IOException e) {
-    //			Log.e(TAG, "Error copying tessdata files: " + e.getMessage());
-    //		}
-    //	}
-
     private static double calculateCentroidX(List<Par> pairs) {
         double sumX = 0;
         for (Par pair : pairs) {
@@ -239,12 +107,6 @@ public class BuscarCirculos {
         // Imagen principal arriba del código
 
         Mat imgOriginal = Imgcodecs.imread(imagePath);
-        //
-        // Reducción de la resolución
-        //        Mat imgReduced = new Mat();
-        //        Size size = new Size(imgOriginal.width() / 2, imgOriginal.height() / 2);
-        //        Imgproc.resize(imgOriginal, imgReduced, size);
-
         Mat imgReduced = imgOriginal;
         Mat imgEscalaGrises = new Mat();
         Imgproc.cvtColor(imgReduced, imgEscalaGrises, Imgproc.COLOR_BGR2GRAY);
@@ -265,12 +127,6 @@ public class BuscarCirculos {
             Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
             Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
 
-            //            //        // blanco y negro
-            //            Mat imgBW = new Mat();
-            //            Imgproc.threshold(imgInverted, imgBW, 150, 255, Imgproc.THRESH_BINARY);
-            //
-            //            // Guarda imagen Blanco y negro
-            //            Imgproc.GaussianBlur(imgBW, imgBW, new Size(9, 9), 2, 2);
             Mat imgBW = imgEscalaGrises;
             Imgcodecs.imwrite(rutaInvertido, imgBW);
             imgAnalizada = imgBW;
@@ -316,18 +172,6 @@ public class BuscarCirculos {
             circleROI.release();
         }
 
-        //        Collections.sort(listaCirculosDetectados, new Comparator<Point>() {
-        //            @Override
-        //            public int compare(Point p1, Point p2) {
-        //                if (p1.x > p2.x) {
-        //                    return - 1;
-        //                } else if (p1.x < p2.x) {
-        //                    return 1;
-        //                } else {
-        //                    return Double.compare(p1.y, p2.x);
-        //                }
-        //            }
-        //        });
 
 
         // Guarda todos los circulos.
@@ -340,32 +184,13 @@ public class BuscarCirculos {
             lista.add(pares);
         }
 
-        System.out.println("Circulos detectados: " + listaCirculosDetectados.size());
-        System.out.println("Circulos detectados: " + lista);
 
         return lista;
     }
 
     // colorea los circulos según la pregunta acertada o no
     public void correcionCirculos(List<Par> listaDetectados) {
-        //        // Load an image
-        //        String rutaCirculos = "/data/data/com.universae.correctorexamenes/files/dniCodigo.jpg";
-        //        Mat imgOriginal = Imgcodecs.imread(rutaCirculos);
-        //
-        //        // Calculate centroid and maximum radius
-        //        double centroidX = calculateCentroidX(listaDetectados);
-        //        double centroidY = calculateCentroidY(listaDetectados);
-        //        double radius = calculateMaxRadius(listaDetectados, centroidX, centroidY);
-        //
-        //        // Draw the circle (rounding radius)
-        //        Point center = new Point(centroidX, centroidY);
-        //        Imgproc.circle(imgOriginal, center, (int) Math.round(radius), new Scalar(0, 125, 0), 3);
-        //
-        //
-        //        // Guarda todos los circulos.
-        //        String rutaCirculosCorregidos = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
-        //        Imgcodecs.imwrite(rutaCirculosCorregidos, imgOriginal);
-        // Load an image
+
         String rutaCirculos = imagePath;
         Mat imgOriginal = Imgcodecs.imread(rutaCirculos);
 

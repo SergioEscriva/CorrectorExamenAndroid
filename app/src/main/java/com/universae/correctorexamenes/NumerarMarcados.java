@@ -33,11 +33,6 @@ public class NumerarMarcados {
 
         }
 
-        //        System.out.println("Superior Todo Tamaño: " + listaSuperiorTodos.size() + " --> " + listaSuperiorTodos);
-        //        System.out.println("Superior Marcados: " + listaSuperiorMarcados.size() + " --> " + listaSuperiorMarcados);
-        //        System.out.println("Inferior Todo Tamaño: " + listaInferiorTodos.size() + " --> " + listaInferiorTodos);
-        //        System.out.println("Inferior Marcado Tamaño: " + listaInferiorMarcados.size() + " --> " + listaInferiorMarcados);
-
         Map<Integer, String> listaMarcada = new HashMap<>();
         switch (arribaAbajo) {
             case "arriba":
@@ -88,11 +83,6 @@ public class NumerarMarcados {
 
             Par value = entry.getValue();
             for (Par respuestas : listaInferiorMarcados) {
-                //  System.out.println(respuestas + " respuestas");
-                //
-
-                //                System.out.println("1  " + value.toString());
-                //                System.out.println("respuestas " + respuestas.toString());
 
                 double miny = respuestas.getNumeroY() - 15;
                 double maxy = respuestas.getNumeroY() + 15;
@@ -101,15 +91,9 @@ public class NumerarMarcados {
 
 
                 if (value.getNumeroX() <= maxx && value.getNumeroX() >= minx && value.getNumeroY() <= maxy && value.getNumeroY() >= miny) {
-                    //                if (respuestas.toString().contains(value.toString())) {
-
-
                     if (circulosMarcados.get(Integer.valueOf(llaveNumero)).equals("Empty")) {
                         circulosMarcados.put(Integer.valueOf(llaveNumero), llaveLetra);
-
-
                     } else {
-                        // System.out.println("2  " + value.toString());
                         circulosMarcados.put(Integer.valueOf(llaveNumero), "Nula");
 
                     }
@@ -119,31 +103,20 @@ public class NumerarMarcados {
             }
 
         }
-        //  System.out.println("NumMarc: " + circulosMarcados.size() + " Marcados --> " + circulosMarcados);
         return circulosMarcados;
 
     }
 
     public Map<Integer, String> metodoArriba(List<Par> listaSuperiorTodos, List<Par> listaSuperiorMarcados) {
-        //System.out.println(listaSuperiorTodos.size() + " tamaño");
+
         NumerarCirculos numerarTodos = new NumerarCirculos();
         Map<String, Par> todosNumeradosMap = numerarTodos.busquedaLetrasArriba(listaSuperiorTodos); // Todos los circulos numerados
         List<Par> superiormarcados = numerarTodos.igualarXYArriba(listaSuperiorMarcados);
-        //        int u = 0;
+
         Map<Integer, String> circulosMarcados = new HashMap<>();
         for (int i = 0; i <= 12; i++) {
-
             circulosMarcados.put(i, "Empty");
-            //            u = i;
         }
-
-
-        //                for (Par par :listaSuperiorTodos ){
-        //NumerarCirculos numerarCirculos = new NumerarCirculos();
-        //numerarCirculos.numeroPregunta(par,"DNI");
-        System.out.println("print " + listaSuperiorMarcados);
-        //        }
-
 
         for (Map.Entry<String, Par> entry : todosNumeradosMap.entrySet()) {
             String llave = entry.getKey();
@@ -162,21 +135,13 @@ public class NumerarMarcados {
 
 
             Par value = entry.getValue();
-            //System.out.println(superiormarcados + " superior");
             for (Par respuestas : superiormarcados) {
-                //                        System.out.println(respuestas + " respuestas");
-                //                        System.out.println(value.toString() + " value");
 
-
-                //                        System.out.println("1  " + value.toString());
-                //                System.out.println("respuestas " + respuestas.toString());
 
                 double miny = respuestas.getNumeroY() - 15;
                 double maxy = respuestas.getNumeroY() + 15;
                 double minx = respuestas.getNumeroX() - 10;
                 double maxx = respuestas.getNumeroX() + 10;
-
-                //                        System.out.println(respuestas.toString() + " respuestaTS ");
 
                 if (value.getNumeroX() <= maxx && value.getNumeroX() >= minx && value.getNumeroY() <= maxy && value.getNumeroY() >= miny) {
 
@@ -265,8 +230,6 @@ public class NumerarMarcados {
         }
 
 
-        //                }
-        System.out.println("NumMarc: " + circulosMarcados.size() + " Marcados --> " + circulosMarcados);
         arrayDatos(circulosMarcados);
         return circulosMarcados;
 
