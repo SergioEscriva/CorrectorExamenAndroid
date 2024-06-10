@@ -277,14 +277,19 @@ public class NumerarMarcados {
         for (int i = 0; i < 2; i++) {
             String valor = circulosMarcados.get(i);
             if (i == 0 && valor.equals("Empty")) {
-                System.out.println("DNI");
                 for (int j = 1; j < 10; j++) {
                     String valorDni = circulosMarcados.get(j);
                     dniNie += valorDni;
                 }
+            } else if (i == 0 && ! valor.equals("Empty")) {
+                System.out.println("NIE");
+                for (int j = 0; j < 9; j++) {
+                    String valorDni = circulosMarcados.get(j);
+                    dniNie += valorDni;
+                }
             }
-            System.out.println("DNI: " + dniNie);
         }
+        System.out.println("DNI/NIE: " + dniNie);
 
     }
 

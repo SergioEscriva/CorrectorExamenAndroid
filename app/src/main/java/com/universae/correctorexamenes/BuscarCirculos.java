@@ -22,7 +22,7 @@ public class BuscarCirculos {
 
     private Map<Integer, String> examenAlumno;
     private List<Par> allCircles;
-    private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
+    private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraNIEValidos.jpg";  /// Imagen principal
 
 
     //    public Map<Integer, String> buscarCirculos(int y, int x) throws JSONException, IOException {
