@@ -100,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
         btnCorrecto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                NumerarMarcados numerarMarcados = new NumerarMarcados();
+                Map<Integer, String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "abajo");
 
-
-                //                NumerarMarcados numerarMarcados = new NumerarMarcados();
-                //
-                //                Map<Integer, String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
+                Map<String, String> nota = buscarCirculos.calcularNota(listaAbajoMarcados, 0.0);
+                System.out.println(" nota " + nota);
 
                 // muestra la imagen corregida con los circulos por colores.
                 String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";

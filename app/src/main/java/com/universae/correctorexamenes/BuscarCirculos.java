@@ -12,6 +12,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class BuscarCirculos {
 
     private Map<Integer, String> examenAlumno;
     private List<Par> allCircles;
-    private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraNIEValidos.jpg";  /// Imagen principal
+    private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraNoValidos.jpg";  /// Imagen principal
 
 
     //    public Map<Integer, String> buscarCirculos(int y, int x) throws JSONException, IOException {
@@ -122,46 +123,46 @@ public class BuscarCirculos {
     //    }
 
 
-    //    public Map<String, String> calcularNota(JSONArray plantillaString, Double penalizacion)
-    //            throws JSONException, IOException {
-    //
-    //        Map<String, String> notas = new HashMap<>();
-    //        ArrayList<Integer> resultado = new ArrayList<>();
-    //        int aciertos = 0;
-    //        int falladas = 0;
-    //        int blanco = 0;
-    //        int nulas = 0;
-    //
-    //        for (int i = 0; i <= 39; i++) {
-    //            String preguntaPlantilla = plantillaString.getString(i);
-    //            String preguntaExamen = examenAlumno.get(i + 1);
-    //            if (preguntaPlantilla.equals(preguntaExamen)) {
-    //                resultado.add(1);
-    //                aciertos += 1;
-    //            } else if (preguntaExamen.equals("Nula")) {
-    //                nulas += 1;
-    //
-    //            } else if (preguntaExamen.equals("Empty")) {
-    //                blanco += 1;
-    //
-    //            } else {
-    //                resultado.add(0);
-    //                falladas += 1;
-    //
-    //            }
-    //        }
-    //        double notaFinal = resultado.stream().reduce(0, (a, b) -> a + b);
-    //        double penaliza = penalizacion * falladas;
-    //
-    //        double notaReal = (notaFinal / 4) + penaliza;
-    //
-    //        notas.put("notaFinal", String.valueOf(notaReal));
-    //        notas.put("aciertos", String.valueOf(aciertos));
-    //        notas.put("fallos", String.valueOf(falladas));
-    //        notas.put("blanco", String.valueOf(blanco));
-    //        notas.put("nulas", String.valueOf(nulas));
-    //        return notas;
-    //    }
+        public Map<String, String> calcularNota(Map<Integer, String> plantillaString, Double penalizacion) {
+            examenAlumno = plantillaString;
+            Map<String, String> notas = new HashMap<>();
+            ArrayList<Integer> resultado = new ArrayList<>();
+            int aciertos = 0;
+            int falladas = 0;
+            int blanco = 0;
+            int nulas = 0;
+
+            for (int i = 1; i <= 40; i++) {
+                String preguntaPlantilla = plantillaString.get(i);
+                System.out.print("EA " + examenAlumno);
+                String preguntaExamen = examenAlumno.get(i);
+                if (preguntaPlantilla.equals(preguntaExamen)) {
+                    resultado.add(1);
+                    aciertos += 1;
+                } else if (preguntaExamen.equals("Nula")) {
+                    nulas += 1;
+
+                } else if (preguntaExamen.equals("Empty")) {
+                    blanco += 1;
+
+                } else {
+                    resultado.add(0);
+                    falladas += 1;
+
+                }
+            }
+            double notaFinal = resultado.stream().reduce(0, (a, b) -> a + b);
+            double penaliza = penalizacion * falladas;
+
+            double notaReal = (notaFinal / 4) + penaliza;
+
+            notas.put("notaFinal", String.valueOf(notaReal));
+            notas.put("aciertos", String.valueOf(aciertos));
+            notas.put("fallos", String.valueOf(falladas));
+            notas.put("blanco", String.valueOf(blanco));
+            notas.put("nulas", String.valueOf(nulas));
+            return notas;
+        }
 
 
     //	private void copyTessDataFiles(String path) {

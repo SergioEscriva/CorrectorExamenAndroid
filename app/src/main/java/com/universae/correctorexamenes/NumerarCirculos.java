@@ -315,51 +315,6 @@ public class NumerarCirculos {
 
     public Map<String, Par> numerarSuperior(List<Par> circulosList) {
 
-/*
-        /////////////////////////////////////////////////////////////////
-        //////////  gpt
-        List<Par> circulos = circulosList;
-        // Definir letras y números
-        String[] letras = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-        String[] numeros = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-        System.out.println(circulosList.size() + " circulosList " + circulosList);
-        // Ordenar la lista primero por Y (ascendente) y luego por X (ascendente)
-        circulos.sort(Comparator.comparingDouble(Par::getNumeroY).thenComparingDouble(Par::getNumeroX));
-
-        // Crear un mapa para almacenar la asociación de coordenadas con letras/números
-        Map<Par, String> coordenadasAsignadas = new HashMap<>();
-
-        // Variable para iterar sobre letras y números
-        int letraIndex = 0;
-        int numeroIndex = 0;
-        int totalLetras = letras.length;
-        int totalNumeros = numeros.length;
-
-        // Asignar letras y números a los círculos detectados
-        for (int i = 0; i < circulos.size(); i++) {
-            Par par = circulos.get(i);
-
-            if (letraIndex < totalLetras) {
-                coordenadasAsignadas.put(par, letras[letraIndex++]);
-            } else if (numeroIndex < totalNumeros) {
-                coordenadasAsignadas.put(par, numeros[numeroIndex++]);
-            }
-
-            // Si ambos índices alcanzan sus límites, resetear
-            if (letraIndex == totalLetras && numeroIndex == totalNumeros) {
-                letraIndex = 0;
-                numeroIndex = 0;
-            }
-        }
-
-        // Imprimir las coordenadas con las letras/números asignados
-        for (Map.Entry<Par, String> entry : coordenadasAsignadas.entrySet()) {
-            System.out.println(coordenadasAsignadas.size() + " Coordenada: " + entry.getKey() + " Asignado: " + entry.getValue());
-        }
-        //////////// GPT
-        ////////////////////////////////////////////////////////
-*/
-
         Map<String, Par> listaNumerosLetras = new HashMap<>();
         Map<String, Par> dniFinal = new HashMap<>();
 
