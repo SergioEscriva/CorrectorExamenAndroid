@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                         String codigo = inputCodigo.getText().toString();
                         ArrayList<String> plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
 
-                        if (plantillaDB.contains("Null")) {
+                        if (plantillaDB.size() == 0) {
                             takePhoto();
                             image_capture_button.setText("Escanear...");
                             previewView.setVisibility(View.INVISIBLE);
