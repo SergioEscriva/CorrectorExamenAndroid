@@ -45,7 +45,7 @@ public class AlumnoAppController {
     }
 
 
-    public ArrayList<Alumno> obtenerAlumnoId(String identificacion) {
+    public ArrayList<Alumno> obtenerAlumno(String identificacion) {
         ArrayList<Alumno> alumnos = new ArrayList<>();
         // readable porque no vamos a modificar, solamente leer
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getReadableDatabase();

@@ -7,6 +7,7 @@ import com.universae.correctorexamenes.SQLiteDB.PlantillaAppController;
 import com.universae.correctorexamenes.models.Alumno;
 import com.universae.correctorexamenes.models.Plantilla;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class ArreglosBD {
@@ -48,7 +49,22 @@ public class ArreglosBD {
 
         System.out.println("Plantilla " + plantilla);
 
+    }
 
+    public ArrayList<String> existeEnDB(Context context, String codigo) {
+        PlantillaAppController plantillaAppController = new PlantillaAppController(context);
+        ArrayList<Plantilla> plantillaList = plantillaAppController.obtenerPlantillaId(codigo);
+        ArrayList<String> respuestasDB = null;
+
+        for (Plantilla plantilla : plantillaList) {
+            String plantillacodigo = plantilla.getCodigo();
+            if (plantillacodigo.equals(codigo)) {
+                System.out.println("Ya existe la plantilla");
+                respuestasDB.add(plantilla.getRespuestas());
+            }
+
+        }
+        return respuestasDB;
     }
 
 

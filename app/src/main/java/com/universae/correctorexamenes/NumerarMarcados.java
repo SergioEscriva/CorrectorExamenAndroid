@@ -2,12 +2,13 @@ package com.universae.correctorexamenes;
 
 import com.universae.correctorexamenes.models.Par;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class NumerarMarcados {
-    public Map<Integer, String> busquedaLetras(List<Par> allCircles, List<Par> whiteCircles, String arribaAbajo) {
+    public ArrayList<String> busquedaLetras(List<Par> allCircles, List<Par> whiteCircles, String arribaAbajo) {
 
         List<Par> listaSuperiorMarcados = new java.util.ArrayList<>();
         List<Par> listaInferiorMarcados = new java.util.ArrayList<>();
@@ -51,9 +52,15 @@ public class NumerarMarcados {
 
 
         }
+        ArrayList<String> listaDefinitiva = new ArrayList<>();
 
+        for (Map.Entry<Integer, String> entry : listaMarcada.entrySet()) {
+            String value = entry.getValue();
+            listaDefinitiva.add(value);
 
-        return listaMarcada;
+        }
+
+        return listaDefinitiva;
     }
 
     public Map<Integer, String> metodoAbajo(List<Par> listaInferiorTodos, List<Par> listaInferiorMarcados) {
@@ -236,7 +243,7 @@ public class NumerarMarcados {
 
     }
 
-    public Map<String, String> arrayDatos(Map<Integer, String> circulosMarcados) {
+    public Map<String, String> arrayDatos(ArrayList<String> circulosMarcados) {
         Map<String, String> dniNieExamen = new HashMap<>();
         String dniNie = "";
         String numControl = "";

@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -26,6 +25,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.universae.correctorexamenes.models.Par;
 
@@ -34,6 +34,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -45,15 +46,19 @@ public class MainActivity extends AppCompatActivity {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
     private Button image_capture_button;
-    private Button btnCorrecto;
-    private Button btnIncorrecto;
+
+
+    private Button btnCorregir;
+    private Button btnRepetir;
     private ImageView imagePreview;
     private ImageView imageViewMuestra;
+    private TextInputEditText inputCodigo;
     private List<Par> listaBlancos;
     private List<Par> listaTodos;
     private BuscarCirculos buscarCirculos = new BuscarCirculos();
     private NumerarCirculos numerarCirculos = new NumerarCirculos();
-    private ProgressBar progressBar;
+    private ArreglosBD arreglosBD = new ArreglosBD();
+    private int metodo = 0;
 
 
     @Override
@@ -70,10 +75,11 @@ public class MainActivity extends AppCompatActivity {
 
         verificarPermisos();
         previewView = findViewById(R.id.preview_view);
-        btnCorrecto = findViewById(R.id.BttnCorrecto);
-        btnIncorrecto = findViewById(R.id.BttnRepetir);
+        btnCorregir = findViewById(R.id.BttnCorregir);
+        btnRepetir = findViewById(R.id.BttnRepetir);
         imagePreview = findViewById(R.id.imageView2);
         imageViewMuestra = findViewById(R.id.imgViewMuestra);
+        inputCodigo = findViewById(R.id.inputCodigo);
 
 
         image_capture_button = findViewById(R.id.image_capture_button);
@@ -92,23 +98,23 @@ public class MainActivity extends AppCompatActivity {
         }, getExecutor());
 
 
-        btnCorrecto.setOnClickListener(new View.OnClickListener() {
+        btnCorregir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Corrige el examen
                 NumerarMarcados numerarMarcados = new NumerarMarcados();
-                Map<Integer, String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "abajo");
-                Map<Integer, String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
-
+                ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "abajo");
+                ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
                 Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
 
-                // Guardar examen Alumno BD
-                ArreglosBD arreglosBD = new ArreglosBD();
-                arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "examen");
+                // Guardar examen Alumno BD TODO
 
-                // Calcula nota examen
-                Map<String, String> nota = buscarCirculos.calcularNota(listaAbajoMarcados, 0.0);
-                System.out.println(" nota " + nota);
+                //  arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
+                //  arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "examen");
+
+                // Calcula nota examen todo
+                //  Map<String, String> nota = buscarCirculos.calcularNota(listaAbajoMarcados, 0.0);
+                //  System.out.println(" nota " + nota);
 
                 // muestra la imagen corregida con los circulos por colores.
                 String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
@@ -119,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
+
 
     }
 
@@ -148,10 +155,54 @@ public class MainActivity extends AppCompatActivity {
         image_capture_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                takePhoto();
+
+                switch (metodo) {
+                    case 0:
+                        image_capture_button.setText("Procesando...");
+                        String codigo = inputCodigo.getText().toString();
+                        ArrayList<String> plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
+
+                        if (plantillaDB.contains("Null")) {
+                            takePhoto();
+                            image_capture_button.setText("Escanear...");
+                            previewView.setVisibility(View.INVISIBLE);
+                            imagePreview.setVisibility(View.INVISIBLE);
+
+                        } else {
+                            previewView.setVisibility(View.INVISIBLE);
+                            imagePreview.setVisibility(View.INVISIBLE);
+                        }
+                        image_capture_button.setText("Examen...");
+                        metodo = 1;
+                        break;
+                    case 1:
+
+                        takePhoto();
+                        image_capture_button.setText("Procesando...");
+                        previewView.setVisibility(View.INVISIBLE);
+                        imagePreview.setVisibility(View.INVISIBLE);
+                        metodo = 0;
+                        break;
+
+
+                }
+
+
                 image_capture_button.setText("Procesando...");
-                previewView.setVisibility(View.INVISIBLE);
-                imagePreview.setVisibility(View.INVISIBLE);
+                String codigo = inputCodigo.getText().toString();
+                ArrayList<String> plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
+
+                if (plantillaDB.contains("Null")) {
+                    takePhoto();
+                    image_capture_button.setText("Escanear...");
+                    previewView.setVisibility(View.INVISIBLE);
+                    imagePreview.setVisibility(View.INVISIBLE);
+
+                } else {
+                    previewView.setVisibility(View.INVISIBLE);
+                    imagePreview.setVisibility(View.INVISIBLE);
+                }
+
 
             }
 
@@ -187,8 +238,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCaptureSuccess(@NonNull ImageProxy image) {
                 // Convert ImageProxy to byte array
-                byte[] imageData = imageToByteArray(image);
-
+                imageToByteArray(image);
 
                 image.close();
 
@@ -220,9 +270,9 @@ public class MainActivity extends AppCompatActivity {
         imageViewMuestra.setImageBitmap(bitmap);
 
 
-        //Corrige el examen
-        NumerarMarcados numerarMarcados = new NumerarMarcados();
-        Map<Integer, String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
+        //        //Corrige el examen
+        //        NumerarMarcados numerarMarcados = new NumerarMarcados();
+        //        ArrayList<String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
 
         //Guarda la imagen corregida con los circulos por colores
         buscarCirculos.correcionCirculos(listaBlancos);
@@ -232,8 +282,8 @@ public class MainActivity extends AppCompatActivity {
         image_capture_button.setVisibility(View.INVISIBLE);
         previewView.setVisibility(View.INVISIBLE);
         imagePreview.setVisibility(View.INVISIBLE);
-        btnCorrecto.setVisibility(View.VISIBLE);
-        btnIncorrecto.setVisibility(View.VISIBLE);
+        btnCorregir.setVisibility(View.VISIBLE);
+        btnRepetir.setVisibility(View.VISIBLE);
         imageViewMuestra.setVisibility(View.VISIBLE);
 
 

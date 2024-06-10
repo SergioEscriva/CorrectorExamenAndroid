@@ -52,13 +52,13 @@
         android:layout_marginTop="10dp"
         android:clickable="true"
         android:elevation="2dp"
-        android:text="Escanear"
+        android:text="Plantilla"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <Button
-        android:id="@+id/BttnCorrecto"
+        android:id="@+id/BttnCorregir"
         android:layout_width="134dp"
         android:layout_height="54dp"
         android:layout_marginStart="24dp"
@@ -76,7 +76,22 @@
         android:text="Repetir"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/BttnCorrecto"
+        app:layout_constraintStart_toEndOf="@+id/BttnCorregir"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="113dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_capture_button">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputCodigo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Código" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
