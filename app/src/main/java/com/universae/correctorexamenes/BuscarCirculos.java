@@ -25,7 +25,7 @@ public class BuscarCirculos {
 
     private Map<Integer, String> examenAlumno;
     private List<Par> allCircles;
-    private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraNoValidos.jpg";  /// Imagen principal
+    private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
 
     private static double calculateCentroidX(List<Par> pairs) {
         double sumX = 0;

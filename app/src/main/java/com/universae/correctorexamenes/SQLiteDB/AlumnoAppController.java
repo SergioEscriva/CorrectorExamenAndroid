@@ -24,8 +24,8 @@ public class AlumnoAppController {
     public int eliminarAlumno(Alumno alumno) {
 
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
-        String[] argumentos = {String.valueOf(alumno.getId())};
-        return baseDeDatos.delete(NOMBRE_TABLA, "id = ?", argumentos);
+        String[] argumentos = {String.valueOf(alumno.getIdentificacion())};
+        return baseDeDatos.delete(NOMBRE_TABLA, "identificacion = ?", argumentos);
     }
 
 
@@ -45,12 +45,11 @@ public class AlumnoAppController {
     }
 
 
-    public ArrayList<Alumno> obtenerAlumnoId(String alumno) {
+    public ArrayList<Alumno> obtenerAlumnoId(String identificacion) {
         ArrayList<Alumno> alumnos = new ArrayList<>();
-
         // readable porque no vamos a modificar, solamente leer
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getReadableDatabase();
-        String identificacion = alumno;
+
 
         // Los alumnos son tods.
         String selection = "identificacion= ?";
@@ -69,17 +68,20 @@ public class AlumnoAppController {
                 null
         );
 
+
         if (cursor == null) {
             /*
                 Salimos aquí porque hubo un error, regresar
                 lista vacía
              */
+
             return alumnos;
 
         }
 
         // Si no hay datos, igualmente regresamos la lista vacía
         if (! cursor.moveToFirst()) return alumnos;
+
 
         // El 0 es el número de la columna, como seleccionamos
         String identificacionObtenidoDeBD = String.valueOf(cursor.getString(0));

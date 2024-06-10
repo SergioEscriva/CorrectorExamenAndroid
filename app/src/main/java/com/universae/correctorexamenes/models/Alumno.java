@@ -14,9 +14,10 @@ public class Alumno {
         this.codigo = codigo;
     }
 
-    public Alumno(String codigo, String respuestas) {
+    public Alumno(String identificacion, String codigo, String respuestas) {
         this.codigo = codigo;
         this.respuestas = respuestas;
+        this.identificacion = identificacion;
     }
 
     // Constructor para cuando instanciamos desde la BD
