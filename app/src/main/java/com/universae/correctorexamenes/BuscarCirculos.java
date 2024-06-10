@@ -97,20 +97,18 @@ public class BuscarCirculos {
     }
 
     public List<Par> rebuscarCirculos(Mat imgOriginal, String circulos) {
+        // Ruta de imagen Invertida tanto para guardarla como recuperarla.
+        String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
+
         Mat imgAnalizada = new Mat();
         List<Par> lista = new ArrayList<>();
         double radio = 0.0;
-
-        // Cargar la imagen desde el almacenamiento interno
-        String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
-        // Imagen principal arriba del código
 
         // Mat imgOriginal = Imgcodecs.imread(imagePath);
         Mat imgReduced = imgOriginal;
         Mat imgEscalaGrises = new Mat();
         Imgproc.cvtColor(imgReduced, imgEscalaGrises, Imgproc.COLOR_BGR2GRAY);
         Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
-
 
         // Guarda Imagen en Gris
         // String rutaMuestra = "/data/data/com.universae.correctorexamenes/files/muestra.jpg";
@@ -127,6 +125,7 @@ public class BuscarCirculos {
             Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
 
             Mat imgBW = imgEscalaGrises;
+            // Cargar la imagen desde el almacenamiento interno
             Imgcodecs.imwrite(rutaInvertido, imgBW);
             imgAnalizada = imgBW;
         }
@@ -187,7 +186,7 @@ public class BuscarCirculos {
     }
 
     // colorea los circulos según la pregunta acertada o no
-    public void correcionCirculos(List<Par> listaDetectados, Mat imgOriginal) {
+    public void correcionCirculos(List<Par> listaDetectados, Mat imgOriginalMat) {
 
         //        String rutaCirculos = imagePath;
         //        Mat imgOriginal = Imgcodecs.imread(rutaCirculos);
@@ -202,12 +201,12 @@ public class BuscarCirculos {
 
             // Draw the circle
             Point center = new Point(x, y);
-            Imgproc.circle(imgOriginal, center, (int) Math.round(radius + 10), new Scalar(0, 0, 255), 3);
+            Imgproc.circle(imgOriginalMat, center, (int) Math.round(radius + 10), new Scalar(0, 0, 255), 3);
         }
 
         // Save the modified image
         String rutaCirculosCorregidos = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
-        Imgcodecs.imwrite(rutaCirculosCorregidos, imgOriginal);
+        Imgcodecs.imwrite(rutaCirculosCorregidos, imgOriginalMat);
     }
 
     // Implement the radius calculation function

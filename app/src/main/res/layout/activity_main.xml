@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtAyuda"
         android:layout_width="119dp"
         android:layout_height="100dp"
         android:text="Introducir Primero el número de Plantilla."
@@ -27,7 +27,7 @@
         android:id="@+id/imgViewMuestra"
         android:layout_width="355dp"
         android:layout_height="496dp"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

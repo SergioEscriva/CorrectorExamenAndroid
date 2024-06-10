@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imagePreview;
     private ImageView imageViewMuestra;
     private TextInputEditText inputCodigo;
+    private TextView ayuda;
     private List<Par> listaBlancos;
     private List<Par> listaTodos;
     private ArrayList<String> plantillaDB = new ArrayList<>();
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         imagePreview = findViewById(R.id.imageView2);
         imageViewMuestra = findViewById(R.id.imgViewMuestra);
         inputCodigo = findViewById(R.id.inputCodigo);
+        ayuda = findViewById(R.id.txtAyuda);
 
 
         image_capture_button = findViewById(R.id.image_capture_button);
@@ -122,6 +125,11 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "abajo");
         ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
         Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
+
+        // muestra la imagen corregida con los circulos por colores.
+        String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        imageViewMuestra.setImageBitmap(bitmap);
 
         // Guardar examen Alumno BD
         if (plantillaExamen.equals("plantilla")) {
@@ -174,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
                         // Primera vez que se ejecuta pide Num Plantilla.
                         image_capture_button.setText("Procesando Plantilla...");
                         String codigo = inputCodigo.getText().toString();
+                        ayuda.setVisibility(View.INVISIBLE);
                         // si existe la carga en memoria.
                         plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
 
@@ -192,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
                         image_capture_button.setText("Procesando Examen...");
                         previewView.setVisibility(View.INVISIBLE);
                         imagePreview.setVisibility(View.INVISIBLE);
-                        mostrarExamen();
+
                         break;
 
                 }
@@ -230,6 +239,14 @@ public class MainActivity extends AppCompatActivity {
         imageCapture.takePicture(ContextCompat.getMainExecutor(this), new ImageCapture.OnImageCapturedCallback() {
             @Override
             public void onCaptureSuccess(@NonNull ImageProxy image) {
+
+                // Oculta la vista del preview de la foto.
+                imageViewMuestra.setVisibility(View.VISIBLE);
+
+                previewView.setVisibility(View.INVISIBLE);
+                imagePreview.setVisibility(View.INVISIBLE);
+
+
                 // Convert ImageProxy to byte array
                 imageToByteArray(image);
 
@@ -245,6 +262,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void imageToByteArray(ImageProxy image) {
+
+
         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
         byte[] bytes = new byte[buffer.remaining()];
         buffer.get(bytes);
@@ -261,14 +280,11 @@ public class MainActivity extends AppCompatActivity {
         ///
         listaTodos = buscarCirculos.rebuscarCirculos(mat, "all");
         listaBlancos = buscarCirculos.rebuscarCirculos(mat, "blancos");
-
+   
         //Guarda la imagen corregida con los circulos por colores
         buscarCirculos.correcionCirculos(listaBlancos, mat);
 
-        // Recupera imagen con todos los círculos y los muesta
-        String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        imageViewMuestra.setImageBitmap(bitmap);
+        mostrarExamen();
     }
 
     private void mostrarExamen() {
@@ -278,8 +294,8 @@ public class MainActivity extends AppCompatActivity {
         //        NumerarMarcados numerarMarcados = new NumerarMarcados();
         //        ArrayList<String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
 
-        // muestra la imagen corregida con los circulos por colores.
-        String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
+        // muestra la imagen con los circulos
+        String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imageViewMuestra.setImageBitmap(bitmap);
 
