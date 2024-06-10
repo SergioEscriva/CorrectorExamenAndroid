@@ -45,12 +45,11 @@ public class PlantillaAppController {
     }
 
 
-    public ArrayList<Plantilla> obtenerPlantillaId(String plantilla) {
+    public ArrayList<Plantilla> obtenerPlantillaId(String codigo) {
         ArrayList<Plantilla> plantillas = new ArrayList<>();
 
         // readable porque no vamos a modificar, solamente leer
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getReadableDatabase();
-        String codigo = plantilla;
 
         // Los plantillas son tods.
         String selection = "codigo= ?";
@@ -83,9 +82,9 @@ public class PlantillaAppController {
 
         // El 0 es el número de la columna, como seleccionamos
 
-        String codigoObtenidoDeBD = String.valueOf(cursor.getString(0));
-        String respuestasObtenidoDeBD = String.valueOf(cursor.getString(1));
-        Long plantillaIdObtenidoDeBD = (cursor.getLong(2));
+        String codigoObtenidoDeBD = cursor.getString(0);
+        String respuestasObtenidoDeBD = cursor.getString(1);
+        Long plantillaIdObtenidoDeBD = cursor.getLong(2);
         Plantilla usuarioObtenidaDeBD = new Plantilla(codigoObtenidoDeBD, respuestasObtenidoDeBD, plantillaIdObtenidoDeBD);
         plantillas.add(usuarioObtenidaDeBD);
 

@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class BuscarCirculos {
 
-    private Map<Integer, String> examenAlumno;
+    private ArrayList<String> examenAlumno;
     private List<Par> allCircles;
     private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
 
@@ -56,8 +56,8 @@ public class BuscarCirculos {
         return maxDistance;
     }
 
-    public Map<String, String> calcularNota(Map<Integer, String> plantillaString, Double penalizacion) {
-        examenAlumno = plantillaString;
+    public Map<String, String> calcularNota(ArrayList<String> plantillaDB, ArrayList<String> examenAlumno, Double penalizacion) {
+
         Map<String, String> notas = new HashMap<>();
         ArrayList<Integer> resultado = new ArrayList<>();
         int aciertos = 0;
@@ -66,8 +66,7 @@ public class BuscarCirculos {
         int nulas = 0;
 
         for (int i = 1; i <= 40; i++) {
-            String preguntaPlantilla = plantillaString.get(i);
-            System.out.print("EA " + examenAlumno);
+            String preguntaPlantilla = plantillaDB.get(i);
             String preguntaExamen = examenAlumno.get(i);
             if (preguntaPlantilla.equals(preguntaExamen)) {
                 resultado.add(1);

@@ -13,7 +13,7 @@ import java.util.Map;
 public class ArreglosBD {
 
 
-    public void guardarDB(Context context, Map<Integer, String> listaAbajoMarcados, Map<String, String> arrayDatosArriba, String examenPlantilla) {
+    public void guardarDB(Context context, ArrayList<String> listaAbajoMarcados, Map<String, String> arrayDatosArriba, String examenPlantilla) {
         PlantillaAppController appController = new PlantillaAppController(context);
         AlumnoAppController alumnoAppController = new AlumnoAppController(context);
         String codigo = "";
@@ -30,10 +30,11 @@ public class ArreglosBD {
             }
         }
 
-        for (String respuestasAbajo : listaAbajoMarcados.values()) {
-            plantilla += respuestasAbajo + ",";
-
-        }
+        //        for (String respuestasAbajo : listaAbajoMarcados.values()) {
+        //            plantilla += respuestasAbajo + ",";
+        //
+        //        }
+        plantilla = listaAbajoMarcados.toString();
 
         switch (examenPlantilla) {
             case "examen":
@@ -54,13 +55,14 @@ public class ArreglosBD {
     public ArrayList<String> existeEnDB(Context context, String codigo) {
         PlantillaAppController plantillaAppController = new PlantillaAppController(context);
         ArrayList<Plantilla> plantillaList = plantillaAppController.obtenerPlantillaId(codigo);
-        ArrayList<String> respuestasDB = null;
+        ArrayList<String> respuestasDB = new ArrayList<>();
 
+        // Array de las  respuestas de la plantilla de la base de datos
         for (Plantilla plantilla : plantillaList) {
-            String plantillacodigo = plantilla.getCodigo();
-            if (plantillacodigo.equals(codigo)) {
-                System.out.println("Ya existe la plantilla");
-                respuestasDB.add(plantilla.getRespuestas());
+            String plantillaKey = plantilla.getCodigo();
+            String plantillaValores = plantilla.getRespuestas();
+            if (plantillaKey.equals(codigo)) {
+                respuestasDB.add(plantillaValores);
             }
 
         }

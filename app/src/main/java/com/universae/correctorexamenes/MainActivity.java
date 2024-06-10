@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText inputCodigo;
     private List<Par> listaBlancos;
     private List<Par> listaTodos;
+    private ArrayList<String> plantillaDB = new ArrayList<>();
     private BuscarCirculos buscarCirculos = new BuscarCirculos();
     private NumerarCirculos numerarCirculos = new NumerarCirculos();
     private ArreglosBD arreglosBD = new ArreglosBD();
@@ -102,30 +103,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Corrige el examen
-                NumerarMarcados numerarMarcados = new NumerarMarcados();
-                ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "abajo");
-                ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
-                Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
-
-                // Guardar examen Alumno BD TODO
-
-                //  arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
-                //  arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "examen");
-
-                // Calcula nota examen todo
-                //  Map<String, String> nota = buscarCirculos.calcularNota(listaAbajoMarcados, 0.0);
-                //  System.out.println(" nota " + nota);
-
-                // muestra la imagen corregida con los circulos por colores.
-                String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
-                Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-                imageViewMuestra.setImageBitmap(bitmap);
-
+                cuentaMarcados("examen");
             }
 
 
         });
 
+
+    }
+
+
+    private void cuentaMarcados(String plantillaExamen) {
+        NumerarMarcados numerarMarcados = new NumerarMarcados();
+        ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "abajo");
+        ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
+        Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
+
+        // Guardar examen Alumno BD
+        if (plantillaExamen.equals("plantilla")) {
+            arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
+            // Calcula nota examen todo
+            Map<String, String> nota = buscarCirculos.calcularNota(plantillaDB, listaAbajoMarcados, 0.0);
+            System.out.println(" nota " + nota);
+
+
+        } else {
+            // Guarda la plantilla en DB
+            arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "examen");
+
+        }
 
     }
 
@@ -158,55 +164,43 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (metodo) {
                     case 0:
-                        image_capture_button.setText("Procesando...");
+                        previewView.setVisibility(View.VISIBLE);
+                        imagePreview.setVisibility(View.VISIBLE);
+                        // Primera vez que se ejecuta pide Num Plantilla.
+                        image_capture_button.setText("Procesando Plantilla...");
                         String codigo = inputCodigo.getText().toString();
-                        ArrayList<String> plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
+                        // si existe la carga en memoria.
+                        plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
 
                         if (plantillaDB.size() == 0) {
                             takePhoto();
-                            image_capture_button.setText("Escanear...");
-                            previewView.setVisibility(View.INVISIBLE);
-                            imagePreview.setVisibility(View.INVISIBLE);
+
+                            image_capture_button.setText("Escanear Examen...");
+                            //previewView.setVisibility(View.INVISIBLE);
+                            //imagePreview.setVisibility(View.INVISIBLE);
 
                         } else {
-                            previewView.setVisibility(View.INVISIBLE);
-                            imagePreview.setVisibility(View.INVISIBLE);
+                            image_capture_button.setText("Escanear1 Examen...");
+                            mostrarExamen();
+                            //                            previewView.setVisibility(View.INVISIBLE);
+                            //                            imagePreview.setVisibility(View.INVISIBLE);
                         }
-                        image_capture_button.setText("Examen...");
                         metodo = 1;
                         break;
                     case 1:
-
+                        // Siguientes veces el número plantilla ya está en memoria.
+                        System.out.println("Caso 1 plantillaDB ");
                         takePhoto();
-                        image_capture_button.setText("Procesando...");
+                        image_capture_button.setText("Procesando Examen...");
                         previewView.setVisibility(View.INVISIBLE);
                         imagePreview.setVisibility(View.INVISIBLE);
-                        metodo = 0;
                         break;
 
-
-                }
-
-
-                image_capture_button.setText("Procesando...");
-                String codigo = inputCodigo.getText().toString();
-                ArrayList<String> plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
-
-                if (plantillaDB.contains("Null")) {
-                    takePhoto();
-                    image_capture_button.setText("Escanear...");
-                    previewView.setVisibility(View.INVISIBLE);
-                    imagePreview.setVisibility(View.INVISIBLE);
-
-                } else {
-                    previewView.setVisibility(View.INVISIBLE);
-                    imagePreview.setVisibility(View.INVISIBLE);
                 }
 
 
             }
 
-            ;
 
         });
     }
@@ -251,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private byte[] imageToByteArray(ImageProxy image) {
+    private void imageToByteArray(ImageProxy image) {
         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
         byte[] bytes = new byte[buffer.remaining()];
         buffer.get(bytes);
@@ -268,14 +262,23 @@ public class MainActivity extends AppCompatActivity {
         String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imageViewMuestra.setImageBitmap(bitmap);
+    }
+
+    private void mostrarExamen() {
 
 
         //        //Corrige el examen
         //        NumerarMarcados numerarMarcados = new NumerarMarcados();
         //        ArrayList<String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
 
+        // muestra la imagen corregida con los circulos por colores.
+        String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        imageViewMuestra.setImageBitmap(bitmap);
+
+
         //Guarda la imagen corregida con los circulos por colores
-        buscarCirculos.correcionCirculos(listaBlancos);
+        // buscarCirculos.correcionCirculos(listaBlancos);
 
 
         // Reorganiza la pantalla
@@ -288,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //buscarCirculos.buscarRespuestas(bytes);
-        return bytes;
+        //  return bytes;
     }
 
     private Mat processImageData(byte[] imageData) {
