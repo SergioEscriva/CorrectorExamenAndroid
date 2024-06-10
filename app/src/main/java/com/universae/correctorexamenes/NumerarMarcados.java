@@ -274,6 +274,7 @@ public class NumerarMarcados {
 
     public void arrayDatos(Map<Integer, String> circulosMarcados) {
         String dniNie = "";
+        String numControl = "";
         for (int i = 0; i < 2; i++) {
             String valor = circulosMarcados.get(i);
             if (i == 0 && valor.equals("Empty")) {
@@ -289,7 +290,12 @@ public class NumerarMarcados {
                 }
             }
         }
+        for (int j = 10; j < 13; j++) {
+            String valorControl = circulosMarcados.get(j);
+            numControl += valorControl;
+        }
         System.out.println("DNI/NIE: " + dniNie);
+        System.out.println("Numero Examen: " + numControl);
 
     }
 
