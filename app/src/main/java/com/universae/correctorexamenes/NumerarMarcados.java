@@ -272,7 +272,8 @@ public class NumerarMarcados {
 
     }
 
-    public void arrayDatos(Map<Integer, String> circulosMarcados) {
+    public Map<String, String> arrayDatos(Map<Integer, String> circulosMarcados) {
+        Map<String, String> dniNieExamen = new HashMap<>();
         String dniNie = "";
         String numControl = "";
         for (int i = 0; i < 2; i++) {
@@ -281,21 +282,26 @@ public class NumerarMarcados {
                 for (int j = 1; j < 10; j++) {
                     String valorDni = circulosMarcados.get(j);
                     dniNie += valorDni;
+                    dniNieExamen.put("dni", dniNie);
                 }
             } else if (i == 0 && ! valor.equals("Empty")) {
                 System.out.println("NIE");
                 for (int j = 0; j < 9; j++) {
                     String valorDni = circulosMarcados.get(j);
                     dniNie += valorDni;
+                    dniNieExamen.put("nie", dniNie);
                 }
             }
         }
         for (int j = 10; j < 13; j++) {
             String valorControl = circulosMarcados.get(j);
             numControl += valorControl;
+            dniNieExamen.put("examen", numControl);
         }
-        System.out.println("DNI/NIE: " + dniNie);
-        System.out.println("Numero Examen: " + numControl);
+
+        System.out.println("Datos: " + dniNieExamen);
+
+        return dniNieExamen;
 
     }
 
