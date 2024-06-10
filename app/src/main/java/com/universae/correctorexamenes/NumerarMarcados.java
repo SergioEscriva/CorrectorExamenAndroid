@@ -232,7 +232,6 @@ public class NumerarMarcados {
         }
 
 
-        arrayDatos(circulosMarcados);
         return circulosMarcados;
 
     }
@@ -247,21 +246,21 @@ public class NumerarMarcados {
                 for (int j = 1; j < 10; j++) {
                     String valorDni = circulosMarcados.get(j);
                     dniNie += valorDni;
-                    dniNieExamen.put("dni", dniNie);
+                    dniNieExamen.put("identificacion", dniNie);
                 }
             } else if (i == 0 && ! valor.equals("Empty")) {
                 System.out.println("NIE");
                 for (int j = 0; j < 9; j++) {
                     String valorDni = circulosMarcados.get(j);
                     dniNie += valorDni;
-                    dniNieExamen.put("nie", dniNie);
+                    dniNieExamen.put("identificacion", dniNie);
                 }
             }
         }
         for (int j = 10; j < 13; j++) {
             String valorControl = circulosMarcados.get(j);
             numControl += valorControl;
-            dniNieExamen.put("examen", numControl);
+            dniNieExamen.put("codigo", numControl);
         }
 
         System.out.println("Datos: " + dniNieExamen);

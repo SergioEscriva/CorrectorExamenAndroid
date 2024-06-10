@@ -27,11 +27,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import com.universae.correctorexamenes.SQLiteDB.AlumnoAppController;
-import com.universae.correctorexamenes.SQLiteDB.PlantillaAppController;
-import com.universae.correctorexamenes.models.Alumno;
 import com.universae.correctorexamenes.models.Par;
-import com.universae.correctorexamenes.models.Plantilla;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -96,30 +92,21 @@ public class MainActivity extends AppCompatActivity {
         }, getExecutor());
 
 
-        ///
-
-        String plantilla = "1=A, 2=B, 3=C, 4=A, 5=D, 6=C, 7=B, 8=A, 9=B, 10=C, 11=B, 12=A, 13=B, 14=C, 15=D, 16=C, 17=B, 18=A, 19=B, 20=A, 21=D, 22=C, 23=B, 24=A, 25=B, 26=C, 27=D, 28=A, 29=B, 30=C, 31=A, 32=B, 33=C, 34=B, 35=C, 36=D, 37=C, 38=B, 39=A, 40=D";
-        String codigo = "005";
-        Plantilla introducirDB = new Plantilla(codigo, plantilla);
-        PlantillaAppController appController = new PlantillaAppController(this);
-        // appController.nuevoPlantilla(introducirDB);
-
-        AlumnoAppController alumnoAppController = new AlumnoAppController(this);
-        //String plantilla = "1=A, 2=B, 3=C, 4=A, 5=D, 6=C, 7=B, 8=A, 9=B, 10=C, 11=B, 12=A, 13=B, 14=C, 15=D, 16=C, 17=B, 18=A, 19=B, 20=A, 21=D, 22=C, 23=B, 24=A, 25=B, 26=C, 27=D, 28=A, 29=B, 30=C, 31=A, 32=B, 33=C, 34=B, 35=C, 36=D, 37=C, 38=B, 39=A, 40=D";
-        //String codigo = "006";
-        String identificacion = "12345678B";
-        Alumno introducirDBalumno = new Alumno(identificacion, codigo, plantilla);
-
-        // System.out.println("Codigo ID " + alumnoAppController.nuevoAlumno(introducirDBalumno));
-
-
-        ///
         btnCorrecto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Corrige el examen
                 NumerarMarcados numerarMarcados = new NumerarMarcados();
                 Map<Integer, String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "abajo");
+                Map<Integer, String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
 
+                Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
+
+                // Guardar examen Alumno BD
+                ArreglosBD arreglosBD = new ArreglosBD();
+                arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "examen");
+
+                // Calcula nota examen
                 Map<String, String> nota = buscarCirculos.calcularNota(listaAbajoMarcados, 0.0);
                 System.out.println(" nota " + nota);
 
@@ -132,8 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
-        System.out.println("DB plantilla " + appController.obtenerPlantillaId("005"));
-        System.out.println("DB alumno " + alumnoAppController.obtenerAlumnoId("12345678B"));
 
     }
 
