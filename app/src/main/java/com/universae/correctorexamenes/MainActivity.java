@@ -1,11 +1,13 @@
 package com.universae.correctorexamenes;
 
 import android.Manifest;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -32,6 +34,7 @@ import com.universae.correctorexamenes.models.Par;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -115,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void cuentaMarcados(String plantillaExamen) {
         NumerarMarcados numerarMarcados = new NumerarMarcados();
+        System.out.println(listaTodos + " " + listaBlancos);
         ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "abajo");
         ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
         Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
@@ -164,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (metodo) {
                     case 0:
+                        hideKeyboard(v);
                         previewView.setVisibility(View.VISIBLE);
                         imagePreview.setVisibility(View.VISIBLE);
                         // Primera vez que se ejecuta pide Num Plantilla.
@@ -175,25 +180,19 @@ public class MainActivity extends AppCompatActivity {
                         if (plantillaDB.size() == 0) {
                             takePhoto();
 
-                            image_capture_button.setText("Escanear Examen...");
-                            //previewView.setVisibility(View.INVISIBLE);
-                            //imagePreview.setVisibility(View.INVISIBLE);
-
-                        } else {
-                            image_capture_button.setText("Escanear1 Examen...");
-                            mostrarExamen();
-                            //                            previewView.setVisibility(View.INVISIBLE);
-                            //                            imagePreview.setVisibility(View.INVISIBLE);
                         }
+                        image_capture_button.setText("Escanear Examen...");
+
                         metodo = 1;
                         break;
                     case 1:
                         // Siguientes veces el número plantilla ya está en memoria.
-                        System.out.println("Caso 1 plantillaDB ");
+                        image_capture_button.setText("Escanear Examen...");
                         takePhoto();
                         image_capture_button.setText("Procesando Examen...");
                         previewView.setVisibility(View.INVISIBLE);
                         imagePreview.setVisibility(View.INVISIBLE);
+                        mostrarExamen();
                         break;
 
                 }
@@ -250,13 +249,21 @@ public class MainActivity extends AppCompatActivity {
         byte[] bytes = new byte[buffer.remaining()];
         buffer.get(bytes);
         // System.out.println(bytes);
-        Mat mat = processImageData(bytes);
+
+        System.out.println("pasando por imagetoarray");
+        /// Busca los círculos en la imagen TODO Para Pruebas jpg del directorio.
+        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
+        Mat mat = Imgcodecs.imread(imagePathPrueba);
+        /// Todo descomentar para utilizar cámara.
+        ///Mat mat = processImageData(bytes);
         //Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);
         // (new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
-
-        // Busca los círculos en la imagen
+        ///
         listaTodos = buscarCirculos.rebuscarCirculos(mat, "all");
         listaBlancos = buscarCirculos.rebuscarCirculos(mat, "blancos");
+
+        //Guarda la imagen corregida con los circulos por colores
+        buscarCirculos.correcionCirculos(listaBlancos, mat);
 
         // Recupera imagen con todos los círculos y los muesta
         String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
@@ -275,10 +282,6 @@ public class MainActivity extends AppCompatActivity {
         String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imageViewMuestra.setImageBitmap(bitmap);
-
-
-        //Guarda la imagen corregida con los circulos por colores
-        // buscarCirculos.correcionCirculos(listaBlancos);
 
 
         // Reorganiza la pantalla
@@ -305,6 +308,12 @@ public class MainActivity extends AppCompatActivity {
         return mat;
         // You can now use the bitmap for further processing
         // For instance, saving it to a file or displaying it in an ImageView
+    }
+
+    // Cierra el teclado
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 

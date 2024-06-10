@@ -9,6 +9,20 @@
     tools:context=".MainActivity">
 
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="119dp"
+        android:layout_height="100dp"
+        android:text="Introducir Primero el número de Plantilla."
+        android:textAlignment="center"
+        android:textColor="#CFBC0F"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/preview_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imgViewMuestra"
         android:layout_width="355dp"

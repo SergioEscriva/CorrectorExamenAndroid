@@ -25,7 +25,7 @@ public class BuscarCirculos {
 
     private ArrayList<String> examenAlumno;
     private List<Par> allCircles;
-    private String imagePath = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
+
 
     private static double calculateCentroidX(List<Par> pairs) {
         double sumX = 0;
@@ -96,7 +96,7 @@ public class BuscarCirculos {
         return notas;
     }
 
-    public List<Par> rebuscarCirculos(Mat imgOriginal1, String circulos) {
+    public List<Par> rebuscarCirculos(Mat imgOriginal, String circulos) {
         Mat imgAnalizada = new Mat();
         List<Par> lista = new ArrayList<>();
         double radio = 0.0;
@@ -105,7 +105,7 @@ public class BuscarCirculos {
         String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
         // Imagen principal arriba del código
 
-        Mat imgOriginal = Imgcodecs.imread(imagePath);
+        // Mat imgOriginal = Imgcodecs.imread(imagePath);
         Mat imgReduced = imgOriginal;
         Mat imgEscalaGrises = new Mat();
         Imgproc.cvtColor(imgReduced, imgEscalaGrises, Imgproc.COLOR_BGR2GRAY);
@@ -187,10 +187,10 @@ public class BuscarCirculos {
     }
 
     // colorea los circulos según la pregunta acertada o no
-    public void correcionCirculos(List<Par> listaDetectados) {
+    public void correcionCirculos(List<Par> listaDetectados, Mat imgOriginal) {
 
-        String rutaCirculos = imagePath;
-        Mat imgOriginal = Imgcodecs.imread(rutaCirculos);
+        //        String rutaCirculos = imagePath;
+        //        Mat imgOriginal = Imgcodecs.imread(rutaCirculos);
 
         // Iterate through detected points and draw circles
         for (Par pair : listaDetectados) {
