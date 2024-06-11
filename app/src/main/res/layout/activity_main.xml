@@ -119,17 +119,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textBlancosNum" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="315dp"
-        android:layout_height="445.5dp"
-        android:layout_marginTop="40dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/fondocamarared" />
-
     <androidx.camera.view.PreviewView
         android:id="@+id/preview_view"
         android:layout_width="300dp"
@@ -145,10 +134,22 @@
 
     </androidx.camera.view.PreviewView>
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="315dp"
+        android:layout_height="445.5dp"
+        android:layout_marginTop="40dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fondocamarared" />
+
     <TextView
         android:id="@+id/txtAyuda"
         android:layout_width="119dp"
         android:layout_height="100dp"
+        android:layout_marginBottom="24dp"
         android:text="Introducir número de Plantilla y Escanear."
         android:textAlignment="center"
         android:textColor="#CFBC0F"
@@ -156,8 +157,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/preview_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imgViewMuestra"
@@ -182,6 +182,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
+
+    <TextView
+        android:id="@+id/textAfinar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Afinar"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_capture_button"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/textAfinarNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="18dp"
+        android:text="0.8"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_capture_button"
+        app:layout_constraintTop_toBottomOf="@+id/textAfinar" />
 
     <Button
         android:id="@+id/BttnCorregir"

@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView notaFinal, aciertos, fallos, blancos, nulas;
     private TextView notaFinalNum, aciertosNum, fallosNum, blancosNum, nulasNum;
     private TextInputLayout layoutCodigo;
+    private TextView textAfinar, textAfinarNum;
 
 
     private ArrayList<String> plantillaDB = new ArrayList<>();
@@ -117,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
         fallosNum = findViewById(R.id.textFallosNum);
         blancosNum = findViewById(R.id.textBlancosNum);
         nulasNum = findViewById(R.id.textNulosNum);
+        textAfinar = findViewById(R.id.textAfinar);
+        textAfinarNum = findViewById(R.id.textAfinarNum);
 
 
         image_capture_button = findViewById(R.id.image_capture_button);
@@ -149,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Repetir la foto
+                textAfinar.setVisibility(View.VISIBLE);
+                textAfinarNum.setVisibility(View.VISIBLE);
                 image_capture_button.setText("Escanear Examen");
                 image_capture_button.setVisibility(View.VISIBLE);
                 imageViewMuestra.setImageDrawable(getDrawable(R.drawable.icono_examen));
@@ -296,35 +301,52 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Entrando 0");
                 previewView.setVisibility(View.VISIBLE);
                 imagePreview.setVisibility(View.VISIBLE);
+                textAfinar.setVisibility(View.VISIBLE);
+                textAfinarNum.setVisibility(View.VISIBLE);
                 // Primera vez que se ejecuta pide Num Plantilla.
                 String codigo = inputCodigo.getText().toString();
-                ayuda.setVisibility(View.INVISIBLE);
-                // si existe la carga en memoria.
-                plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
 
-                if (plantillaDB.size() == 0) {
-                    System.out.println("No existe en DB");
-                    image_capture_button.setText("Escanear Plantilla...");
-                    takePhoto("plantilla");
+                // Si no se ha introducido código se pide.
+                if (codigo.isEmpty()) {
+                    Toast.makeText(this, "Introduzca el código de Plantilla", Toast.LENGTH_SHORT).show();
+                    layoutCodigo.setBoxBackgroundColor(Color.MAGENTA);
+                    inputCodigo.requestFocus();
+                    break;
+                } else {
+                    layoutCodigo.setBoxBackgroundColor(Color.GRAY);
+                    textAfinar.setVisibility(View.VISIBLE);
+                    textAfinarNum.setVisibility(View.VISIBLE);
+                    image_capture_button.setText("Escanear Examen");
+                    ayuda.setVisibility(View.INVISIBLE);
+                    // si existe la carga en memoria.
+                    plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
 
+                    if (plantillaDB.size() == 0) {
+                        System.out.println("No existe en DB");
+                        image_capture_button.setText("Escanear Plantilla...");
+                        takePhoto("plantilla");
+
+
+                    }
+                    Toast.makeText(this, "Plantilla cargada con éxito", Toast.LENGTH_SHORT).show();
+                    image_capture_button.setText("Escanear Examen");
 
                 }
-                Toast.makeText(this, "Plantilla cargada con éxito", Toast.LENGTH_SHORT).show();
-                image_capture_button.setText("Escanear Examen");
-
-
                 metodo = 1;
 
                 break;
             case 1:
-                System.out.println("Entrando 1");
+                textAfinar.setVisibility(View.INVISIBLE);
+                textAfinarNum.setVisibility(View.INVISIBLE);
                 imageViewMuestra.setVisibility(View.VISIBLE);
                 previewView.setVisibility(View.INVISIBLE);
                 imagePreview.setVisibility(View.INVISIBLE);
+
                 // Siguientes veces el número plantilla ya está en memoria.
                 image_capture_button.setText("Escanear Examen");
                 takePhoto("examen");
                 imageViewMuestra.setVisibility(View.VISIBLE);
+
                 image_capture_button.setText("Procesando Examen...");
 
                 break;
