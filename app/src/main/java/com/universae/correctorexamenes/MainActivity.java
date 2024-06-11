@@ -1,10 +1,7 @@
 package com.universae.correctorexamenes;
 
-import static android.media.CamcorderProfile.get;
-
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,11 +12,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
@@ -32,7 +27,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -82,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
     private Map<String, String> nota = new HashMap<>();
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         btnCorregir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // Corrige el examen
                 cuentaMarcadosExamen();
             }
@@ -136,11 +129,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Repetir la foto
                 image_capture_button.setText("Escanear Examen");
-                takePhoto("examen");
+                image_capture_button.setVisibility(View.VISIBLE);
+                imageViewMuestra.setImageDrawable(getDrawable(R.drawable.icono_examen));
                 imageViewMuestra.setVisibility(View.INVISIBLE);
                 previewView.setVisibility(View.VISIBLE);
                 imagePreview.setVisibility(View.VISIBLE);
-
+                btnCorregir.setVisibility(View.INVISIBLE);
+                btnRepetir.setVisibility(View.INVISIBLE);
             }
 
 
@@ -163,17 +158,12 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imageViewMuestra.setImageBitmap(bitmap);
 
-        System.out.println("JJJJJJJJ " + listaAbajoMarcados);
-        System.out.println("pppppppp " + plantillaDB.get(1));
         // Guarda la Examen en DB
         arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "examen");
         // Calcula nota examen
         nota = buscarCirculos.calcularNota(plantillaDB, listaAbajoMarcados, 0.0);
         System.out.println(" nota " + nota);
         crearDialog();
-
-
-
 
 
     }
@@ -191,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         imageViewMuestra.setImageBitmap(bitmap);
 
         // Guardar examen Alumno BD
-String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
+        String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
         //arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
         plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
         inputCodigo.setText(codigo);
@@ -231,10 +221,12 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
 
         });
     }
-    public void botones(View view){
+
+    public void botones(View view) {
         switch (metodo) {
             case 0:
                 hideKeyboard(view);
+                System.out.println("Entrando 0");
                 previewView.setVisibility(View.VISIBLE);
                 imagePreview.setVisibility(View.VISIBLE);
                 // Primera vez que se ejecuta pide Num Plantilla.
@@ -257,14 +249,15 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
 
                 break;
             case 1:
-
+                System.out.println("Entrando 1");
+                imageViewMuestra.setVisibility(View.VISIBLE);
+                previewView.setVisibility(View.INVISIBLE);
+                imagePreview.setVisibility(View.INVISIBLE);
                 // Siguientes veces el número plantilla ya está en memoria.
                 image_capture_button.setText("Escanear Examen");
                 takePhoto("examen");
                 imageViewMuestra.setVisibility(View.VISIBLE);
                 image_capture_button.setText("Procesando Examen...");
-                previewView.setVisibility(View.INVISIBLE);
-                imagePreview.setVisibility(View.INVISIBLE);
 
                 break;
 
@@ -341,25 +334,19 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
             cuentaMarcadosPlantilla();
             botones(view);
 
-        } else if (plantillaExamen.equals("examen")){
+        } else if (plantillaExamen.equals("examen")) {
             System.out.println("Entrando examen");
             listaTodosExamen = buscarCirculos.rebuscarCirculos(mat, "all");
             listaBlancosExamen = buscarCirculos.rebuscarCirculos(mat, "blancos");
             //Guarda la imagen corregida con los circulos por colores
             buscarCirculos.correcionCirculos(listaBlancosExamen, mat);
+            mostrarExamen();
         }
 
 
-
-        mostrarExamen();
     }
 
     private void mostrarExamen() {
-
-
-        //        //Corrige el examen
-        //        NumerarMarcados numerarMarcados = new NumerarMarcados();
-        //        ArrayList<String> listaMarcadosNumerados = numerarMarcados.busquedaLetras(listaTodos, listaBlancos, "arriba");
 
         // muestra la imagen con los circulos
         String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
@@ -375,9 +362,6 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
         btnRepetir.setVisibility(View.VISIBLE);
         imageViewMuestra.setVisibility(View.VISIBLE);
 
-
-        //buscarCirculos.buscarRespuestas(bytes);
-        //  return bytes;
     }
 
     private Mat processImageData(byte[] imageData) {
@@ -399,10 +383,9 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public void crearDialog(){
+    public void crearDialog() {
 
-            String calificaciones = String.format(" Nota Final = %s \n Aciertos = %s \n Fallos = %s \n Blancas = %s \n Nulas = %s", nota.get("notaFinal"), nota.get("aciertos"), nota.get("fallos"), nota.get("blanco"), nota.get("nulas"));
-
+        String calificaciones = String.format(" Nota Final = %s \n Aciertos = %s \n Fallos = %s \n Blancas = %s \n Nulas = %s", nota.get("notaFinal"), nota.get("aciertos"), nota.get("fallos"), nota.get("blanco"), nota.get("nulas"));
 
 
         AlertDialog alertDialog = new AlertDialog
@@ -414,10 +397,6 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
                 .create();
         alertDialog.show();
     }
-
-
-
-
 
 
 }

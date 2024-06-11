@@ -53,8 +53,9 @@
         android:layout_width="355dp"
         android:layout_height="496dp"
         android:visibility="invisible"
-        app:srcCompat="@android:drawable/btn_star_big_on"
-        tools:layout_editor_absoluteX="55dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/icono_examen"
         tools:layout_editor_absoluteY="48dp"
         tools:srcCompat="@tools:sample/avatars" />
 
