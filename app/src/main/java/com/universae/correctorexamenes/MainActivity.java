@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -156,6 +157,17 @@ public class MainActivity extends AppCompatActivity {
                 imagePreview.setVisibility(View.VISIBLE);
                 btnCorregir.setVisibility(View.INVISIBLE);
                 btnRepetir.setVisibility(View.INVISIBLE);
+                // Oculta e las notas.
+                notaFinal.setVisibility(View.INVISIBLE);
+                aciertos.setVisibility(View.INVISIBLE);
+                fallos.setVisibility(View.INVISIBLE);
+                blancos.setVisibility(View.INVISIBLE);
+                nulas.setVisibility(View.INVISIBLE);
+                notaFinalNum.setVisibility(View.INVISIBLE);
+                aciertosNum.setVisibility(View.INVISIBLE);
+                fallosNum.setVisibility(View.INVISIBLE);
+                blancosNum.setVisibility(View.INVISIBLE);
+                nulasNum.setVisibility(View.INVISIBLE);
             }
 
 
@@ -184,6 +196,24 @@ public class MainActivity extends AppCompatActivity {
         // Calcula nota examen
         nota = buscarCirculos.calcularNota(plantillaDB, listaAbajoMarcados, 0.0);
 
+        if (Double.valueOf(nota.get("notaFinal")) <= 4f) {
+            notaFinalNum.setTextColor(Color.RED);
+        } else {
+            notaFinalNum.setTextColor(Color.GREEN);
+        }
+
+        // Setea las notas
+        notaFinalNum.setText(nota.get("notaFinal"));
+        aciertosNum.setTextColor(Color.GREEN);
+        aciertosNum.setText(nota.get("aciertos"));
+        fallosNum.setTextColor(Color.RED);
+        fallosNum.setText(nota.get("fallos"));
+        blancosNum.setTextColor(Color.WHITE);
+        blancosNum.setText(nota.get("blanco"));
+        nulasNum.setTextColor(Color.YELLOW);
+        nulasNum.setText(nota.get("nulas"));
+
+
         // Oculta el código para ver las notas.
         inputCodigo.setVisibility(View.INVISIBLE);
         layoutCodigo.setVisibility(View.INVISIBLE);
@@ -200,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         System.out.println(" nota " + nota);
-        crearDialog();
+        //crearDialog();
 
 
     }
