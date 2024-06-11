@@ -65,7 +65,7 @@ public class BuscarCirculos {
         int blanco = 0;
         int nulas = 0;
 
-        for (int i = 1; i <= 40; i++) {
+        for (int i = 0; i <= 39; i++) {
             String preguntaPlantilla = plantillaDB.get(i);
             String preguntaExamen = examenAlumno.get(i);
             if (preguntaPlantilla.equals(preguntaExamen)) {

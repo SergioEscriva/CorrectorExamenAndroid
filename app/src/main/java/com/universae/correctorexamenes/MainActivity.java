@@ -135,8 +135,9 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imageViewMuestra.setImageBitmap(bitmap);
 
-
-        // Guarda la plantilla en DB
+        System.out.println("JJJJJJJJ " + listaAbajoMarcados);
+        System.out.println("pppppppp " + plantillaDB.get(1));
+        // Guarda la Examen en DB
         arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "examen");
         // Calcula nota examen todo
         Map<String, String> nota = buscarCirculos.calcularNota(plantillaDB, listaAbajoMarcados, 0.0);

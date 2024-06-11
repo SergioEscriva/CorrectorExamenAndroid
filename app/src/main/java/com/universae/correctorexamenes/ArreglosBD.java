@@ -62,7 +62,9 @@ public class ArreglosBD {
             String plantillaKey = plantilla.getCodigo();
             String plantillaValores = plantilla.getRespuestas();
             if (plantillaKey.equals(codigo)) {
-                respuestasDB.add(plantillaValores);
+                for (String respuestas : plantillaValores.split(",")) {
+                    respuestasDB.add(respuestas);
+                }
             }
 
         }
