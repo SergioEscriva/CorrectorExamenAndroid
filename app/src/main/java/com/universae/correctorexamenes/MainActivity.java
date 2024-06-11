@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView notaFinalNum, aciertosNum, fallosNum, blancosNum, nulasNum;
     private TextInputLayout layoutCodigo;
     private TextView textAfinar, textAfinarNum;
+    private ProgressBar progressBar;
 
 
     private ArrayList<String> plantillaDB = new ArrayList<>();
@@ -120,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         nulasNum = findViewById(R.id.textNulosNum);
         textAfinar = findViewById(R.id.textAfinar);
         textAfinarNum = findViewById(R.id.textAfinarNum);
+        progressBar = findViewById(R.id.progressBar);
 
 
         image_capture_button = findViewById(R.id.image_capture_button);
@@ -346,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
                 image_capture_button.setText("Escanear Examen");
                 takePhoto("examen");
                 imageViewMuestra.setVisibility(View.VISIBLE);
-
+                progressBar.setVisibility(View.VISIBLE);
                 image_capture_button.setText("Procesando Examen...");
 
                 break;
@@ -437,7 +440,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mostrarExamen() {
-
+        progressBar.setVisibility(View.INVISIBLE);
         // muestra la imagen con los circulos
         String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
