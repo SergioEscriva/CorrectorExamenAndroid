@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.universae.correctorexamenes.models.Par;
 
@@ -66,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
     private List<Par> listaTodosExamen;
     private List<Par> listaBlancosPlantilla;
     private List<Par> listaTodosPlantilla;
+    private FrameLayout frameNotas;
+    private TextView notaFinal, aciertos, fallos, blancos, nulas;
+    private TextView notaFinalNum, aciertosNum, fallosNum, blancosNum, nulasNum;
+    private TextInputLayout layoutCodigo;
 
 
     private ArrayList<String> plantillaDB = new ArrayList<>();
@@ -98,7 +104,18 @@ public class MainActivity extends AppCompatActivity {
         imagePreview = findViewById(R.id.imageView2);
         imageViewMuestra = findViewById(R.id.imgViewMuestra);
         inputCodigo = findViewById(R.id.inputCodigo);
+        layoutCodigo = findViewById(R.id.layoutCodigo);
         ayuda = findViewById(R.id.txtAyuda);
+        notaFinal = findViewById(R.id.textNota);
+        aciertos = findViewById(R.id.textAciertos);
+        fallos = findViewById(R.id.textFallos);
+        blancos = findViewById(R.id.textBlancos);
+        nulas = findViewById(R.id.textNulos);
+        notaFinalNum = findViewById(R.id.textNotaNum);
+        aciertosNum = findViewById(R.id.textAciertosNum);
+        fallosNum = findViewById(R.id.textFallosNum);
+        blancosNum = findViewById(R.id.textBlancosNum);
+        nulasNum = findViewById(R.id.textNulosNum);
 
 
         image_capture_button = findViewById(R.id.image_capture_button);
@@ -150,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void cuentaMarcadosExamen() {
 
+
         NumerarMarcados numerarMarcados = new NumerarMarcados();
         System.out.println(listaTodosExamen + " " + listaBlancosExamen);
         ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodosExamen, listaBlancosExamen, "abajo");
@@ -165,6 +183,22 @@ public class MainActivity extends AppCompatActivity {
         arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "examen");
         // Calcula nota examen
         nota = buscarCirculos.calcularNota(plantillaDB, listaAbajoMarcados, 0.0);
+
+        // Oculta el código para ver las notas.
+        inputCodigo.setVisibility(View.INVISIBLE);
+        layoutCodigo.setVisibility(View.INVISIBLE);
+        notaFinal.setVisibility(View.VISIBLE);
+        aciertos.setVisibility(View.VISIBLE);
+        fallos.setVisibility(View.VISIBLE);
+        blancos.setVisibility(View.VISIBLE);
+        nulas.setVisibility(View.VISIBLE);
+        notaFinalNum.setVisibility(View.VISIBLE);
+        aciertosNum.setVisibility(View.VISIBLE);
+        fallosNum.setVisibility(View.VISIBLE);
+        blancosNum.setVisibility(View.VISIBLE);
+        nulasNum.setVisibility(View.VISIBLE);
+
+
         System.out.println(" nota " + nota);
         crearDialog();
 
@@ -401,7 +435,6 @@ public class MainActivity extends AppCompatActivity {
                 .create();
         alertDialog.show();
     }
-
 
 
 }

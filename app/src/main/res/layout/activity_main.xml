@@ -9,11 +9,122 @@
     tools:context=".MainActivity">
 
 
+    <TextView
+        android:id="@+id/textNota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="Nota Final"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BttnCorregir" />
+
+    <TextView
+        android:id="@+id/textAciertos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="Aciertos"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNota" />
+
+    <TextView
+        android:id="@+id/textFallos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="Fallos"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAciertos" />
+
+    <TextView
+        android:id="@+id/textBlancos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="En blanco"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textFallos" />
+
+    <TextView
+        android:id="@+id/textNulos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textBlancos" />
+
+    <TextView
+        android:id="@+id/textNotaNum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="200dp"
+        android:text="0"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BttnCorregir" />
+
+    <TextView
+        android:id="@+id/textAciertosNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNotaNum" />
+
+    <TextView
+        android:id="@+id/textFallosNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAciertosNum" />
+
+    <TextView
+        android:id="@+id/textBlancosNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textFallosNum" />
+
+    <TextView
+        android:id="@+id/textNulosNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textBlancosNum" />
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="315dp"
         android:layout_height="445.5dp"
         android:layout_marginTop="40dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -95,6 +206,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutCodigo"
         android:layout_width="215dp"
         android:layout_height="57dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +221,7 @@
             android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_capture_button" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutCodigo" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
