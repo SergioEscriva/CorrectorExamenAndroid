@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
     private ArreglosBD arreglosBD = new ArreglosBD();
     private int metodo = 0;
 
+    private View view;
+
 
 
 
@@ -209,7 +211,8 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
         image_capture_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                botones();
+                view = v;
+                botones(view);
 
 //                switch (metodo) {
 //                    case 0:
@@ -255,10 +258,10 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
 
         });
     }
-    public void botones(){
+    public void botones(View view){
         switch (metodo) {
             case 0:
-//                hideKeyboard(v);
+                hideKeyboard(view);
                 previewView.setVisibility(View.VISIBLE);
                 imagePreview.setVisibility(View.VISIBLE);
                 // Primera vez que se ejecuta pide Num Plantilla.
@@ -363,7 +366,7 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
             listaTodosPlantilla = buscarCirculos.rebuscarCirculos(mat, "all");
             listaBlancosPlantilla = buscarCirculos.rebuscarCirculos(mat, "blancos");
             cuentaMarcadosPlantilla();
-            botones();
+            botones(view);
 
         } else if (plantillaExamen.equals("examen")){
             System.out.println("Entrando examen");
