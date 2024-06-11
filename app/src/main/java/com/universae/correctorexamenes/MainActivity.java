@@ -136,8 +136,8 @@ public class MainActivity extends AppCompatActivity {
         imageViewMuestra.setImageBitmap(bitmap);
 
 
-            // Guarda la plantilla en DB
-            arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "examen");
+        // Guarda la plantilla en DB
+        arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "examen");
         // Calcula nota examen todo
         Map<String, String> nota = buscarCirculos.calcularNota(plantillaDB, listaAbajoMarcados, 0.0);
         System.out.println(" nota " + nota);
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void cuentaMarcadosPlantilla (){
+    private void cuentaMarcadosPlantilla() {
         NumerarMarcados numerarMarcados = new NumerarMarcados();
         System.out.println(listaTodosExamen + " " + listaBlancosExamen);
         ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodosPlantilla, listaBlancosPlantilla, "abajo");
@@ -159,9 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Guardar examen Alumno BD
 
-            arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
-
-
+        arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
 
 
     }
@@ -199,17 +197,18 @@ public class MainActivity extends AppCompatActivity {
                         previewView.setVisibility(View.VISIBLE);
                         imagePreview.setVisibility(View.VISIBLE);
                         // Primera vez que se ejecuta pide Num Plantilla.
-                        image_capture_button.setText("Procesando Plantilla...");
                         String codigo = inputCodigo.getText().toString();
                         ayuda.setVisibility(View.INVISIBLE);
                         // si existe la carga en memoria.
                         plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
 
                         if (plantillaDB.size() == 0) {
+                            System.out.println("No existe en DB");
                             image_capture_button.setText("Escanear Plantilla...");
                             takePhoto("plantilla");
 
                         }
+                        image_capture_button.setText("Escanear Examen...");
 
 
                         metodo = 1;
@@ -270,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Convert ImageProxy to byte array
                 imageToByteArray(image, plantillaExamen);
-                image_capture_button.setText("Escanear Examen...");
+
 
                 image.close();
 
@@ -291,7 +290,6 @@ public class MainActivity extends AppCompatActivity {
         buffer.get(bytes);
         // System.out.println(bytes);
 
-        System.out.println("pasando por imagetoarray");
         /// Busca los círculos en la imagen TODO Para Pruebas jpg del directorio.
         String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
         Mat mat = Imgcodecs.imread(imagePathPrueba);
@@ -300,15 +298,15 @@ public class MainActivity extends AppCompatActivity {
         //Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);
         // (new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
         ///
-        if (plantillaExamen.equals("plantilla")){
+        if (plantillaExamen.equals("plantilla")) {
             listaTodosPlantilla = buscarCirculos.rebuscarCirculos(mat, "all");
             listaBlancosPlantilla = buscarCirculos.rebuscarCirculos(mat, "blancos");
-            cuentaMarcadosPlantilla ();
-        }else {
+            cuentaMarcadosPlantilla();
+        } else {
             listaTodosExamen = buscarCirculos.rebuscarCirculos(mat, "all");
             listaBlancosExamen = buscarCirculos.rebuscarCirculos(mat, "blancos");
         }
-   
+
         //Guarda la imagen corregida con los circulos por colores
         buscarCirculos.correcionCirculos(listaBlancosExamen, mat);
 
