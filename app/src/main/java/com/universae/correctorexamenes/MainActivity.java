@@ -120,6 +120,20 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
+        btnRepetir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Repetir la foto
+                image_capture_button.setText("Escanear Examen");
+                takePhoto("examen");
+                imageViewMuestra.setVisibility(View.INVISIBLE);
+                previewView.setVisibility(View.VISIBLE);
+                imagePreview.setVisibility(View.VISIBLE);
+
+            }
+
+
+        });
 
 
     }
@@ -269,7 +283,7 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
             case 1:
 
                 // Siguientes veces el número plantilla ya está en memoria.
-                image_capture_button.setText("Escanear Examen...");
+                image_capture_button.setText("Escanear Examen");
                 takePhoto("examen");
                 imageViewMuestra.setVisibility(View.VISIBLE);
                 image_capture_button.setText("Procesando Examen...");
