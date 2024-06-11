@@ -187,10 +187,11 @@ public class MainActivity extends AppCompatActivity {
                         plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
 
                         if (plantillaDB.size() == 0) {
+                            image_capture_button.setText("Escanear Plantilla...");
                             takePhoto();
 
                         }
-                        image_capture_button.setText("Escanear Examen...");
+//                        image_capture_button.setText("Escanear Examen...");
 
                         metodo = 1;
                         break;
@@ -198,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
                         // Siguientes veces el número plantilla ya está en memoria.
                         image_capture_button.setText("Escanear Examen...");
                         takePhoto();
+                        imageViewMuestra.setVisibility(View.VISIBLE);
                         image_capture_button.setText("Procesando Examen...");
                         previewView.setVisibility(View.INVISIBLE);
                         imagePreview.setVisibility(View.INVISIBLE);
