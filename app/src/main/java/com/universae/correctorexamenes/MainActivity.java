@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
     private int metodo = 0;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void cuentaMarcadosExamen() {
+
         NumerarMarcados numerarMarcados = new NumerarMarcados();
         System.out.println(listaTodosExamen + " " + listaBlancosExamen);
         ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodosExamen, listaBlancosExamen, "abajo");
@@ -148,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void cuentaMarcadosPlantilla() {
         NumerarMarcados numerarMarcados = new NumerarMarcados();
-        System.out.println(listaTodosExamen + " " + listaBlancosExamen);
+        System.out.println(listaTodosPlantilla + " 2 " + listaBlancosPlantilla);
         ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodosPlantilla, listaBlancosPlantilla, "abajo");
         ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodosPlantilla, listaBlancosPlantilla, "arriba");
         Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
@@ -159,9 +162,10 @@ public class MainActivity extends AppCompatActivity {
         imageViewMuestra.setImageBitmap(bitmap);
 
         // Guardar examen Alumno BD
-
-        arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
-
+String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
+        //arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
+        plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
+        inputCodigo.setText(codigo);
 
     }
 
@@ -191,47 +195,91 @@ public class MainActivity extends AppCompatActivity {
         image_capture_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                botones();
 
-                switch (metodo) {
-                    case 0:
-                        hideKeyboard(v);
-                        previewView.setVisibility(View.VISIBLE);
-                        imagePreview.setVisibility(View.VISIBLE);
-                        // Primera vez que se ejecuta pide Num Plantilla.
-                        String codigo = inputCodigo.getText().toString();
-                        ayuda.setVisibility(View.INVISIBLE);
-                        // si existe la carga en memoria.
-                        plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
-
-                        if (plantillaDB.size() == 0) {
-                            System.out.println("No existe en DB");
-                            image_capture_button.setText("Escanear Plantilla...");
-                            takePhoto("plantilla");
-
-                        }
-                        image_capture_button.setText("Escanear Examen...");
-
-
-                        metodo = 1;
-                        break;
-                    case 1:
-                        // Siguientes veces el número plantilla ya está en memoria.
-                        image_capture_button.setText("Escanear Examen...");
-                        takePhoto("examen");
-                        imageViewMuestra.setVisibility(View.VISIBLE);
-                        image_capture_button.setText("Procesando Examen...");
-                        previewView.setVisibility(View.INVISIBLE);
-                        imagePreview.setVisibility(View.INVISIBLE);
-
-                        break;
-
-                }
+//                switch (metodo) {
+//                    case 0:
+//                        hideKeyboard(v);
+//                        previewView.setVisibility(View.VISIBLE);
+//                        imagePreview.setVisibility(View.VISIBLE);
+//                        // Primera vez que se ejecuta pide Num Plantilla.
+//                        String codigo = inputCodigo.getText().toString();
+//                        ayuda.setVisibility(View.INVISIBLE);
+//                        // si existe la carga en memoria.
+//                        plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
+//
+//                        if (plantillaDB.size() == 0) {
+//                            System.out.println("No existe en DB");
+//                            image_capture_button.setText("Escanear Plantilla...");
+//                            takePhoto("plantilla");
+//
+//
+//                        }
+//                        image_capture_button.setText("Escanear Examen...");
+//
+//
+//                        metodo = 1;
+//
+//                        break;
+//                    case 1:
+//
+//                        // Siguientes veces el número plantilla ya está en memoria.
+//                        image_capture_button.setText("Escanear Examen...");
+//                        takePhoto("examen");
+//                        imageViewMuestra.setVisibility(View.VISIBLE);
+//                        image_capture_button.setText("Procesando Examen...");
+//                        previewView.setVisibility(View.INVISIBLE);
+//                        imagePreview.setVisibility(View.INVISIBLE);
+//
+//                        break;
+//
+//                }
 
 
             }
 
 
         });
+    }
+    public void botones(){
+        switch (metodo) {
+            case 0:
+//                hideKeyboard(v);
+                previewView.setVisibility(View.VISIBLE);
+                imagePreview.setVisibility(View.VISIBLE);
+                // Primera vez que se ejecuta pide Num Plantilla.
+                String codigo = inputCodigo.getText().toString();
+                ayuda.setVisibility(View.INVISIBLE);
+                // si existe la carga en memoria.
+                plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
+
+                if (plantillaDB.size() == 0) {
+                    System.out.println("No existe en DB");
+                    image_capture_button.setText("Escanear Plantilla...");
+                    takePhoto("plantilla");
+
+
+                }
+                image_capture_button.setText("Escanear Examen...");
+
+
+                metodo = 1;
+
+                break;
+            case 1:
+
+                // Siguientes veces el número plantilla ya está en memoria.
+                image_capture_button.setText("Escanear Examen...");
+                takePhoto("examen");
+                imageViewMuestra.setVisibility(View.VISIBLE);
+                image_capture_button.setText("Procesando Examen...");
+                previewView.setVisibility(View.INVISIBLE);
+                imagePreview.setVisibility(View.INVISIBLE);
+
+                break;
+
+        }
+
     }
 
 
@@ -301,13 +349,17 @@ public class MainActivity extends AppCompatActivity {
             listaTodosPlantilla = buscarCirculos.rebuscarCirculos(mat, "all");
             listaBlancosPlantilla = buscarCirculos.rebuscarCirculos(mat, "blancos");
             cuentaMarcadosPlantilla();
-        } else {
+            botones();
+
+        } else if (plantillaExamen.equals("examen")){
+            System.out.println("Entrando examen");
             listaTodosExamen = buscarCirculos.rebuscarCirculos(mat, "all");
             listaBlancosExamen = buscarCirculos.rebuscarCirculos(mat, "blancos");
+            //Guarda la imagen corregida con los circulos por colores
+            buscarCirculos.correcionCirculos(listaBlancosExamen, mat);
         }
 
-        //Guarda la imagen corregida con los circulos por colores
-        buscarCirculos.correcionCirculos(listaBlancosExamen, mat);
+
 
         mostrarExamen();
     }

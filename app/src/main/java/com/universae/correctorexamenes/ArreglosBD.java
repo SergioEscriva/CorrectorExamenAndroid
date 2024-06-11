@@ -13,7 +13,7 @@ import java.util.Map;
 public class ArreglosBD {
 
 
-    public void guardarDB(Context context, ArrayList<String> listaAbajoMarcados, Map<String, String> arrayDatosArriba, String examenPlantilla) {
+    public String  guardarDB(Context context, ArrayList<String> listaAbajoMarcados, Map<String, String> arrayDatosArriba, String examenPlantilla) {
         PlantillaAppController appController = new PlantillaAppController(context);
         AlumnoAppController alumnoAppController = new AlumnoAppController(context);
         String codigo = "";
@@ -49,6 +49,7 @@ public class ArreglosBD {
         }
 
         System.out.println("Plantilla " + plantilla);
+        return  codigo;
 
     }
 
