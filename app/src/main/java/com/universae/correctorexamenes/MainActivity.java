@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -242,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }
+                Toast.makeText(this, "Plantilla cargada con éxito", Toast.LENGTH_SHORT).show();
                 image_capture_button.setText("Escanear Examen");
 
 
@@ -397,6 +399,7 @@ public class MainActivity extends AppCompatActivity {
                 .create();
         alertDialog.show();
     }
+
 
 
 }
