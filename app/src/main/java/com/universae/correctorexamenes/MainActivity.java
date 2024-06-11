@@ -295,10 +295,8 @@ public class MainActivity extends AppCompatActivity {
         String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
         Mat mat = Imgcodecs.imread(imagePathPrueba);
         /// Todo descomentar para utilizar cámara.
-        ///Mat mat = processImageData(bytes);
-        //Mat mat = Imgcodecs.imdecode(bytes, Imgcodecs.IMREAD_UNCHANGED);
-        // (new MatOfByte(bytes), Imgcodecs.IMREAD_UNCHANGED);//CV_LOAD_IMAGE_UNCHANGED);
-        ///
+        // Mat mat = processImageData(bytes);
+
         if (plantillaExamen.equals("plantilla")) {
             listaTodosPlantilla = buscarCirculos.rebuscarCirculos(mat, "all");
             listaBlancosPlantilla = buscarCirculos.rebuscarCirculos(mat, "blancos");
