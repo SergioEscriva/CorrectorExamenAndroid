@@ -67,8 +67,10 @@ public class BuscarCirculos {
 
         for (int i = 0; i <= 39; i++) {
             String preguntaPlantilla = plantillaDB.get(i);
+            System.out.println("nota plantilla " + plantillaDB.get(i));
+            System.out.println(" nota examen " + examenAlumno.get(i));
             String preguntaExamen = examenAlumno.get(i);
-            if (preguntaPlantilla.equals(preguntaExamen)) {
+            if (preguntaPlantilla.contains(preguntaExamen)) {
                 resultado.add(1);
                 aciertos += 1;
             } else if (preguntaExamen.equals("Nula")) {
