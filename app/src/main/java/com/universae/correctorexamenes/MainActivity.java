@@ -1,6 +1,10 @@
 package com.universae.correctorexamenes;
 
+import static android.media.CamcorderProfile.get;
+
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,9 +15,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
@@ -26,6 +32,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -39,6 +46,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -71,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private int metodo = 0;
 
     private View view;
+    private Map<String, String> nota = new HashMap<>();
 
 
 
@@ -158,9 +167,13 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("pppppppp " + plantillaDB.get(1));
         // Guarda la Examen en DB
         arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "examen");
-        // Calcula nota examen todo
-        Map<String, String> nota = buscarCirculos.calcularNota(plantillaDB, listaAbajoMarcados, 0.0);
+        // Calcula nota examen
+        nota = buscarCirculos.calcularNota(plantillaDB, listaAbajoMarcados, 0.0);
         System.out.println(" nota " + nota);
+        crearDialog();
+
+
+
 
 
     }
@@ -213,46 +226,6 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
             public void onClick(View v) {
                 view = v;
                 botones(view);
-
-//                switch (metodo) {
-//                    case 0:
-//                        hideKeyboard(v);
-//                        previewView.setVisibility(View.VISIBLE);
-//                        imagePreview.setVisibility(View.VISIBLE);
-//                        // Primera vez que se ejecuta pide Num Plantilla.
-//                        String codigo = inputCodigo.getText().toString();
-//                        ayuda.setVisibility(View.INVISIBLE);
-//                        // si existe la carga en memoria.
-//                        plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
-//
-//                        if (plantillaDB.size() == 0) {
-//                            System.out.println("No existe en DB");
-//                            image_capture_button.setText("Escanear Plantilla...");
-//                            takePhoto("plantilla");
-//
-//
-//                        }
-//                        image_capture_button.setText("Escanear Examen...");
-//
-//
-//                        metodo = 1;
-//
-//                        break;
-//                    case 1:
-//
-//                        // Siguientes veces el número plantilla ya está en memoria.
-//                        image_capture_button.setText("Escanear Examen...");
-//                        takePhoto("examen");
-//                        imageViewMuestra.setVisibility(View.VISIBLE);
-//                        image_capture_button.setText("Procesando Examen...");
-//                        previewView.setVisibility(View.INVISIBLE);
-//                        imagePreview.setVisibility(View.INVISIBLE);
-//
-//                        break;
-//
-//                }
-
-
             }
 
 
@@ -277,7 +250,7 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
 
 
                 }
-                image_capture_button.setText("Escanear Examen...");
+                image_capture_button.setText("Escanear Examen");
 
 
                 metodo = 1;
@@ -425,6 +398,26 @@ String codigo = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, array
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+    public void crearDialog(){
+
+            String calificaciones = String.format(" Nota Final = %s \n Aciertos = %s \n Fallos = %s \n Blancas = %s \n Nulas = %s", nota.get("notaFinal"), nota.get("aciertos"), nota.get("fallos"), nota.get("blanco"), nota.get("nulas"));
+
+
+
+        AlertDialog alertDialog = new AlertDialog
+                .Builder(this)
+                .setMessage(calificaciones)
+                .setPositiveButton("Cerrar", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .create();
+        alertDialog.show();
+    }
+
+
+
+
 
 
 }
