@@ -73,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
     private List<Par> listaTodosPlantilla;
     private FrameLayout frameNotas;
     private TextView notaFinal, aciertos, fallos, blancos, nulas;
-    private TextView notaFinalNum, aciertosNum, fallosNum, blancosNum, nulasNum;
+    private TextView notaFinalNum, aciertosNum, fallosNum, blancosNum, nulasNum, textPena, textPenaNum;
     private TextInputLayout layoutCodigo;
     private TextView textAfinar, textAfinarNum;
     private ProgressBar progressBar;
-    private Spinner spinner;
+    private Spinner spinner, spinnerPena;
 
 
     private ArrayList<String> plantillaDB = new ArrayList<>();
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainA), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -127,11 +127,24 @@ public class MainActivity extends AppCompatActivity {
         nulasNum = findViewById(R.id.textNulosNum);
         textAfinar = findViewById(R.id.textAfinar);
         textAfinarNum = findViewById(R.id.textAfinarNum);
+        textPenaNum = findViewById(R.id.textPenaNum);
+        textPena = findViewById(R.id.textPena);
         progressBar = findViewById(R.id.progressBar);
+
+
+        //Spinner
         spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.4", "0.8", "0.9", "1"});
         spinner.setAdapter(adapter);
         spinner.setSelection(2);
+
+        //Spinner Penalizacion
+        spinnerPena = findViewById(R.id.spinnerPena);
+        ArrayAdapter<String> adapterPena = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.10", "0.15", "0.20", "0.25", "0.33"});
+        spinnerPena.setAdapter(adapterPena);
+        spinnerPena.setSelection(0);
+        textPenaNum.setText(spinnerPena.getSelectedItem().toString());
+
 
         image_capture_button = findViewById(R.id.image_capture_button);
 
@@ -170,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 //Guarda el examen y corrige
                 cuentaMarcadosExamen();
                 plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigo);
+
 
                 if (plantillaDB.isEmpty()) {
                     image_capture_button.setText("Escanear Plantilla");
@@ -273,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
         // Oculta el código para ver las notas.
         inputCodigo.setVisibility(View.INVISIBLE);
         layoutCodigo.setVisibility(View.INVISIBLE);
+
         notaFinal.setVisibility(View.VISIBLE);
         aciertos.setVisibility(View.VISIBLE);
         fallos.setVisibility(View.VISIBLE);
@@ -494,6 +509,9 @@ public class MainActivity extends AppCompatActivity {
         btnCorregir.setVisibility(View.VISIBLE);
         btnRepetir.setVisibility(View.VISIBLE);
         imageViewMuestra.setVisibility(View.VISIBLE);
+        textPena.setVisibility(View.VISIBLE);
+        textPenaNum.setVisibility(View.VISIBLE);
+        spinnerPena.setVisibility(View.VISIBLE);
 
     }
 
