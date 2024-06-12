@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -128,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
         textAfinarNum = findViewById(R.id.textAfinarNum);
         progressBar = findViewById(R.id.progressBar);
         spinner = findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.4", "0.8", "0.9", "1"});
-        spinner.setAdapter(adapter);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.4", "0.8", "0.9", "1"});
+        //spinner.setAdapter(adapter);
 
         image_capture_button = findViewById(R.id.image_capture_button);
 
@@ -152,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String seleccion = parent.getItemAtPosition(position).toString();
                 textAfinarNum.setText(seleccion);
-              
+
                 // Aquí puedes hacer algo con la selección
             }
 
@@ -178,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 //Repetir la foto
                 textAfinar.setVisibility(View.VISIBLE);
                 textAfinarNum.setVisibility(View.VISIBLE);
+                spinner.setVisibility(View.VISIBLE);
                 image_capture_button.setText("Escanear Examen");
                 image_capture_button.setVisibility(View.VISIBLE);
                 imageViewMuestra.setImageDrawable(getDrawable(R.drawable.icono_examen));
@@ -322,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
                 imagePreview.setVisibility(View.VISIBLE);
                 textAfinar.setVisibility(View.VISIBLE);
                 textAfinarNum.setVisibility(View.VISIBLE);
+                spinner.setVisibility(View.VISIBLE);
                 // Primera vez que se ejecuta pide Num Plantilla.
                 String codigo = inputCodigo.getText().toString();
 
@@ -335,6 +336,7 @@ public class MainActivity extends AppCompatActivity {
                     layoutCodigo.setBoxBackgroundColor(Color.GRAY);
                     textAfinar.setVisibility(View.VISIBLE);
                     textAfinarNum.setVisibility(View.VISIBLE);
+                    spinner.setVisibility(View.VISIBLE);
                     image_capture_button.setText("Escanear Examen");
                     ayuda.setVisibility(View.INVISIBLE);
                     // si existe la carga en memoria.
@@ -356,6 +358,7 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 textAfinar.setVisibility(View.INVISIBLE);
                 textAfinarNum.setVisibility(View.INVISIBLE);
+                spinner.setVisibility(View.INVISIBLE);
                 imageViewMuestra.setVisibility(View.VISIBLE);
                 previewView.setVisibility(View.INVISIBLE);
                 imagePreview.setVisibility(View.INVISIBLE);
