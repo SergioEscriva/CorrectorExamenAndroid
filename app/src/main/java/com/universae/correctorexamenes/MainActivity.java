@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                     botones("plantilla");
 
                 } else {
-                    crearToast("Plantilla cargada con éxito");
+                    crearToast(String.format("Plantilla de correción %s", codigo));
                     image_capture_button.setText("Escanear Examen");
 
                     calcularNota(examenDB);
@@ -203,36 +203,7 @@ public class MainActivity extends AppCompatActivity {
         btnRepetir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Repetir la foto
-                textAfinar.setVisibility(View.VISIBLE);
-                textAfinarNum.setVisibility(View.VISIBLE);
-                spinner.setVisibility(View.VISIBLE);
-                image_capture_button.setText("Escanear Examen");
-                image_capture_button.setVisibility(View.VISIBLE);
-                imageViewMuestra.setImageDrawable(getDrawable(R.drawable.icono_examen));
-                imageViewMuestra.setVisibility(View.INVISIBLE);
-                previewView.setVisibility(View.VISIBLE);
-                imagePreview.setVisibility(View.VISIBLE);
-                btnCorregir.setVisibility(View.INVISIBLE);
-                btnRepetir.setVisibility(View.INVISIBLE);
-                // Oculta e las notas.
-                notaFinal.setVisibility(View.INVISIBLE);
-                aciertos.setVisibility(View.INVISIBLE);
-                fallos.setVisibility(View.INVISIBLE);
-                blancos.setVisibility(View.INVISIBLE);
-                nulas.setVisibility(View.INVISIBLE);
-                notaFinalNum.setVisibility(View.INVISIBLE);
-                aciertosNum.setVisibility(View.INVISIBLE);
-                fallosNum.setVisibility(View.INVISIBLE);
-                blancosNum.setVisibility(View.INVISIBLE);
-                nulasNum.setVisibility(View.INVISIBLE);
-                textPena.setVisibility(View.INVISIBLE);
-                textPenaNum.setVisibility(View.INVISIBLE);
-                spinnerPena.setVisibility(View.INVISIBLE);
-                textDNI.setVisibility(View.INVISIBLE);
-                textDNINum.setVisibility(View.INVISIBLE);
-                textCodigo.setVisibility(View.INVISIBLE);
-                textCodigoNum.setVisibility(View.INVISIBLE);
+                repetirFoto();
             }
 
 
@@ -260,10 +231,14 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imageViewMuestra.setImageBitmap(bitmap);
 
-        // Guarda la Examen en DB
-        arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcadosExamen, arrayDatosArriba, "examen");
-        plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigo);
-
+        System.out.println(arrayDatosArriba);
+        if (! arrayDatosArriba.containsValue("nula") || ! arrayDatosArriba.containsValue("empty")) {
+            // Guarda la Examen en DB
+            arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcadosExamen, arrayDatosArriba, "examen");
+            plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigo);
+        } else {
+            crearToast("NO GUARDADO, Error de identificación, volver a Escanear.");
+        }
 
         examenDB = arreglosBD.existeAlumnoEnDB(getBaseContext(), identificacion, codigo);
 
@@ -481,8 +456,9 @@ public class MainActivity extends AppCompatActivity {
         buffer.get(bytes);
 
         /// Busca los círculos en la imagen TODO Para Pruebas jpg del directorio.
-        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
-        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraDNINoValidos.jpg";
+        // String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraPlantilla.jpg";  /// Imagen principal
+        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
+        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMal.jpg";
         Mat mat = Imgcodecs.imread(imagePathPrueba);
         /// Todo descomentar para utilizar cámara.
         // Mat mat = processImageData(bytes);
@@ -498,9 +474,15 @@ public class MainActivity extends AppCompatActivity {
 
             listaTodosExamen = buscarCirculos.rebuscarCirculos(mat, "all", textAfinarNum.getText().toString());
             listaBlancosExamen = buscarCirculos.rebuscarCirculos(mat, "blancos", textAfinarNum.getText().toString());
-            //Guarda la imagen corregida con los circulos por colores
-            buscarCirculos.correcionCirculos(listaBlancosExamen, mat);
-            mostrarExamen();
+            if (listaTodosExamen.size() == 326) {
+                //Guarda la imagen corregida con los circulos por colores
+                buscarCirculos.correcionCirculos(listaBlancosExamen, mat);
+                mostrarExamen();
+            } else {
+                crearToast("No se detectaron todos los circulos");
+                repetirFoto();
+
+            }
         }
 
 
@@ -542,7 +524,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void crearToast(String texto) {
-        Toast.makeText(getBaseContext(), texto, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), texto, Toast.LENGTH_LONG).show();
 
     }
 
@@ -557,6 +539,39 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .create();
         alertDialog.show();
+    }
+
+    public void repetirFoto() {
+        //Repetir la foto
+        textAfinar.setVisibility(View.VISIBLE);
+        textAfinarNum.setVisibility(View.VISIBLE);
+        spinner.setVisibility(View.VISIBLE);
+        image_capture_button.setText("Escanear Examen");
+        image_capture_button.setVisibility(View.VISIBLE);
+        imageViewMuestra.setImageDrawable(getDrawable(R.drawable.icono_examen));
+        imageViewMuestra.setVisibility(View.INVISIBLE);
+        previewView.setVisibility(View.VISIBLE);
+        imagePreview.setVisibility(View.VISIBLE);
+        btnCorregir.setVisibility(View.INVISIBLE);
+        btnRepetir.setVisibility(View.INVISIBLE);
+        // Oculta e las notas.
+        notaFinal.setVisibility(View.INVISIBLE);
+        aciertos.setVisibility(View.INVISIBLE);
+        fallos.setVisibility(View.INVISIBLE);
+        blancos.setVisibility(View.INVISIBLE);
+        nulas.setVisibility(View.INVISIBLE);
+        notaFinalNum.setVisibility(View.INVISIBLE);
+        aciertosNum.setVisibility(View.INVISIBLE);
+        fallosNum.setVisibility(View.INVISIBLE);
+        blancosNum.setVisibility(View.INVISIBLE);
+        nulasNum.setVisibility(View.INVISIBLE);
+        textPena.setVisibility(View.INVISIBLE);
+        textPenaNum.setVisibility(View.INVISIBLE);
+        spinnerPena.setVisibility(View.INVISIBLE);
+        textDNI.setVisibility(View.INVISIBLE);
+        textDNINum.setVisibility(View.INVISIBLE);
+        textCodigo.setVisibility(View.INVISIBLE);
+        textCodigoNum.setVisibility(View.INVISIBLE);
     }
 
 
