@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Si no se ha introducido código se pide.
                 if (codigo.isEmpty()) {
-                    Toast.makeText(this, "Introduzca el código de Plantilla", Toast.LENGTH_SHORT).show();
+                    crearToast("Introduzca el código de Plantilla");
                     layoutCodigo.setBoxBackgroundColor(Color.MAGENTA);
                     inputCodigo.requestFocus();
                     break;
@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     }
-                    Toast.makeText(this, "Plantilla cargada con éxito", Toast.LENGTH_SHORT).show();
+                    crearToast("Plantilla cargada con éxito");
                     image_capture_button.setText("Escanear Examen");
 
                 }
@@ -493,20 +493,11 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public void crearDialog() {
+ public void crearToast(String texto){
+     Toast.makeText(getBaseContext(), texto, Toast.LENGTH_SHORT).show();
 
-        String calificaciones = String.format(" Nota Final = %s \n Aciertos = %s \n Fallos = %s \n Blancas = %s \n Nulas = %s", nota.get("notaFinal"), nota.get("aciertos"), nota.get("fallos"), nota.get("blanco"), nota.get("nulas"));
+ }
 
-
-        AlertDialog alertDialog = new AlertDialog
-                .Builder(this)
-                .setMessage(calificaciones)
-                .setPositiveButton("Cerrar", (dialog, which) -> {
-                    dialog.dismiss();
-                })
-                .create();
-        alertDialog.show();
-    }
 
 
 }

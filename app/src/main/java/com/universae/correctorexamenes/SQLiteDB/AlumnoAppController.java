@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
+import com.universae.correctorexamenes.MainActivity;
 import com.universae.correctorexamenes.models.Alumno;
 
 import java.util.ArrayList;
@@ -29,19 +31,46 @@ public class AlumnoAppController {
     }
 
 
-    public long nuevoAlumno(Alumno alumno) {
+    public void nuevoAlumno(Alumno alumno) {
+
         // writable porque vamos a insertar
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
         ContentValues valoresParaInsertar = new ContentValues();
+        //Comprobamos que el alumno no tenga ya corregido el mismo examen
+        ArrayList<Alumno> bdAlumno = obtenerAlumno(alumno.getIdentificacion());
 
-        // Recuperamos Valores
-        valoresParaInsertar.put("identificacion", alumno.getIdentificacion());
-        valoresParaInsertar.put("codigo", alumno.getCodigo());
-        valoresParaInsertar.put("respuestas", alumno.getRespuestas());
+        if (bdAlumno.isEmpty()) {
+            System.out.print("Entraaa");
+            // Recuperamos Valores
+            valoresParaInsertar.put("identificacion", alumno.getIdentificacion());
+            valoresParaInsertar.put("codigo", alumno.getCodigo());
+            valoresParaInsertar.put("respuestas", alumno.getRespuestas());
 
-        // Agregamos a la BD
-        long resultado = baseDeDatos.insert(NOMBRE_TABLA, null, valoresParaInsertar);
-        return resultado;
+            // Agregamos a la BD
+            baseDeDatos.insert(NOMBRE_TABLA, null, valoresParaInsertar);
+        } else {
+            for (Alumno alumnoDB : bdAlumno){
+                String id = alumnoDB.getIdentificacion();
+                String cod = alumnoDB.getCodigo();
+                if (id.equals(alumno.getIdentificacion()) && cod.equals(alumno.getCodigo())) {
+
+                } else {
+                    // Recuperamos Valores
+                    valoresParaInsertar.put("identificacion", alumno.getIdentificacion());
+                    valoresParaInsertar.put("codigo", alumno.getCodigo());
+                    valoresParaInsertar.put("respuestas", alumno.getRespuestas());
+
+                    // Agregamos a la BD
+                    baseDeDatos.insert(NOMBRE_TABLA, null, valoresParaInsertar);
+                }
+
+
+
+
+            }
+
+
+        }
     }
 
 
