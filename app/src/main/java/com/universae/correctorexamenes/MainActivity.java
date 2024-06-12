@@ -11,10 +11,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout layoutCodigo;
     private TextView textAfinar, textAfinarNum;
     private ProgressBar progressBar;
+    private Spinner spinner;
 
 
     private ArrayList<String> plantillaDB = new ArrayList<>();
@@ -123,7 +127,9 @@ public class MainActivity extends AppCompatActivity {
         textAfinar = findViewById(R.id.textAfinar);
         textAfinarNum = findViewById(R.id.textAfinarNum);
         progressBar = findViewById(R.id.progressBar);
-
+        spinner = findViewById(R.id.spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.4", "0.8", "0.9", "1"});
+        spinner.setAdapter(adapter);
 
         image_capture_button = findViewById(R.id.image_capture_button);
 
@@ -140,6 +146,21 @@ public class MainActivity extends AppCompatActivity {
             }
         }, getExecutor());
 
+        //Spinner
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String seleccion = parent.getItemAtPosition(position).toString();
+                textAfinarNum.setText(seleccion);
+              
+                // Aquí puedes hacer algo con la selección
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Aquí puedes hacer algo si no se selecciona nada
+            }
+        });
 
         btnCorregir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -295,6 +316,8 @@ public class MainActivity extends AppCompatActivity {
         switch (metodo) {
             case 0:
                 hideKeyboard(view);
+                spinner.setVisibility(View.VISIBLE);
+                spinner.setSelection(8);
                 previewView.setVisibility(View.VISIBLE);
                 imagePreview.setVisibility(View.VISIBLE);
                 textAfinar.setVisibility(View.VISIBLE);
