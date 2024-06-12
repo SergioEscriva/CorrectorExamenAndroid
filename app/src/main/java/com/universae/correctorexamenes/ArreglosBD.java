@@ -51,7 +51,7 @@ public class ArreglosBD {
 
     }
 
-    public ArrayList<String> existeEnDB(Context context, String codigo) {
+    public ArrayList<String> existePlantillaEnDB(Context context, String codigo) {
         PlantillaAppController plantillaAppController = new PlantillaAppController(context);
         ArrayList<Plantilla> plantillaList = plantillaAppController.obtenerPlantillaId(codigo);
         ArrayList<String> respuestasDB = new ArrayList<>();
@@ -68,6 +68,25 @@ public class ArreglosBD {
 
         }
         return respuestasDB;
+    }
+
+    public ArrayList<String> existeAlumnoEnDB(Context context, String identificacion, String codigo) {
+        AlumnoAppController alumnoDB = new AlumnoAppController(context);
+        ArrayList<Alumno> alumnoList = alumnoDB.obtenerAlumno(identificacion);
+        ArrayList<String> examenDB = new ArrayList<>();
+
+        // Array de las  respuestas de la plantilla de la base de datos
+        for (Alumno alumno : alumnoList) {
+            String plantillaKey = alumno.getCodigo();
+            String plantillaValores = alumno.getRespuestas();
+            if (plantillaKey.equals(codigo)) {
+                for (String respuestas : plantillaValores.split(",")) {
+                    examenDB.add(respuestas);
+                }
+            }
+
+        }
+        return examenDB;
     }
 
 

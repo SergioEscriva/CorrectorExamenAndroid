@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String codigo;
 
-    private ArrayList<String> listaAbajoMarcadosExamen = new ArrayList<>();
+    private ArrayList<String> examenDB = new ArrayList<>();
 
 
     @Override
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Guarda el examen y corrige
                 cuentaMarcadosExamen();
-                plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
+                plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigo);
 
                 if (plantillaDB.isEmpty()) {
                     image_capture_button.setText("Escanear Plantilla");
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                     crearToast("Plantilla cargada con éxito");
                     image_capture_button.setText("Escanear Examen");
 
-                    calcularNota(listaAbajoMarcadosExamen);
+                    calcularNota(examenDB);
                 }
 
             }
@@ -224,10 +224,11 @@ public class MainActivity extends AppCompatActivity {
 
         NumerarMarcados numerarMarcados = new NumerarMarcados();
 
-        listaAbajoMarcadosExamen = numerarMarcados.busquedaLetras(listaTodosExamen, listaBlancosExamen, "abajo");
+        ArrayList<String> listaAbajoMarcadosExamen = numerarMarcados.busquedaLetras(listaTodosExamen, listaBlancosExamen, "abajo");
         ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodosExamen, listaBlancosExamen, "arriba");
         Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
         codigo = arrayDatosArriba.get("codigo");
+        String identificacion = arrayDatosArriba.get("identificacion");
 
         // muestra la imagen corregida con los circulos por colores.
         String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
@@ -236,15 +237,18 @@ public class MainActivity extends AppCompatActivity {
 
         // Guarda la Examen en DB
         arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcadosExamen, arrayDatosArriba, "examen");
-        plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
+        plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigo);
 
-        // Corrige el examen
+
+        examenDB = arreglosBD.existeAlumnoEnDB(getBaseContext(), identificacion, codigo);
+
 
     }
 
-    public void calcularNota(ArrayList<String> listaAbajoMarcadosExamen) {
+    public void calcularNota(ArrayList<String> examenDB) {
+
         // Calcula nota examen
-        nota = buscarCirculos.calcularNota(plantillaDB, listaAbajoMarcadosExamen, 0.0);
+        nota = buscarCirculos.calcularNota(plantillaDB, examenDB, 0.0);
 
         if (Double.valueOf(nota.get("notaFinal")) <= 4f) {
             notaFinalNum.setTextColor(Color.RED);
@@ -294,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Guardar examen Plantilla BD
         String codigoPlantilla = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
-        plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigoPlantilla);
+        plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigoPlantilla);
 
     }
 
