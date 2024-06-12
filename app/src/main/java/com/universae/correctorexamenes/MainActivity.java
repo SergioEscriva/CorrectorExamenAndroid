@@ -2,8 +2,6 @@ package com.universae.correctorexamenes;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,7 +9,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -168,15 +165,15 @@ public class MainActivity extends AppCompatActivity {
         btnCorregir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //Guarda el examen y corrige
+                //Guarda el examen y corrige
                 cuentaMarcadosExamen();
                 plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
 
                 if (plantillaDB.isEmpty()) {
-                image_capture_button.setText("Escanear Plantilla");
-                botones("plantilla");
+                    image_capture_button.setText("Escanear Plantilla");
+                    botones("plantilla");
 
-                }else{
+                } else {
                     crearToast("Plantilla cargada con éxito");
                     image_capture_button.setText("Escanear Examen");
 
@@ -184,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-
 
 
         });
@@ -245,7 +241,8 @@ public class MainActivity extends AppCompatActivity {
         // Corrige el examen
 
     }
-    public void calcularNota (ArrayList<String> listaAbajoMarcadosExamen){
+
+    public void calcularNota(ArrayList<String> listaAbajoMarcadosExamen) {
         // Calcula nota examen
         nota = buscarCirculos.calcularNota(plantillaDB, listaAbajoMarcadosExamen, 0.0);
 
@@ -327,13 +324,13 @@ public class MainActivity extends AppCompatActivity {
         image_capture_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (metodo){
+                switch (metodo) {
                     case 0:
                         botones("examen");
                         metodo = 1;
                         break;
                     case 1:
-                        botones( "fotoPlantilla");
+                        botones("fotoPlantilla");
                         metodo = 0;
                         break;
 
@@ -346,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void botones( String examenPlantilla) {
+    public void botones(String examenPlantilla) {
 
         spinner.setVisibility(View.VISIBLE);
         spinner.setSelection(3);
@@ -356,8 +353,7 @@ public class MainActivity extends AppCompatActivity {
         textAfinarNum.setVisibility(View.VISIBLE);
 
 
-
-        switch (examenPlantilla){
+        switch (examenPlantilla) {
             case "examen":
                 image_capture_button.setText("Procesando Examen...");
                 takePhoto("examen");
@@ -393,9 +389,7 @@ public class MainActivity extends AppCompatActivity {
         textAfinarNum.setVisibility(View.INVISIBLE);
         spinner.setVisibility(View.INVISIBLE);
 
-        }
-
-
+    }
 
 
     private void verificarPermisos() {
@@ -454,8 +448,8 @@ public class MainActivity extends AppCompatActivity {
         buffer.get(bytes);
 
         /// Busca los círculos en la imagen TODO Para Pruebas jpg del directorio.
-        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
-        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraNoValidos.jpg";
+        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
+        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraDNINoValidos.jpg";
         Mat mat = Imgcodecs.imread(imagePathPrueba);
         /// Todo descomentar para utilizar cámara.
         // Mat mat = processImageData(bytes);
@@ -510,10 +504,11 @@ public class MainActivity extends AppCompatActivity {
         // For instance, saving it to a file or displaying it in an ImageView
     }
 
- public void crearToast(String texto){
-     Toast.makeText(getBaseContext(), texto, Toast.LENGTH_SHORT).show();
+    public void crearToast(String texto) {
+        Toast.makeText(getBaseContext(), texto, Toast.LENGTH_SHORT).show();
 
- }
+    }
+
     public void crearDialog() {
 
         AlertDialog alertDialog = new AlertDialog
@@ -526,7 +521,6 @@ public class MainActivity extends AppCompatActivity {
                 .create();
         alertDialog.show();
     }
-
 
 
 }

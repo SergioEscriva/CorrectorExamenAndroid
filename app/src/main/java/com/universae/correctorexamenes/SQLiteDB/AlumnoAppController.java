@@ -4,9 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
-import com.universae.correctorexamenes.MainActivity;
 import com.universae.correctorexamenes.models.Alumno;
 
 import java.util.ArrayList;
@@ -40,7 +38,6 @@ public class AlumnoAppController {
         ArrayList<Alumno> bdAlumno = obtenerAlumno(alumno.getIdentificacion());
 
         if (bdAlumno.isEmpty()) {
-            System.out.print("Entraaa");
             // Recuperamos Valores
             valoresParaInsertar.put("identificacion", alumno.getIdentificacion());
             valoresParaInsertar.put("codigo", alumno.getCodigo());
@@ -49,7 +46,7 @@ public class AlumnoAppController {
             // Agregamos a la BD
             baseDeDatos.insert(NOMBRE_TABLA, null, valoresParaInsertar);
         } else {
-            for (Alumno alumnoDB : bdAlumno){
+            for (Alumno alumnoDB : bdAlumno) {
                 String id = alumnoDB.getIdentificacion();
                 String cod = alumnoDB.getCodigo();
                 if (id.equals(alumno.getIdentificacion()) && cod.equals(alumno.getCodigo())) {
@@ -63,8 +60,6 @@ public class AlumnoAppController {
                     // Agregamos a la BD
                     baseDeDatos.insert(NOMBRE_TABLA, null, valoresParaInsertar);
                 }
-
-
 
 
             }
