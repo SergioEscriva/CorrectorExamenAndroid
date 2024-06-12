@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         NumerarMarcados numerarMarcados = new NumerarMarcados();
-        System.out.println(listaTodosExamen + " " + listaBlancosExamen);
+
         ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodosExamen, listaBlancosExamen, "abajo");
         ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodosExamen, listaBlancosExamen, "arriba");
         Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
@@ -236,16 +236,10 @@ public class MainActivity extends AppCompatActivity {
         blancosNum.setVisibility(View.VISIBLE);
         nulasNum.setVisibility(View.VISIBLE);
 
-
-        System.out.println(" nota " + nota);
-        //crearDialog();
-
-
     }
 
     private void cuentaMarcadosPlantilla() {
         NumerarMarcados numerarMarcados = new NumerarMarcados();
-        System.out.println(listaTodosPlantilla + " 2 " + listaBlancosPlantilla);
         ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodosPlantilla, listaBlancosPlantilla, "abajo");
         ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodosPlantilla, listaBlancosPlantilla, "arriba");
         Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
@@ -301,7 +295,6 @@ public class MainActivity extends AppCompatActivity {
         switch (metodo) {
             case 0:
                 hideKeyboard(view);
-                System.out.println("Entrando 0");
                 previewView.setVisibility(View.VISIBLE);
                 imagePreview.setVisibility(View.VISIBLE);
                 textAfinar.setVisibility(View.VISIBLE);
@@ -325,7 +318,6 @@ public class MainActivity extends AppCompatActivity {
                     plantillaDB = arreglosBD.existeEnDB(getBaseContext(), codigo);
 
                     if (plantillaDB.size() == 0) {
-                        System.out.println("No existe en DB");
                         image_capture_button.setText("Escanear Plantilla...");
                         takePhoto("plantilla");
 
@@ -413,7 +405,6 @@ public class MainActivity extends AppCompatActivity {
         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
         byte[] bytes = new byte[buffer.remaining()];
         buffer.get(bytes);
-        // System.out.println(bytes);
 
         /// Busca los círculos en la imagen TODO Para Pruebas jpg del directorio.
         String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraDNIValidos.jpg";  /// Imagen principal
@@ -428,7 +419,7 @@ public class MainActivity extends AppCompatActivity {
             botones(view);
 
         } else if (plantillaExamen.equals("examen")) {
-            System.out.println("Entrando examen");
+
             listaTodosExamen = buscarCirculos.rebuscarCirculos(mat, "all");
             listaBlancosExamen = buscarCirculos.rebuscarCirculos(mat, "blancos");
             //Guarda la imagen corregida con los circulos por colores

@@ -67,21 +67,23 @@ public class BuscarCirculos {
 
         for (int i = 0; i <= 39; i++) {
             String preguntaPlantilla = plantillaDB.get(i);
-            System.out.println("nota plantilla " + plantillaDB.get(i));
-            System.out.println(" nota examen " + examenAlumno.get(i));
             String preguntaExamen = examenAlumno.get(i);
             if (preguntaPlantilla.contains(preguntaExamen)) {
                 resultado.add(1);
                 aciertos += 1;
+
             } else if (preguntaExamen.equals("Nula")) {
                 nulas += 1;
+
 
             } else if (preguntaExamen.equals("Empty")) {
                 blanco += 1;
 
+
             } else {
                 resultado.add(0);
                 falladas += 1;
+
 
             }
         }
@@ -121,7 +123,6 @@ public class BuscarCirculos {
 
         if (circulos.equals("blancos")) {
             radio = 0.8;
-            System.out.println("Radio Blancos" + radio);
             Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
             Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
             Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
@@ -145,7 +146,7 @@ public class BuscarCirculos {
                 (double) imgAnalizada.rows() / 60,
                 100, 25, 29, 50);
 
-        System.out.println("Circulos detectados: " + imgCirculosDetectados.size());
+        // System.out.println("Circulos detectados: " + imgCirculosDetectados.size());
         List<Point> listaCirculosDetectados = new ArrayList<>();
         for (int i = 0; i < imgCirculosDetectados.cols(); i++) {
             double[] circle = imgCirculosDetectados.get(0, i);
@@ -203,7 +204,7 @@ public class BuscarCirculos {
 
             // Draw the circle
             Point center = new Point(x, y);
-            Imgproc.circle(imgOriginalMat, center, (int) Math.round(radius + 10), new Scalar(0, 0, 255), 3);
+            Imgproc.circle(imgOriginalMat, center, (int) Math.round(radius + 10), new Scalar(0, 0, 200), 3);
         }
 
         // Save the modified image

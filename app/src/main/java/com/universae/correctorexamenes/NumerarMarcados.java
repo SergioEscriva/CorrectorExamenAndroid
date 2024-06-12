@@ -64,7 +64,7 @@ public class NumerarMarcados {
     }
 
     public Map<Integer, String> metodoAbajo(List<Par> listaInferiorTodos, List<Par> listaInferiorMarcados) {
-        System.out.println(listaInferiorTodos.size() + " tamaño");
+
         NumerarCirculos numerarTodos = new NumerarCirculos();
         Map<String, Par> todosNumeradosMap = numerarTodos.busquedaLetrasAbajo(listaInferiorTodos); // Todos los circulos
 
@@ -112,6 +112,7 @@ public class NumerarMarcados {
             }
 
         }
+
         return circulosMarcados;
 
     }
@@ -256,7 +257,7 @@ public class NumerarMarcados {
                     dniNieExamen.put("identificacion", dniNie);
                 }
             } else if (i == 0 && ! valor.equals("Empty")) {
-                System.out.println("NIE");
+
                 for (int j = 0; j < 9; j++) {
                     String valorDni = circulosMarcados.get(j);
                     dniNie += valorDni;
@@ -270,7 +271,6 @@ public class NumerarMarcados {
             dniNieExamen.put("codigo", numControl);
         }
 
-        System.out.println("Datos: " + dniNieExamen);
 
         return dniNieExamen;
 

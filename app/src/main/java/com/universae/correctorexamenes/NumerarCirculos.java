@@ -355,7 +355,7 @@ public class NumerarCirculos {
 
         double numero = fila.getNumeroY();
         int horquilla = (int) Math.ceil((numero - horquillaInicial) / horquillaSize) + 1;
-        //System.out.println("Horquilla " + (horquilla) + " <> " + fila);
+
 
         return horquilla;
     }
