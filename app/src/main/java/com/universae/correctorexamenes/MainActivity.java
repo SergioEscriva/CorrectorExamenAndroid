@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -128,8 +129,9 @@ public class MainActivity extends AppCompatActivity {
         textAfinarNum = findViewById(R.id.textAfinarNum);
         progressBar = findViewById(R.id.progressBar);
         spinner = findViewById(R.id.spinner);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.4", "0.8", "0.9", "1"});
-        //spinner.setAdapter(adapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.4", "0.8", "0.9", "1"});
+        spinner.setAdapter(adapter);
+        spinner.setSelection(2);
 
         image_capture_button = findViewById(R.id.image_capture_button);
 
@@ -350,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
     public void botones(String examenPlantilla) {
 
         spinner.setVisibility(View.VISIBLE);
-        spinner.setSelection(3);
+
         previewView.setVisibility(View.VISIBLE);
         imagePreview.setVisibility(View.VISIBLE);
         textAfinar.setVisibility(View.VISIBLE);
