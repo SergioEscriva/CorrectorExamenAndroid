@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -35,7 +34,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.universae.correctorexamenes.models.Par;
@@ -65,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
     private Button btnRepetir;
     private ImageView imagePreview;
     private ImageView imageViewMuestra;
-    private TextInputEditText inputCodigo;
-    private TextView ayuda;
+
+    private TextView textDNI, textDNINum, textCodigo, textCodigoNum;
     private List<Par> listaBlancosExamen;
     private List<Par> listaTodosExamen;
     private List<Par> listaBlancosPlantilla;
     private List<Par> listaTodosPlantilla;
-    private FrameLayout frameNotas;
+
     private TextView notaFinal, aciertos, fallos, blancos, nulas;
     private TextView notaFinalNum, aciertosNum, fallosNum, blancosNum, nulasNum, textPena, textPenaNum;
     private TextInputLayout layoutCodigo;
@@ -113,8 +111,8 @@ public class MainActivity extends AppCompatActivity {
         btnRepetir = findViewById(R.id.BttnRepetir);
         imagePreview = findViewById(R.id.imageView2);
         imageViewMuestra = findViewById(R.id.imgViewMuestra);
-        inputCodigo = findViewById(R.id.inputCodigo);
-        layoutCodigo = findViewById(R.id.layoutCodigo);
+        textCodigo = findViewById(R.id.textCodigo);
+        textCodigoNum = findViewById(R.id.textCodigoNum);
         notaFinal = findViewById(R.id.textNota);
         aciertos = findViewById(R.id.textAciertos);
         fallos = findViewById(R.id.textFallos);
@@ -130,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
         textPenaNum = findViewById(R.id.textPenaNum);
         textPena = findViewById(R.id.textPena);
         progressBar = findViewById(R.id.progressBar);
+        textDNI = findViewById(R.id.textDNI);
+        textDNINum = findViewById(R.id.textDNINum);
 
 
         //Spinner
@@ -226,6 +226,13 @@ public class MainActivity extends AppCompatActivity {
                 fallosNum.setVisibility(View.INVISIBLE);
                 blancosNum.setVisibility(View.INVISIBLE);
                 nulasNum.setVisibility(View.INVISIBLE);
+                textPena.setVisibility(View.INVISIBLE);
+                textPenaNum.setVisibility(View.INVISIBLE);
+                spinnerPena.setVisibility(View.INVISIBLE);
+                textDNI.setVisibility(View.INVISIBLE);
+                textDNINum.setVisibility(View.INVISIBLE);
+                textCodigo.setVisibility(View.INVISIBLE);
+                textCodigoNum.setVisibility(View.INVISIBLE);
             }
 
 
@@ -245,6 +252,8 @@ public class MainActivity extends AppCompatActivity {
         Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
         codigo = arrayDatosArriba.get("codigo");
         String identificacion = arrayDatosArriba.get("identificacion");
+        textDNINum.setText(identificacion);
+        textCodigoNum.setText(codigo);
 
         // muestra la imagen corregida con los circulos por colores.
         String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
@@ -285,8 +294,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Oculta el código para ver las notas.
-        inputCodigo.setVisibility(View.INVISIBLE);
-        layoutCodigo.setVisibility(View.INVISIBLE);
+
 
         notaFinal.setVisibility(View.VISIBLE);
         aciertos.setVisibility(View.VISIBLE);
@@ -298,6 +306,10 @@ public class MainActivity extends AppCompatActivity {
         fallosNum.setVisibility(View.VISIBLE);
         blancosNum.setVisibility(View.VISIBLE);
         nulasNum.setVisibility(View.VISIBLE);
+        textDNI.setVisibility(View.VISIBLE);
+        textDNINum.setVisibility(View.VISIBLE);
+        textCodigo.setVisibility(View.VISIBLE);
+        textCodigoNum.setVisibility(View.VISIBLE);
 
     }
 
@@ -512,6 +524,7 @@ public class MainActivity extends AppCompatActivity {
         textPena.setVisibility(View.VISIBLE);
         textPenaNum.setVisibility(View.VISIBLE);
         spinnerPena.setVisibility(View.VISIBLE);
+
 
     }
 

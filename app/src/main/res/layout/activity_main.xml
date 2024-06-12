@@ -297,26 +297,54 @@
             app:layout_constraintStart_toEndOf="@+id/textPenaNum"
             app:layout_constraintTop_toBottomOf="@+id/BttnCorregir" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutCodigo"
-            android:layout_width="215dp"
-            android:layout_height="57dp"
+
+        <TextView
+            android:id="@+id/textCodigo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="4dp"
+            android:text="Código Examen: "
+            android:textColor="@color/white"
             android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_capture_button">
+            app:layout_constraintTop_toBottomOf="@+id/textDNI" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputCodigo"
-                android:layout_width="215dp"
-                android:layout_height="69dp"
-                android:hint="Código Plantilla"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutCodigo" />
+        <TextView
+            android:id="@+id/textCodigoNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="000"
+            android:textColor="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@+id/textCodigo"
+            app:layout_constraintTop_toTopOf="@+id/textCodigo" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/textDNI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="8dp"
+            android:text="Identificación: "
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textPena" />
+
+        <TextView
+            android:id="@+id/textDNINum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="12345678A"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@+id/textDNI"
+            app:layout_constraintTop_toTopOf="@+id/textDNI" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
