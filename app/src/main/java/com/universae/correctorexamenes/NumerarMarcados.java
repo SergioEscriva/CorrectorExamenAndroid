@@ -270,8 +270,6 @@ public class NumerarMarcados {
             numControl += valorControl;
             dniNieExamen.put("codigo", numControl);
         }
-        System.out.println("DNI: " + dniNieExamen);
-
 
         return dniNieExamen;
 
