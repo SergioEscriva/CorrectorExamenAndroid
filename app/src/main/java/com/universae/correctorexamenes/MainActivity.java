@@ -461,16 +461,16 @@ public class MainActivity extends AppCompatActivity {
         // Mat mat = processImageData(bytes);
 
         if (plantillaExamen.equals("plantilla")) {
-            listaTodosPlantilla = buscarCirculos.rebuscarCirculos(mat, "all");
-            listaBlancosPlantilla = buscarCirculos.rebuscarCirculos(mat, "blancos");
+            listaTodosPlantilla = buscarCirculos.rebuscarCirculos(mat, "all", textAfinarNum.getText().toString());
+            listaBlancosPlantilla = buscarCirculos.rebuscarCirculos(mat, "blancos", textAfinarNum.getText().toString());
             cuentaMarcadosPlantilla();
             mostrarExamen();
 
 
         } else if (plantillaExamen.equals("examen")) {
 
-            listaTodosExamen = buscarCirculos.rebuscarCirculos(mat, "all");
-            listaBlancosExamen = buscarCirculos.rebuscarCirculos(mat, "blancos");
+            listaTodosExamen = buscarCirculos.rebuscarCirculos(mat, "all", textAfinarNum.getText().toString());
+            listaBlancosExamen = buscarCirculos.rebuscarCirculos(mat, "blancos", textAfinarNum.getText().toString());
             //Guarda la imagen corregida con los circulos por colores
             buscarCirculos.correcionCirculos(listaBlancosExamen, mat);
             mostrarExamen();

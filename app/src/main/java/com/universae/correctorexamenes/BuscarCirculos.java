@@ -100,7 +100,7 @@ public class BuscarCirculos {
         return notas;
     }
 
-    public List<Par> rebuscarCirculos(Mat imgOriginal, String circulos) {
+    public List<Par> rebuscarCirculos(Mat imgOriginal, String circulos, String radioSeleccionado) {
         // Ruta de imagen Invertida tanto para guardarla como recuperarla.
         String rutaInvertido = "/data/data/com.universae.correctorexamenes/files/invertido.jpg";
 
@@ -122,7 +122,8 @@ public class BuscarCirculos {
 
 
         if (circulos.equals("blancos")) {
-            radio = 0.8;
+            radio = Double.parseDouble(radioSeleccionado);
+            // radio = 0.8;
             Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
             Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
             Imgproc.GaussianBlur(imgEscalaGrises, imgEscalaGrises, new Size(9, 9), 2, 2);
