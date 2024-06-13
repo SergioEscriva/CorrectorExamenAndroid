@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imageViewMuestra.setImageBitmap(bitmap);
 
-        System.out.println(arrayDatosArriba);
+
         if (! arrayDatosArriba.containsValue("nula") || ! arrayDatosArriba.containsValue("empty")) {
             // Guarda la Examen en DB
             arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcadosExamen, arrayDatosArriba, "examen");
@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Calcula nota examen
         nota = buscarCirculos.calcularNota(plantillaDB, examenDB, 0.0);
-
+        System.out.println(nota);
         if (Double.valueOf(nota.get("notaFinal")) <= 4f) {
             notaFinalNum.setTextColor(Color.RED);
         } else {
@@ -457,8 +457,8 @@ public class MainActivity extends AppCompatActivity {
 
         /// Busca los círculos en la imagen TODO Para Pruebas jpg del directorio.
         // String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraPlantilla.jpg";  /// Imagen principal
-        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
-        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMal.jpg";
+        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
+        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
         Mat mat = Imgcodecs.imread(imagePathPrueba);
         /// Todo descomentar para utilizar cámara.
         // Mat mat = processImageData(bytes);

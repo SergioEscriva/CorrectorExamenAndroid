@@ -64,7 +64,8 @@ public class BuscarCirculos {
         int falladas = 0;
         int blanco = 0;
         int nulas = 0;
-
+        String examenAlumnoString = examenAlumno.get(3);
+        System.out.println("Examen: " + examenAlumnoString);
         for (int i = 0; i <= 39; i++) {
             String preguntaPlantilla = plantillaDB.get(i);
             String preguntaExamen = examenAlumno.get(i);
@@ -72,11 +73,11 @@ public class BuscarCirculos {
                 resultado.add(1);
                 aciertos += 1;
 
-            } else if (preguntaExamen.equals("Nula")) {
+            } else if (preguntaExamen.contains("Nula")) {
                 nulas += 1;
 
 
-            } else if (preguntaExamen.equals("Empty")) {
+            } else if (preguntaExamen.contains("Empty")) {
                 blanco += 1;
 
 
