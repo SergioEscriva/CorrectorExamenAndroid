@@ -36,7 +36,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.universae.correctorexamenes.models.Par;
 
@@ -54,8 +53,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 public class MainActivity extends AppCompatActivity {
-    PreviewView previewView;
     int codigo_permiso = 200;
+    private PreviewView previewView;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
     private Button image_capture_button;
@@ -67,14 +66,14 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageViewMuestra;
 
     private TextView textDNI, textDNINum, textCodigo, textCodigoNum;
-    private List<Par> listaBlancosExamen;
+    private List<Par> listaMarcadosExamen;
     private List<Par> listaTodosExamen;
-    private List<Par> listaBlancosPlantilla;
+    private List<Par> listaMarcadosPlantilla;
     private List<Par> listaTodosPlantilla;
 
     private TextView notaFinal, aciertos, fallos, blancos, nulas;
     private TextView notaFinalNum, aciertosNum, fallosNum, blancosNum, nulasNum, textPena, textPenaNum;
-    private TextInputLayout layoutCodigo;
+
     private TextView textAfinar, textAfinarNum;
     private ProgressBar progressBar;
     private Spinner spinner, spinnerPena;
@@ -94,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
     private String codigo;
 
     private ArrayList<String> examenDB = new ArrayList<>();
+    private Mat imagenMat1;
 
 
     @Override
@@ -200,10 +200,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Guarda el examen y corrige
         btnCorregir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Guarda el examen y corrige
+
+                // marca los circulos que no se detectaron como marcados
+                buscarCirculos.correcionCirculos(listaMarcadosExamen, imagenMat1);
                 cuentaMarcadosExamen();
                 plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigo);
 
@@ -257,8 +260,8 @@ public class MainActivity extends AppCompatActivity {
 
         NumerarMarcados numerarMarcados = new NumerarMarcados();
 
-        ArrayList<String> listaAbajoMarcadosExamen = numerarMarcados.busquedaLetras(listaTodosExamen, listaBlancosExamen, "abajo");
-        ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodosExamen, listaBlancosExamen, "arriba");
+        ArrayList<String> listaAbajoMarcadosExamen = numerarMarcados.busquedaLetras(listaTodosExamen, listaMarcadosExamen, "abajo");
+        ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodosExamen, listaMarcadosExamen, "arriba");
         Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
         codigo = arrayDatosArriba.get("codigo");
         String identificacion = arrayDatosArriba.get("identificacion");
@@ -268,7 +271,8 @@ public class MainActivity extends AppCompatActivity {
         // muestra la imagen corregida con los circulos por colores.
         String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        imageViewMuestra.setImageBitmap(bitmap);
+        Bitmap croppedBitmap = imagenRecortada(bitmap);
+        imageViewMuestra.setImageBitmap(croppedBitmap);
 
         // Si es nulo los datos, no guarda.
         if (arrayDatosArriba.containsValue("Error")) {
@@ -282,6 +286,38 @@ public class MainActivity extends AppCompatActivity {
         examenDB = arreglosBD.existeAlumnoEnDB(getBaseContext(), identificacion, codigo);
 
 
+    }
+
+    public Bitmap imagenRecortada(Bitmap bitmap) {
+        // Verificar si la imagen se ha cargado correctamente
+        Bitmap finalBitmap = null;
+        if (bitmap != null) {
+            // Obtener las dimensiones de la imagen original
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
+            System.out.println("Width: " + width + ", Height: " + height);
+            // Calcular las coordenadas para recortar la mitad inferior
+            int x = 0;
+            int y = 2200;//height / 2;
+            int croppedHeight = 1800;//height / 2;
+
+            // Crear un nuevo bitmap con solo la mitad inferior de la imagen original
+            Bitmap croppedBitmap = Bitmap.createBitmap(bitmap, x, y, width, croppedHeight);
+
+            // Aplicar zoom (por ejemplo, un 20% de aumento)
+            float zoomFactor = 1.2f;
+            int zoomedWidth = (int) (width * zoomFactor);
+            int zoomedHeight = (int) (croppedHeight * zoomFactor);
+
+            // Crear un bitmap escalado
+            Bitmap zoomedBitmap = Bitmap.createScaledBitmap(croppedBitmap, zoomedWidth, zoomedHeight, true);
+
+            // Ajustar el bitmap escalado al tamaño original de la mitad inferior
+            int offsetX = (zoomedWidth - width) / 2;
+            int offsetY = (zoomedHeight - croppedHeight) / 2;
+            finalBitmap = Bitmap.createBitmap(zoomedBitmap, offsetX, offsetY, width, croppedHeight);
+        }
+        return finalBitmap;
     }
 
     public void calcularNota(ArrayList<String> examenDB) {
@@ -309,7 +345,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Oculta el código para ver las notas.
 
-
         notaFinal.setVisibility(View.VISIBLE);
         aciertos.setVisibility(View.VISIBLE);
         fallos.setVisibility(View.VISIBLE);
@@ -335,8 +370,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void cuentaMarcadosPlantilla() {
         NumerarMarcados numerarMarcados = new NumerarMarcados();
-        ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodosPlantilla, listaBlancosPlantilla, "abajo");
-        ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodosPlantilla, listaBlancosPlantilla, "arriba");
+        ArrayList<String> listaAbajoMarcados = numerarMarcados.busquedaLetras(listaTodosPlantilla, listaMarcadosPlantilla, "abajo");
+        ArrayList<String> listaArribaMarcados = numerarMarcados.busquedaLetras(listaTodosPlantilla, listaMarcadosPlantilla, "arriba");
         Map<String, String> arrayDatosArriba = numerarMarcados.arrayDatos(listaArribaMarcados);
 
         // muestra la imagen corregida con los circulos por colores.
@@ -501,27 +536,33 @@ public class MainActivity extends AppCompatActivity {
 
         /// Busca los círculos en la imagen TODO Para Pruebas jpg del directorio.
         //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraPlantilla.jpg";  /// Imagen principal
-        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
-        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
+        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
+        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
         //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMal.jpg";
-        Mat mat = Imgcodecs.imread(imagePathPrueba);
+        Mat imagenMat = Imgcodecs.imread(imagePathPrueba);
+        imagenMat1 = Imgcodecs.imread(imagePathPrueba);
         /// Todo descomentar para utilizar cámara.
         // Mat mat = processImageData(bytes);
 
+
         if (plantillaExamen.equals("plantilla")) {
-            listaTodosPlantilla = buscarCirculos.rebuscarCirculos(mat, "all", textAfinarNum.getText().toString());
-            listaBlancosPlantilla = buscarCirculos.rebuscarCirculos(mat, "blancos", textAfinarNum.getText().toString());
+            listaTodosPlantilla = buscarCirculos.rebuscarCirculos(imagenMat, "all", textAfinarNum.getText().toString());
+            listaMarcadosPlantilla = buscarCirculos.rebuscarCirculos(imagenMat, "blancos", textAfinarNum.getText().toString());
             cuentaMarcadosPlantilla();
             mostrarExamen();
 
 
         } else if (plantillaExamen.equals("examen")) {
 
-            listaTodosExamen = buscarCirculos.rebuscarCirculos(mat, "all", textAfinarNum.getText().toString());
-            listaBlancosExamen = buscarCirculos.rebuscarCirculos(mat, "blancos", textAfinarNum.getText().toString());
+            listaTodosExamen = buscarCirculos.rebuscarCirculos(imagenMat, "all", textAfinarNum.getText().toString());
+            listaMarcadosExamen = buscarCirculos.rebuscarCirculos(imagenMat, "blancos", textAfinarNum.getText().toString());
+            // Save the modified image
+
+
             if (listaTodosExamen.size() == 326) {
+
                 //Guarda la imagen corregida con los circulos por colores
-                buscarCirculos.correcionCirculos(listaBlancosExamen, mat);
+                //buscarCirculos.correcionCirculos(listaBlancosExamen, imagenMat1);
                 mostrarExamen();
             } else {
                 crearToast("No se detectaron todos los circulos");
@@ -553,16 +594,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Mat processImageData(byte[] imageData) {
-        // Process the image data (e.g., convert to Bitmap, save to file, etc.)
-        // Here, you can save the imageData to a buffer or perform other operations
         // For example, to convert to a Bitmap:
         Mat mat = new Mat();
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.your_image);
+
         Utils.bitmapToMat(bitmap, mat);
+
         return mat;
-        // You can now use the bitmap for further processing
-        // For instance, saving it to a file or displaying it in an ImageView
     }
 
     public void crearToast(String texto) {

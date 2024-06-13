@@ -195,9 +195,6 @@ public class BuscarCirculos {
     // colorea los circulos según la pregunta acertada o no
     public void correcionCirculos(List<Par> listaDetectados, Mat imgOriginalMat) {
 
-        //        String rutaCirculos = imagePath;
-        //        Mat imgOriginal = Imgcodecs.imread(rutaCirculos);
-
         // Iterate through detected points and draw circles
         for (Par pair : listaDetectados) {
             double x = pair.getNumeroX();
@@ -208,12 +205,13 @@ public class BuscarCirculos {
 
             // Draw the circle
             Point center = new Point(x, y);
-            Imgproc.circle(imgOriginalMat, center, (int) Math.round(radius + 10), new Scalar(0, 0, 200), 3);
+            Imgproc.circle(imgOriginalMat, center, (int) Math.round(radius + 10), new Scalar(250, 0, 0), 3);
         }
-
-        // Save the modified image
+   
+        //Save the modified image
         String rutaCirculosCorregidos = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
         Imgcodecs.imwrite(rutaCirculosCorregidos, imgOriginalMat);
+
     }
 
     // Implement the radius calculation function

@@ -46,8 +46,6 @@ public class ExamenFragment extends Fragment {
         etIdentificacion.setText(identificacion);
         etCodigo.setText(codigo);
 
-        System.out.println("Identificacion: " + identificacion);
-
 
         if (identificacion != null || codigo != null) {
 

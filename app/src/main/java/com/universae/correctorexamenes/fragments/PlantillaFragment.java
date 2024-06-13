@@ -1,66 +1,76 @@
 package com.universae.correctorexamenes.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.universae.correctorexamenes.ArreglosBD;
 import com.universae.correctorexamenes.R;
+import com.universae.correctorexamenes.adapters.ExamenAdapters;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PlantillaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+
 public class PlantillaFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private String identificacion, codigo;
+    private EditText etIdentificacion, etCodigo;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public PlantillaFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PlantillaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PlantillaFragment newInstance(String param1, String param2) {
-        PlantillaFragment fragment = new PlantillaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            identificacion = getArguments().getString("identificacion");
+            codigo = getArguments().getString("codigo");
+
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plantilla, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_plantilla, container, false);
+
+
+        etCodigo = rootView.findViewById(R.id.eTCodigo);
+
+        // Set the values from the arguments
+        etIdentificacion.setText(identificacion);
+        etCodigo.setText(codigo);
+
+
+        if (identificacion != null || codigo != null) {
+
+            // Get the activity context
+            Context context = getActivity();
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
+
+            ArreglosBD arreglosBD = new ArreglosBD();
+            ArrayList<String> listaExamen = arreglosBD.existePlantillaEnDB(getContext(), codigo);
+
+            // 1. get a reference to recyclerView
+            RecyclerView rvExamen = rootView.findViewById(R.id.RVExamen);
+            // 2. set layoutManger
+            rvExamen.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            // 3. create an adapter
+            ExamenAdapters mAdapter = new ExamenAdapters(listaExamen, adapter);
+            // 4. set adapter
+            rvExamen.setAdapter(mAdapter);
+            // 5. set item animator to DefaultAnimator
+            rvExamen.setItemAnimator(new DefaultItemAnimator());
+        }
+
+        return rootView;
     }
+
 }

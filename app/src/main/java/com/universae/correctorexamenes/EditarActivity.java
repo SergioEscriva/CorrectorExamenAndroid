@@ -44,23 +44,6 @@ public class EditarActivity extends AppCompatActivity {
                 .commit();
     }
 
-    //
-    //        View view = this.getWindow().getDecorView().findViewById(android.R.id.content);
-    //        //Crea View con inflater
-    //        LayoutInflater inflater =
-    //                (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
-    //
-    //        View fragmentExamen = inflater.inflate(R.layout.fragment_examen, null);
-    //        etIdentificacion = fragmentExamen.findViewById(R.id.eTIdentificacion);
-    //        etIdentificacion.setText(identificacion);
-    //        etCodigo = fragmentExamen.findViewById(R.id.eTCodigo);
-    //        etCodigo.setText(codigo);
-
-    //        View activityTransactionView = inflater.inflate(R.layout.activity_add_transaction, null);
-    //        ViewGroup viewGroup = null;
-    //        View filaWallet = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_examen, viewGroup, false);
-    //        tvIdentificacion = filaWallet.findViewById(R.id.tVIdentificacion);
-    //        tvIdentificacion.setText(identificacion);
 
 }
 
