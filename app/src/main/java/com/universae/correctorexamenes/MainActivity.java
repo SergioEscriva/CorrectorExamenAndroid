@@ -177,6 +177,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        spinnerPena.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String seleccion = parent.getItemAtPosition(position).toString();
+                textPenaNum.setText(seleccion);
+                if (! examenDB.isEmpty()) {
+                    calcularNota(examenDB);
+                }
+
+                // Aquí puedes hacer algo con la selección
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Aquí puedes hacer algo si no se selecciona nada
+            }
+        });
+
         btnCorregir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,8 +202,10 @@ public class MainActivity extends AppCompatActivity {
                 cuentaMarcadosExamen();
                 plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigo);
 
-
-                if (plantillaDB.isEmpty()) {
+                if (codigo.contains("Error") || textDNINum.getText().toString().contains("Error")) {
+                    crearToast("NO GUARDADO, Error en el código, volver a Escanear.");
+                    repetirFoto();
+                } else if (plantillaDB.isEmpty()) {
                     image_capture_button.setText("Escanear Plantilla");
                     botones("plantilla");
 
@@ -230,14 +250,14 @@ public class MainActivity extends AppCompatActivity {
         String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imageViewMuestra.setImageBitmap(bitmap);
-
-
-        if (! arrayDatosArriba.containsValue("nula") || ! arrayDatosArriba.containsValue("empty")) {
+        System.out.println(arrayDatosArriba);
+        // Si es nulo los datos, no guarda.
+        if (arrayDatosArriba.containsValue("Error")) {
+            crearToast("NO GUARDADO, Error de identificación, volver a Escanear.");
+        } else {
             // Guarda la Examen en DB
             arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcadosExamen, arrayDatosArriba, "examen");
             plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigo);
-        } else {
-            crearToast("NO GUARDADO, Error de identificación, volver a Escanear.");
         }
 
         examenDB = arreglosBD.existeAlumnoEnDB(getBaseContext(), identificacion, codigo);
@@ -247,8 +267,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void calcularNota(ArrayList<String> examenDB) {
 
+        Double penalizacion = Double.valueOf(textPenaNum.getText().toString());
         // Calcula nota examen
-        nota = buscarCirculos.calcularNota(plantillaDB, examenDB, 0.0);
+        nota = buscarCirculos.calcularNota(plantillaDB, examenDB, penalizacion);
         System.out.println(nota);
         if (Double.valueOf(nota.get("notaFinal")) <= 4f) {
             notaFinalNum.setTextColor(Color.RED);
@@ -285,6 +306,10 @@ public class MainActivity extends AppCompatActivity {
         textDNINum.setVisibility(View.VISIBLE);
         textCodigo.setVisibility(View.VISIBLE);
         textCodigoNum.setVisibility(View.VISIBLE);
+        textPena.setVisibility(View.VISIBLE);
+        textPenaNum.setVisibility(View.VISIBLE);
+        spinnerPena.setVisibility(View.VISIBLE);
+
 
     }
 
@@ -459,6 +484,7 @@ public class MainActivity extends AppCompatActivity {
         // String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraPlantilla.jpg";  /// Imagen principal
         //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
         String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
+        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMal.jpg";
         Mat mat = Imgcodecs.imread(imagePathPrueba);
         /// Todo descomentar para utilizar cámara.
         // Mat mat = processImageData(bytes);
@@ -503,9 +529,6 @@ public class MainActivity extends AppCompatActivity {
         btnCorregir.setVisibility(View.VISIBLE);
         btnRepetir.setVisibility(View.VISIBLE);
         imageViewMuestra.setVisibility(View.VISIBLE);
-        textPena.setVisibility(View.VISIBLE);
-        textPenaNum.setVisibility(View.VISIBLE);
-        spinnerPena.setVisibility(View.VISIBLE);
 
 
     }

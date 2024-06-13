@@ -91,7 +91,10 @@ public class BuscarCirculos {
         double notaFinal = resultado.stream().reduce(0, (a, b) -> a + b);
         double penaliza = penalizacion * falladas;
 
-        double notaReal = (notaFinal / 4) + penaliza;
+        double notaReal = (notaFinal / 4) - penaliza;
+        if (notaReal < 0) {
+            notaReal = 0;
+        }
 
         notas.put("notaFinal", String.valueOf(notaReal));
         notas.put("aciertos", String.valueOf(aciertos));

@@ -253,22 +253,37 @@ public class NumerarMarcados {
             if (i == 0 && valor.equals("Empty")) {
                 for (int j = 1; j < 10; j++) {
                     String valorDni = circulosMarcados.get(j);
-                    dniNie += valorDni;
-                    dniNieExamen.put("identificacion", dniNie);
+                    if (valorDni.contains("Nula") || valorDni.contains("Empty")) {
+                        dniNieExamen.put("identificacion", "Error");
+                    } else {
+                        dniNie += valorDni;
+                        dniNieExamen.put("identificacion", dniNie);
+                    }
                 }
             } else if (i == 0 && ! valor.equals("Empty")) {
 
                 for (int j = 0; j < 9; j++) {
                     String valorDni = circulosMarcados.get(j);
-                    dniNie += valorDni;
-                    dniNieExamen.put("identificacion", dniNie);
+                    if (valorDni.contains("Nula") || valorDni.contains("Empty")) {
+                        dniNieExamen.put("identificacion", "Error");
+                    } else {
+
+                        dniNie += valorDni;
+                        dniNieExamen.put("identificacion", dniNie);
+                    }
                 }
             }
         }
         for (int j = 10; j < 13; j++) {
             String valorControl = circulosMarcados.get(j);
-            numControl += valorControl;
-            dniNieExamen.put("codigo", numControl);
+            if (valorControl.contains("Nula") || valorControl.contains("Empty")) {
+                dniNieExamen.put("codigo", "Error");
+
+            } else {
+
+                numControl += valorControl;
+                dniNieExamen.put("codigo", numControl);
+            }
         }
 
         return dniNieExamen;
