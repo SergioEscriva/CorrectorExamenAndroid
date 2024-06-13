@@ -65,7 +65,6 @@ public class BuscarCirculos {
         int blanco = 0;
         int nulas = 0;
         String examenAlumnoString = examenAlumno.get(3);
-        System.out.println("Examen: " + examenAlumnoString);
         for (int i = 0; i <= 39; i++) {
             String preguntaPlantilla = plantillaDB.get(i);
             String preguntaExamen = examenAlumno.get(i);

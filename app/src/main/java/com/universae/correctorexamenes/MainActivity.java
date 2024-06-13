@@ -289,7 +289,6 @@ public class MainActivity extends AppCompatActivity {
         Double penalizacion = Double.valueOf(textPenaNum.getText().toString());
         // Calcula nota examen
         nota = buscarCirculos.calcularNota(plantillaDB, examenDB, penalizacion);
-        System.out.println(nota);
         if (Double.valueOf(nota.get("notaFinal")) <= 4f) {
             notaFinalNum.setTextColor(Color.RED);
         } else {

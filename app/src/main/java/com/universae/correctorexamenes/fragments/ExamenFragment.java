@@ -27,6 +27,7 @@ public class ExamenFragment extends Fragment {
         if (getArguments() != null) {
             identificacion = getArguments().getString("identificacion");
             codigo = getArguments().getString("codigo");
+
         }
     }
 
@@ -42,21 +43,24 @@ public class ExamenFragment extends Fragment {
         etIdentificacion.setText(identificacion);
         etCodigo.setText(codigo);
 
-        ArreglosBD arreglosBD = new ArreglosBD();
-        ArrayList<String> listaExamen = arreglosBD.existeAlumnoEnDB(getContext(), identificacion, codigo);
 
-        // 1. get a reference to recyclerView
-        RecyclerView rvExamen = rootView.findViewById(R.id.RVExamen);
-        // 2. set layoutManger
-        rvExamen.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if (identificacion != null || codigo != null) {
+            System.out.println("SSSSS " + identificacion + " " + codigo);
 
+            ArreglosBD arreglosBD = new ArreglosBD();
+            ArrayList<String> listaExamen = arreglosBD.existeAlumnoEnDB(getContext(), identificacion, codigo);
 
-        // 3. create an adapter
-        ExamenAdapters mAdapter = new ExamenAdapters(listaExamen);
-        // 4. set adapter
-        rvExamen.setAdapter(mAdapter);
-        // 5. set item animator to DefaultAnimator
-        rvExamen.setItemAnimator(new DefaultItemAnimator());
+            // 1. get a reference to recyclerView
+            RecyclerView rvExamen = rootView.findViewById(R.id.RVExamen);
+            // 2. set layoutManger
+            rvExamen.setLayoutManager(new LinearLayoutManager(getActivity()));
+            // 3. create an adapter
+            ExamenAdapters mAdapter = new ExamenAdapters(listaExamen);
+            // 4. set adapter
+            rvExamen.setAdapter(mAdapter);
+            // 5. set item animator to DefaultAnimator
+            rvExamen.setItemAnimator(new DefaultItemAnimator());
+        }
 
         return rootView;
     }
