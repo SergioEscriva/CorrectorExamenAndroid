@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.universae.correctorexamenes.ArreglosBD;
@@ -61,7 +61,7 @@ public class ExamenFragment extends Fragment {
             // 1. get a reference to recyclerView
             RecyclerView rvExamen = rootView.findViewById(R.id.RVExamen);
             // 2. set layoutManger
-            rvExamen.setLayoutManager(new LinearLayoutManager(getActivity()));
+            rvExamen.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             // 3. create an adapter
             ExamenAdapters mAdapter = new ExamenAdapters(listaExamen, adapter);
             // 4. set adapter
