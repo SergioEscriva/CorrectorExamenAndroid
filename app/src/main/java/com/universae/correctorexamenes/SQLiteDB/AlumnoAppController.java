@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.universae.correctorexamenes.models.String;
+import com.universae.correctorexamenes.models.Alumno;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ public class AlumnoAppController {
     }
 
 
-    public int eliminarAlumno(String alumno) {
+    public int eliminarAlumno(Alumno alumno) {
 
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
         java.lang.String[] argumentos = {java.lang.String.valueOf(alumno.getIdentificacion())};
@@ -29,13 +29,13 @@ public class AlumnoAppController {
     }
 
 
-    public void nuevoAlumno(String alumno) {
+    public void nuevoAlumno(Alumno alumno) {
 
         // writable porque vamos a insertar
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
         ContentValues valoresParaInsertar = new ContentValues();
         //Comprobamos que el alumno no tenga ya corregido el mismo examen
-        ArrayList<String> bdAlumno = obtenerAlumno(alumno.getIdentificacion());
+        ArrayList<Alumno> bdAlumno = obtenerAlumno(alumno.getIdentificacion());
 
         if (bdAlumno.isEmpty()) {
             // Recuperamos Valores
@@ -46,7 +46,7 @@ public class AlumnoAppController {
             // Agregamos a la BD
             baseDeDatos.insert(NOMBRE_TABLA, null, valoresParaInsertar);
         } else {
-            for (String alumnoDB : bdAlumno) {
+            for (Alumno alumnoDB : bdAlumno) {
                 java.lang.String id = alumnoDB.getIdentificacion();
                 java.lang.String cod = alumnoDB.getCodigo();
                 if (id.equals(alumno.getIdentificacion()) && cod.equals(alumno.getCodigo())) {
@@ -69,8 +69,8 @@ public class AlumnoAppController {
     }
 
 
-    public ArrayList<String> obtenerAlumno(java.lang.String identificacion) {
-        ArrayList<String> alumnos = new ArrayList<>();
+    public ArrayList<Alumno> obtenerAlumno(java.lang.String identificacion) {
+        ArrayList<Alumno> alumnos = new ArrayList<>();
         // readable porque no vamos a modificar, solamente leer
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getReadableDatabase();
 
@@ -112,7 +112,7 @@ public class AlumnoAppController {
         java.lang.String codigoObtenidoDeBD = java.lang.String.valueOf(cursor.getString(1));
         java.lang.String respuestasObtenidoDeBD = java.lang.String.valueOf(cursor.getString(2));
         Long alumnoIdObtenidoDeBD = (cursor.getLong(3));
-        String usuarioObtenidaDeBD = new String(identificacionObtenidoDeBD, codigoObtenidoDeBD, respuestasObtenidoDeBD, alumnoIdObtenidoDeBD);
+        Alumno usuarioObtenidaDeBD = new Alumno(identificacionObtenidoDeBD, codigoObtenidoDeBD, respuestasObtenidoDeBD, alumnoIdObtenidoDeBD);
         alumnos.add(usuarioObtenidaDeBD);
 
         // Fin del ciclo. Cerramos cursor y regresamos la lista
