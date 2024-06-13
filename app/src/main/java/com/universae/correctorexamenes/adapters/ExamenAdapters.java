@@ -3,30 +3,34 @@ package com.universae.correctorexamenes.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.universae.correctorexamenes.R;
+
 import java.util.ArrayList;
 
 
 public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHolder> {
 
     private ArrayList<String> respuestasExamen;
+    private ArrayAdapter<String> adapter;
 
 
-
-    public ExamenAdapters(ArrayList<String> respuesta) {
+    public ExamenAdapters(ArrayList<String> respuesta, ArrayAdapter<String> adapter) {
 
         this.respuestasExamen = respuesta;
+        this.adapter = adapter;
     }
 
 
-    public void setRespuestasExamen(ArrayList<String> respuestasExamen) {
+    public void setRespuestasExamen(ArrayList<String> respuestasExamen, ArrayAdapter<String> adapter) {
         this.respuestasExamen = respuestasExamen;
+        this.adapter = adapter;
     }
 
 
@@ -40,18 +44,38 @@ public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        System.out.println("i " + i);
-        System.out.println("respuestas " + respuestasExamen.get(i) );
-        System.out.println("tamaño " + respuestasExamen.size());
+
         // Obtener la de nuestra lista gracias al índice i
-        String respuesta= respuestasExamen.get(i);
+        String respuesta = respuestasExamen.get(i);
+
+        int letraRespuesta = 0;
+
+        if (respuesta.equals("A")) {
+            letraRespuesta = 0;
+        } else if (respuesta.equals("B")) {
+            letraRespuesta = 1;
+        } else if (respuesta.equals("C")) {
+            letraRespuesta = 2;
+        } else if (respuesta.equals("D")) {
+            letraRespuesta = 3;
+        } else if (respuesta.equals("Null")) {
+            letraRespuesta = 4;
+        } else if (respuesta.equals("Empty")) {
+            letraRespuesta = 5;
+
+        }
+
+        //Spinner
+        myViewHolder.spinner.setAdapter(adapter);
+        myViewHolder.spinner.setSelection(letraRespuesta);
+
 
         // Obtener los datos de la lista
         String numeroPregunta = String.valueOf(i + 1);
 
         // Y poner a los TextView los datos con setText
         myViewHolder.tVNumeroPregunta.setText(numeroPregunta);
-        myViewHolder.eTRespuesta.setText(String.valueOf(respuesta));
+
 
     }
 
@@ -65,15 +89,18 @@ public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHo
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tVNumeroPregunta;
-        EditText eTRespuesta;
+
+        Spinner spinner;
 
 
         MyViewHolder(View itemView) {
             super(itemView);
             this.tVNumeroPregunta = itemView.findViewById(R.id.tVNumeroPregunta);
-            this.eTRespuesta = itemView.findViewById(R.id.eTRespuesta);
+
+            this.spinner = itemView.findViewById(R.id.spinnerExamen);
 
         }
+
     }
 
 }

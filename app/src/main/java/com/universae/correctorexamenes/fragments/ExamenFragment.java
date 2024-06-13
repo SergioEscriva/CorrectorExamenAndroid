@@ -1,9 +1,11 @@
 package com.universae.correctorexamenes.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 public class ExamenFragment extends Fragment {
     private String identificacion, codigo;
     private EditText etIdentificacion, etCodigo;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,10 @@ public class ExamenFragment extends Fragment {
 
 
         if (identificacion != null || codigo != null) {
-            System.out.println("SSSSS " + identificacion + " " + codigo);
+
+            // Get the activity context
+            Context context = getActivity();
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
 
             ArreglosBD arreglosBD = new ArreglosBD();
             ArrayList<String> listaExamen = arreglosBD.existeAlumnoEnDB(getContext(), identificacion, codigo);
@@ -55,7 +61,7 @@ public class ExamenFragment extends Fragment {
             // 2. set layoutManger
             rvExamen.setLayoutManager(new LinearLayoutManager(getActivity()));
             // 3. create an adapter
-            ExamenAdapters mAdapter = new ExamenAdapters(listaExamen);
+            ExamenAdapters mAdapter = new ExamenAdapters(listaExamen, adapter);
             // 4. set adapter
             rvExamen.setAdapter(mAdapter);
             // 5. set item animator to DefaultAnimator

@@ -327,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
         textPena.setVisibility(View.VISIBLE);
         textPenaNum.setVisibility(View.VISIBLE);
         spinnerPena.setVisibility(View.VISIBLE);
+        fabEditar.setVisibility(View.VISIBLE);
 
 
     }
@@ -613,6 +614,7 @@ public class MainActivity extends AppCompatActivity {
         textDNINum.setVisibility(View.INVISIBLE);
         textCodigo.setVisibility(View.INVISIBLE);
         textCodigoNum.setVisibility(View.INVISIBLE);
+        fabEditar.setVisibility(View.INVISIBLE);
     }
 
 
