@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
         String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imageViewMuestra.setImageBitmap(bitmap);
-        System.out.println(arrayDatosArriba);
+
         // Si es nulo los datos, no guarda.
         if (arrayDatosArriba.containsValue("Error")) {
             crearToast("NO GUARDADO, Error de identificación, volver a Escanear.");

@@ -30,11 +30,13 @@ public class ArreglosBD {
             }
         }
 
-        //        for (String respuestasAbajo : listaAbajoMarcados.values()) {
-        //            plantilla += respuestasAbajo + ",";
-        //
-        //        }
-        plantilla = listaAbajoMarcados.toString();
+                for (String respuestasAbajo : listaAbajoMarcados) {
+                    respuestasAbajo.replace("[]" , "");
+                    plantilla += respuestasAbajo + ",";
+
+                }
+
+
 
         switch (examenPlantilla) {
             case "examen":
