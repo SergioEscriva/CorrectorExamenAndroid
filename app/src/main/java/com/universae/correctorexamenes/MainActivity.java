@@ -237,7 +237,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, EditarActivity.class);
+                String identificacion = textDNINum.getText().toString();
+                intent.putExtra("identificacion", identificacion);
+                intent.putExtra("codigo", codigo);
                 startActivity(intent);
+
+
             }
 
 

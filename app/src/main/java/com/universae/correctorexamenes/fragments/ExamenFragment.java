@@ -1,5 +1,6 @@
 package com.universae.correctorexamenes.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,8 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.universae.correctorexamenes.ArreglosBD;
+import com.universae.correctorexamenes.EditarActivity;
+import com.universae.correctorexamenes.MainActivity;
 import com.universae.correctorexamenes.R;
 import com.universae.correctorexamenes.adapters.ExamenAdapters;
 
@@ -34,6 +38,8 @@ public class ExamenFragment extends Fragment {
     private String mParam2;
 
     private String identificacion, codigo;
+
+    private EditText etidentificacion, etcodigo;
     private RecyclerView rvExamen;
     public ExamenFragment() {
         // Required empty public constructor
@@ -79,10 +85,19 @@ public class ExamenFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_examen, container, false);
         ArreglosBD arreglosBD = new ArreglosBD();
-
+        etidentificacion = rootView.findViewById(R.id.eTIdentificacion);
+        etcodigo = rootView.findViewById(R.id.eTCodigo);
         ArrayList<String> listaExamen = new ArrayList<>();
-        identificacion = "54872351E";
-        codigo = "016";
+        EditarActivity  editarActivity = new EditarActivity();
+//        identificacion = editarActivity.getIdentificacion();
+//        codigo = editarActivity.getCodigo();
+         identificacion = getArguments().getString("identificacion");
+        codigo = getArguments().getString("codigo");
+        //identificacion = etidentificacion.getText().toString();
+        //codigo = etcodigo.getText().toString();
+        System.out.println("i " + identificacion);
+        System.out.println("c " + codigo);
+
 
         listaExamen = arreglosBD.existeAlumnoEnDB(getContext(), identificacion, codigo);
 
