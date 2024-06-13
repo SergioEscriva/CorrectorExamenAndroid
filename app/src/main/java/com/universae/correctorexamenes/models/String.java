@@ -1,27 +1,27 @@
 package com.universae.correctorexamenes.models;
 
-public class Alumno {
-    private String identificacion;
-    private String codigo;
-    private String respuestas;
+public class String {
+    private java.lang.String identificacion;
+    private java.lang.String codigo;
+    private java.lang.String respuestas;
     private long id;
 
-    public Alumno(long id) {
+    public String(long id) {
         this.id = id;
     }
 
-    public Alumno(String codigo) {
+    public String(java.lang.String codigo) {
         this.codigo = codigo;
     }
 
-    public Alumno(String identificacion, String codigo, String respuestas) {
+    public String(java.lang.String identificacion, java.lang.String codigo, java.lang.String respuestas) {
         this.codigo = codigo;
         this.respuestas = respuestas;
         this.identificacion = identificacion;
     }
 
     // Constructor para cuando instanciamos desde la BD
-    public Alumno(String identificacion, String codigo, String respuestas, long id) {
+    public String(java.lang.String identificacion, java.lang.String codigo, java.lang.String respuestas, long id) {
         this.identificacion = identificacion;
         this.codigo = codigo;
         this.respuestas = respuestas;
@@ -37,32 +37,32 @@ public class Alumno {
         this.id = id;
     }
 
-    public String getCodigo() {
+    public java.lang.String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(java.lang.String codigo) {
         this.codigo = codigo;
     }
 
-    public String getRespuestas() {
+    public java.lang.String getRespuestas() {
         return respuestas;
     }
 
-    public void setRespuestas(String respuestas) {
+    public void setRespuestas(java.lang.String respuestas) {
         this.respuestas = respuestas;
     }
 
-    public String getIdentificacion() {
+    public java.lang.String getIdentificacion() {
         return identificacion;
     }
 
-    public void setIdentificacion(String identificacion) {
+    public void setIdentificacion(java.lang.String identificacion) {
         this.identificacion = identificacion;
     }
 
     @Override
-    public String toString() {
+    public java.lang.String toString() {
         return "Alumno{" +
                 ", identificacion='" + identificacion + '\'' +
                 ", codigo='" + codigo + '\'' +

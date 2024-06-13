@@ -1,4 +1,4 @@
-package com.universae.correctorexamenes;
+package com.universae.correctorexamenes.fragments;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.universae.correctorexamenes.R;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.universae.correctorexamenes.models.Alumno;
+import com.universae.correctorexamenes.models.String;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class AlumnoAppController {
 
     private AyudanteBaseDeDatos ayudanteBaseDeDatos;
-    private String NOMBRE_TABLA = "alumno";
+    private java.lang.String NOMBRE_TABLA = "alumno";
 
 
     public AlumnoAppController(Context contexto) {
@@ -21,21 +21,21 @@ public class AlumnoAppController {
     }
 
 
-    public int eliminarAlumno(Alumno alumno) {
+    public int eliminarAlumno(String alumno) {
 
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
-        String[] argumentos = {String.valueOf(alumno.getIdentificacion())};
+        java.lang.String[] argumentos = {java.lang.String.valueOf(alumno.getIdentificacion())};
         return baseDeDatos.delete(NOMBRE_TABLA, "identificacion = ?", argumentos);
     }
 
 
-    public void nuevoAlumno(Alumno alumno) {
+    public void nuevoAlumno(String alumno) {
 
         // writable porque vamos a insertar
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
         ContentValues valoresParaInsertar = new ContentValues();
         //Comprobamos que el alumno no tenga ya corregido el mismo examen
-        ArrayList<Alumno> bdAlumno = obtenerAlumno(alumno.getIdentificacion());
+        ArrayList<String> bdAlumno = obtenerAlumno(alumno.getIdentificacion());
 
         if (bdAlumno.isEmpty()) {
             // Recuperamos Valores
@@ -46,9 +46,9 @@ public class AlumnoAppController {
             // Agregamos a la BD
             baseDeDatos.insert(NOMBRE_TABLA, null, valoresParaInsertar);
         } else {
-            for (Alumno alumnoDB : bdAlumno) {
-                String id = alumnoDB.getIdentificacion();
-                String cod = alumnoDB.getCodigo();
+            for (String alumnoDB : bdAlumno) {
+                java.lang.String id = alumnoDB.getIdentificacion();
+                java.lang.String cod = alumnoDB.getCodigo();
                 if (id.equals(alumno.getIdentificacion()) && cod.equals(alumno.getCodigo())) {
 
                 } else {
@@ -69,16 +69,16 @@ public class AlumnoAppController {
     }
 
 
-    public ArrayList<Alumno> obtenerAlumno(String identificacion) {
-        ArrayList<Alumno> alumnos = new ArrayList<>();
+    public ArrayList<String> obtenerAlumno(java.lang.String identificacion) {
+        ArrayList<String> alumnos = new ArrayList<>();
         // readable porque no vamos a modificar, solamente leer
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getReadableDatabase();
 
 
         // Los alumnos son tods.
-        String selection = "identificacion= ?";
-        String[] selectionArgs = {identificacion};
-        String[] columnasAConsultar = {"identificacion", "codigo", "respuestas", "id"};
+        java.lang.String selection = "identificacion= ?";
+        java.lang.String[] selectionArgs = {identificacion};
+        java.lang.String[] columnasAConsultar = {"identificacion", "codigo", "respuestas", "id"};
 
         // Los alumnos son de toda la app.
 
@@ -108,11 +108,11 @@ public class AlumnoAppController {
 
 
         // El 0 es el número de la columna, como seleccionamos
-        String identificacionObtenidoDeBD = String.valueOf(cursor.getString(0));
-        String codigoObtenidoDeBD = String.valueOf(cursor.getString(1));
-        String respuestasObtenidoDeBD = String.valueOf(cursor.getString(2));
+        java.lang.String identificacionObtenidoDeBD = java.lang.String.valueOf(cursor.getString(0));
+        java.lang.String codigoObtenidoDeBD = java.lang.String.valueOf(cursor.getString(1));
+        java.lang.String respuestasObtenidoDeBD = java.lang.String.valueOf(cursor.getString(2));
         Long alumnoIdObtenidoDeBD = (cursor.getLong(3));
-        Alumno usuarioObtenidaDeBD = new Alumno(identificacionObtenidoDeBD, codigoObtenidoDeBD, respuestasObtenidoDeBD, alumnoIdObtenidoDeBD);
+        String usuarioObtenidaDeBD = new String(identificacionObtenidoDeBD, codigoObtenidoDeBD, respuestasObtenidoDeBD, alumnoIdObtenidoDeBD);
         alumnos.add(usuarioObtenidaDeBD);
 
         // Fin del ciclo. Cerramos cursor y regresamos la lista
