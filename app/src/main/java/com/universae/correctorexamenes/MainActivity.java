@@ -2,6 +2,7 @@ package com.universae.correctorexamenes;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,6 +35,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.universae.correctorexamenes.models.Par;
@@ -76,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView textAfinar, textAfinarNum;
     private ProgressBar progressBar;
     private Spinner spinner, spinnerPena;
+
+    private FloatingActionButton fabEditar;
 
 
     private ArrayList<String> plantillaDB = new ArrayList<>();
@@ -130,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         textDNI = findViewById(R.id.textDNI);
         textDNINum = findViewById(R.id.textDNINum);
+        fabEditar = findViewById(R.id.fab_editar);
 
 
         //Spinner
@@ -228,9 +233,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
+        fabEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EditarActivity.class);
+                startActivity(intent);
+            }
 
+
+        });
 
     }
+
+
+
+
 
 
     private void cuentaMarcadosExamen() {
