@@ -1,108 +1,52 @@
 package com.universae.correctorexamenes.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-
 import com.universae.correctorexamenes.ArreglosBD;
-import com.universae.correctorexamenes.EditarActivity;
-import com.universae.correctorexamenes.MainActivity;
 import com.universae.correctorexamenes.R;
 import com.universae.correctorexamenes.adapters.ExamenAdapters;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ExamenFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ExamenFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private String identificacion, codigo;
-
-    private EditText etidentificacion, etcodigo;
-    private RecyclerView rvExamen;
-    public ExamenFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ExamenFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ExamenFragment newInstance(String param1, String param2) {
-        ExamenFragment fragment = new ExamenFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private EditText etIdentificacion, etCodigo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-
+            identificacion = getArguments().getString("identificacion");
+            codigo = getArguments().getString("codigo");
         }
-
-
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_examen, container, false);
+
+        etIdentificacion = rootView.findViewById(R.id.eTIdentificacion);
+        etCodigo = rootView.findViewById(R.id.eTCodigo);
+
+        // Set the values from the arguments
+        etIdentificacion.setText(identificacion);
+        etCodigo.setText(codigo);
+
         ArreglosBD arreglosBD = new ArreglosBD();
-        etidentificacion = rootView.findViewById(R.id.eTIdentificacion);
-        etcodigo = rootView.findViewById(R.id.eTCodigo);
-        ArrayList<String> listaExamen = new ArrayList<>();
-        EditarActivity  editarActivity = new EditarActivity();
-//        identificacion = editarActivity.getIdentificacion();
-//        codigo = editarActivity.getCodigo();
-         identificacion = getArguments().getString("identificacion");
-        codigo = getArguments().getString("codigo");
-        //identificacion = etidentificacion.getText().toString();
-        //codigo = etcodigo.getText().toString();
-        System.out.println("i " + identificacion);
-        System.out.println("c " + codigo);
-
-
-        listaExamen = arreglosBD.existeAlumnoEnDB(getContext(), identificacion, codigo);
+        ArrayList<String> listaExamen = arreglosBD.existeAlumnoEnDB(getContext(), identificacion, codigo);
 
         // 1. get a reference to recyclerView
-        rvExamen = rootView.findViewById(R.id.RVExamen);
+        RecyclerView rvExamen = rootView.findViewById(R.id.RVExamen);
         // 2. set layoutManger
         rvExamen.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -116,9 +60,5 @@ public class ExamenFragment extends Fragment {
 
         return rootView;
     }
-
-
-
-
 
 }

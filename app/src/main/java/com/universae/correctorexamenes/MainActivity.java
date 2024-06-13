@@ -248,11 +248,8 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
     }
-
-
-
-
 
 
     private void cuentaMarcadosExamen() {
@@ -503,9 +500,9 @@ public class MainActivity extends AppCompatActivity {
         buffer.get(bytes);
 
         /// Busca los círculos en la imagen TODO Para Pruebas jpg del directorio.
-        // String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraPlantilla.jpg";  /// Imagen principal
-        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
-        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
+        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraPlantilla.jpg";  /// Imagen principal
+        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
+        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
         //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMal.jpg";
         Mat mat = Imgcodecs.imread(imagePathPrueba);
         /// Todo descomentar para utilizar cámara.
