@@ -22,17 +22,15 @@ import java.util.ArrayList;
 
 public class PlantillaFragment extends Fragment {
 
-    private String identificacion, codigo;
-    private EditText etIdentificacion, etCodigo;
+    private String codigo;
+    private EditText  etCodigo;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            identificacion = getArguments().getString("identificacion");
             codigo = getArguments().getString("codigo");
-
         }
     }
 
@@ -45,11 +43,10 @@ public class PlantillaFragment extends Fragment {
         etCodigo = rootView.findViewById(R.id.eTCodigo);
 
         // Set the values from the arguments
-        etIdentificacion.setText(identificacion);
         etCodigo.setText(codigo);
 
 
-        if (identificacion != null || codigo != null) {
+        if ( codigo != null) {
 
             // Get the activity context
             Context context = getActivity();
