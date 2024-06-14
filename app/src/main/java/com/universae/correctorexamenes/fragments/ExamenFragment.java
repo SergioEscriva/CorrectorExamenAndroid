@@ -63,7 +63,7 @@ public class ExamenFragment extends Fragment {
                     if (a.getCodigo().equals(codigo) && a.getIdentificacion().equals(identificacion)) {
                         Long id = a.getId();
                         String lista = Arrays.toString(getLista());
-                        lista.replace("[]", "");
+                        lista.replace("[", "").replace("]","");
                         Alumno examenCambiado = new Alumno(identificacion, codigo, lista, id);
 
                         alumnoAppController.guardarCambios(examenCambiado);

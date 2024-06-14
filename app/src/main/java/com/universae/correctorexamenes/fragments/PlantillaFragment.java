@@ -55,12 +55,14 @@ public class PlantillaFragment extends Fragment {
                 PlantillaAppController plantillaAppController = new PlantillaAppController(getContext());
                 ArrayList<Plantilla> plantilla = plantillaAppController.obtenerPlantillaId(codigo);
 
+
                 for (Plantilla p : plantilla) {
                     String coordenadas = p.getCoordenadas();
+                    long id = p.getId();
                     ExamenFragment examenFragment = new ExamenFragment();
                         String lista = Arrays.toString(examenFragment.getLista());
-                        lista.replace("[]", "");
-                        Plantilla plantillaCambiado = new Plantilla(codigo, lista, coordenadas);
+                        lista =lista.replace("[]", "");
+                        Plantilla plantillaCambiado = new Plantilla(codigo, lista, coordenadas, id);
 
                         plantillaAppController.guardarCambios(plantillaCambiado);
 

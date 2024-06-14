@@ -105,10 +105,11 @@ public class PlantillaAppController {
         valoresParaActualizar.put("coordenadas", plantillaEditado.getCoordenadas());
         valoresParaActualizar.put("id", plantillaEditado.getId());
 
+
         // where id...
         String campoParaActualizar = "codigo = ?";
         // ... = idUsuario
-        String[] argumentosParaActualizar = {String.valueOf(plantillaEditado.getId())};
+        String[] argumentosParaActualizar = {String.valueOf(plantillaEditado.getCodigo())};
         return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
     }
 
