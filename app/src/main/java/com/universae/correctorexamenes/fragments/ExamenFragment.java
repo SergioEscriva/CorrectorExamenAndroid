@@ -7,21 +7,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.universae.correctorexamenes.ArreglosBD;
 import com.universae.correctorexamenes.R;
 import com.universae.correctorexamenes.adapters.ExamenAdapters;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ExamenFragment extends Fragment {
     private String identificacion, codigo;
     private EditText etIdentificacion, etCodigo;
+
+    private FloatingActionButton guardarFAB;
+
+    private ExamenAdapters mAdapter;
+    private RecyclerView rvExamen;
+    private ArrayAdapter<String> adapter;
+
+
+
+
+    private static String[] lista;
 
 
     @Override
@@ -41,6 +55,16 @@ public class ExamenFragment extends Fragment {
 
         etIdentificacion = rootView.findViewById(R.id.eTIdentificacion);
         etCodigo = rootView.findViewById(R.id.eTCodigo);
+        guardarFAB = rootView.findViewById(R.id.fabGuardarE);
+
+        guardarFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refrescarAdaptador();
+                System.out.println("lista" + Arrays.toString(getLista()));
+            }
+        });
+
 
         // Set the values from the arguments
         etIdentificacion.setText(identificacion);
@@ -51,17 +75,20 @@ public class ExamenFragment extends Fragment {
 
             // Get the activity context
             Context context = getActivity();
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
+            adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
+
+
+
 
             ArreglosBD arreglosBD = new ArreglosBD();
             ArrayList<String> listaExamen = arreglosBD.existeAlumnoEnDB(getContext(), identificacion, codigo);
             String[] listaNueva = cambiarLista(listaExamen);
             // 1. get a reference to recyclerView
-            RecyclerView rvExamen = rootView.findViewById(R.id.RVExamen);
+             rvExamen = rootView.findViewById(R.id.RVExamen);
             // 2. set layoutManger
             rvExamen.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             // 3. create an adapter
-            ExamenAdapters mAdapter = new ExamenAdapters(listaNueva, adapter);
+            mAdapter = new ExamenAdapters(listaNueva, adapter);
             // 4. set adapter
             rvExamen.setAdapter(mAdapter);
             // 5. set item animator to DefaultAnimator
@@ -75,12 +102,29 @@ public class ExamenFragment extends Fragment {
 
 
         for (int i = 0; i <= 39; i++){
-            System.out.println("tamaño " + listaExamen.get(i));
             listaNueva[i] = listaExamen.get(i);
 
         }
 
         return listaNueva;
     }
+
+
+    public  String[] getLista() {
+        return lista;
+    }
+
+    public  void setLista(String[] lista) {
+        ExamenFragment.lista = lista;
+    }
+    public void refrescarAdaptador(){
+
+        mAdapter = new ExamenAdapters(getLista(), adapter);
+
+        rvExamen.setAdapter(mAdapter);
+
+        rvExamen.setItemAnimator(new DefaultItemAnimator());
+    }
+
 
 }
