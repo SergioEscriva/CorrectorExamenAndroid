@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.universae.correctorexamenes.models.Alumno;
 import com.universae.correctorexamenes.models.Plantilla;
 
 import java.util.ArrayList;
@@ -94,6 +95,21 @@ public class PlantillaAppController {
         cursor.close();
 
         return plantillas;
+    }
+    public int guardarCambios(Plantilla plantillaEditado) {
+        SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
+        ContentValues valoresParaActualizar = new ContentValues();
+
+        valoresParaActualizar.put("codigo", plantillaEditado.getCodigo());
+        valoresParaActualizar.put("respuestas", plantillaEditado.getRespuestas());
+        valoresParaActualizar.put("coordenadas", plantillaEditado.getCoordenadas());
+        valoresParaActualizar.put("id", plantillaEditado.getId());
+
+        // where id...
+        String campoParaActualizar = "codigo = ?";
+        // ... = idUsuario
+        String[] argumentosParaActualizar = {String.valueOf(plantillaEditado.getId())};
+        return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
     }
 
 }

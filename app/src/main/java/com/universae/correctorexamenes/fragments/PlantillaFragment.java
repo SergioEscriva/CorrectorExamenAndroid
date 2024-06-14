@@ -13,17 +13,25 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.universae.correctorexamenes.ArreglosBD;
 import com.universae.correctorexamenes.R;
+import com.universae.correctorexamenes.SQLiteDB.AlumnoAppController;
+import com.universae.correctorexamenes.SQLiteDB.PlantillaAppController;
 import com.universae.correctorexamenes.adapters.ExamenAdapters;
+import com.universae.correctorexamenes.models.Alumno;
+import com.universae.correctorexamenes.models.Plantilla;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class PlantillaFragment extends Fragment {
 
     private String codigo;
     private EditText  etCodigo;
+
+    private FloatingActionButton guardarFAB;
 
 
     @Override
@@ -38,9 +46,32 @@ public class PlantillaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_plantilla, container, false);
-
-
         etCodigo = rootView.findViewById(R.id.eTCodigo);
+        guardarFAB = rootView.findViewById(R.id.fabGuardarP);
+
+        guardarFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlantillaAppController plantillaAppController = new PlantillaAppController(getContext());
+                ArrayList<Plantilla> plantilla = plantillaAppController.obtenerPlantillaId(codigo);
+
+                for (Plantilla p : plantilla) {
+                    String coordenadas = p.getCoordenadas();
+                    ExamenFragment examenFragment = new ExamenFragment();
+                        String lista = Arrays.toString(examenFragment.getLista());
+                        lista.replace("[]", "");
+                        Plantilla plantillaCambiado = new Plantilla(codigo, lista, coordenadas);
+
+                        plantillaAppController.guardarCambios(plantillaCambiado);
+
+
+                }
+
+
+            }
+        });
+
+
 
         // Set the values from the arguments
         etCodigo.setText(codigo);
