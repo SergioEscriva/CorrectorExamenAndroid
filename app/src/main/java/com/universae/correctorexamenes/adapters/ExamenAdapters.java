@@ -14,9 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.universae.correctorexamenes.R;
 import com.universae.correctorexamenes.fragments.ExamenFragment;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 
 public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHolder> {
 
@@ -24,7 +21,6 @@ public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHo
     private ArrayAdapter<String> adapter;
 
     private String letra;
-
 
 
     public ExamenAdapters(String[] respuesta, ArrayAdapter<String> adapter) {
@@ -58,24 +54,24 @@ public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHo
         int letraRespuesta = 0;
         letra = "";
 
-        if (respuesta.equals("A")) {
+        if (respuesta.contains("A")) {
             letraRespuesta = 0;
-            letra= "A";
-        } else if (respuesta.equals("B")) {
+            letra = "A";
+        } else if (respuesta.contains("B")) {
             letraRespuesta = 1;
-            letra= "B";
-        } else if (respuesta.equals("C")) {
+            letra = "B";
+        } else if (respuesta.contains("C")) {
             letraRespuesta = 2;
-            letra= "C";
-        } else if (respuesta.equals("D")) {
+            letra = "C";
+        } else if (respuesta.contains("D")) {
             letraRespuesta = 3;
-            letra= "D";
-        } else if (respuesta.equals("Null")) {
+            letra = "D";
+        } else if (respuesta.contains("Null")) {
             letraRespuesta = 4;
-            letra= "Null";
-        } else if (respuesta.equals("Empty")) {
+            letra = "Null";
+        } else if (respuesta.contains("Empty")) {
             letraRespuesta = 5;
-            letra= "Empty";
+            letra = "Empty";
 
         }
 
@@ -84,24 +80,27 @@ public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHo
         myViewHolder.spinner.setSelection(letraRespuesta);
         String letra1 = myViewHolder.spinner.getSelectedItem().toString();
 
-        respuestasExamen[i] = letra1;
-        System.out.println("res " + Arrays.toString(respuestasExamen));
-
-
-
-
-
         // Obtener los datos de la lista
         String numeroPregunta = String.valueOf(i + 1);
 
         // Y poner a los TextView los datos con setText
-                myViewHolder.tVNumeroPregunta.setText(numeroPregunta);
+        myViewHolder.tVNumeroPregunta.setText(numeroPregunta);
+        myViewHolder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                respuestasExamen[Integer.parseInt(numeroPregunta) - 1] = item;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         ExamenFragment examenFragment = new ExamenFragment();
         examenFragment.setLista(respuestasExamen);
-
-
-
 
 
     }

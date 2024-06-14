@@ -69,16 +69,16 @@ public class AlumnoAppController {
     }
 
 
-    public ArrayList<Alumno> obtenerAlumno(java.lang.String identificacion) {
+    public ArrayList<Alumno> obtenerAlumno(String identificacion) {
         ArrayList<Alumno> alumnos = new ArrayList<>();
         // readable porque no vamos a modificar, solamente leer
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getReadableDatabase();
 
 
         // Los alumnos son tods.
-        java.lang.String selection = "identificacion= ?";
-        java.lang.String[] selectionArgs = {identificacion};
-        java.lang.String[] columnasAConsultar = {"identificacion", "codigo", "respuestas", "id"};
+        String selection = "identificacion= ?";
+        String[] selectionArgs = {identificacion};
+        String[] columnasAConsultar = {"identificacion", "codigo", "respuestas", "id"};
 
         // Los alumnos son de toda la app.
 
@@ -119,6 +119,22 @@ public class AlumnoAppController {
         cursor.close();
 
         return alumnos;
+    }
+
+    public int guardarCambios(Alumno examenEditado) {
+        SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
+        ContentValues valoresParaActualizar = new ContentValues();
+
+        valoresParaActualizar.put("codigo", examenEditado.getCodigo());
+        valoresParaActualizar.put("identificacion", examenEditado.getIdentificacion());
+        valoresParaActualizar.put("respuestas", examenEditado.getRespuestas());
+        valoresParaActualizar.put("id", examenEditado.getId());
+
+        // where id...
+        String campoParaActualizar = "id = ?";
+        // ... = idUsuario
+        String[] argumentosParaActualizar = {String.valueOf(examenEditado.getId())};
+        return baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, argumentosParaActualizar);
     }
 
 }

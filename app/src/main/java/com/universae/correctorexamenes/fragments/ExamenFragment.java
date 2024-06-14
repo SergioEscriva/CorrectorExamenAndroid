@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -17,25 +16,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.universae.correctorexamenes.ArreglosBD;
 import com.universae.correctorexamenes.R;
+import com.universae.correctorexamenes.SQLiteDB.AlumnoAppController;
 import com.universae.correctorexamenes.adapters.ExamenAdapters;
+import com.universae.correctorexamenes.models.Alumno;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ExamenFragment extends Fragment {
+    private static String[] lista;
     private String identificacion, codigo;
     private EditText etIdentificacion, etCodigo;
-
     private FloatingActionButton guardarFAB;
-
     private ExamenAdapters mAdapter;
     private RecyclerView rvExamen;
     private ArrayAdapter<String> adapter;
-
-
-
-
-    private static String[] lista;
 
 
     @Override
@@ -52,16 +47,31 @@ public class ExamenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_examen, container, false);
+        View rootView2 = inflater.inflate(R.layout.rellenar_rv, container, false);
 
         etIdentificacion = rootView.findViewById(R.id.eTIdentificacion);
         etCodigo = rootView.findViewById(R.id.eTCodigo);
         guardarFAB = rootView.findViewById(R.id.fabGuardarE);
 
+
         guardarFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refrescarAdaptador();
-                System.out.println("lista" + Arrays.toString(getLista()));
+                AlumnoAppController alumnoAppController = new AlumnoAppController(getContext());
+                ArrayList<Alumno> alumno = alumnoAppController.obtenerAlumno(identificacion);
+                for (Alumno a : alumno) {
+                    if (a.getCodigo().equals(codigo) && a.getIdentificacion().equals(identificacion)) {
+                        Long id = a.getId();
+                        String lista = Arrays.toString(getLista());
+                        lista.replace("[]", "");
+                        Alumno examenCambiado = new Alumno(identificacion, codigo, lista, id);
+
+                        alumnoAppController.guardarCambios(examenCambiado);
+
+                    }
+                }
+
+
             }
         });
 
@@ -78,13 +88,12 @@ public class ExamenFragment extends Fragment {
             adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
 
 
-
-
             ArreglosBD arreglosBD = new ArreglosBD();
             ArrayList<String> listaExamen = arreglosBD.existeAlumnoEnDB(getContext(), identificacion, codigo);
             String[] listaNueva = cambiarLista(listaExamen);
+
             // 1. get a reference to recyclerView
-             rvExamen = rootView.findViewById(R.id.RVExamen);
+            rvExamen = rootView.findViewById(R.id.RVExamen);
             // 2. set layoutManger
             rvExamen.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             // 3. create an adapter
@@ -97,11 +106,12 @@ public class ExamenFragment extends Fragment {
 
         return rootView;
     }
-    public String[] cambiarLista(ArrayList<String> listaExamen){
+
+    public String[] cambiarLista(ArrayList<String> listaExamen) {
         String[] listaNueva = new String[40];
 
 
-        for (int i = 0; i <= 39; i++){
+        for (int i = 0; i <= 39; i++) {
             listaNueva[i] = listaExamen.get(i);
 
         }
@@ -110,20 +120,12 @@ public class ExamenFragment extends Fragment {
     }
 
 
-    public  String[] getLista() {
+    public String[] getLista() {
         return lista;
     }
 
-    public  void setLista(String[] lista) {
+    public void setLista(String[] lista) {
         ExamenFragment.lista = lista;
-    }
-    public void refrescarAdaptador(){
-
-        mAdapter = new ExamenAdapters(getLista(), adapter);
-
-        rvExamen.setAdapter(mAdapter);
-
-        rvExamen.setItemAnimator(new DefaultItemAnimator());
     }
 
 
