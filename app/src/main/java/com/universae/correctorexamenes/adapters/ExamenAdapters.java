@@ -17,18 +17,18 @@ import java.util.ArrayList;
 
 public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHolder> {
 
-    private ArrayList<String> respuestasExamen;
+    private String[] respuestasExamen;
     private ArrayAdapter<String> adapter;
 
 
-    public ExamenAdapters(ArrayList<String> respuesta, ArrayAdapter<String> adapter) {
+    public ExamenAdapters(String[] respuesta, ArrayAdapter<String> adapter) {
 
         this.respuestasExamen = respuesta;
         this.adapter = adapter;
     }
 
 
-    public void setRespuestasExamen(ArrayList<String> respuestasExamen, ArrayAdapter<String> adapter) {
+    public void setRespuestasExamen(String[] respuestasExamen, ArrayAdapter<String> adapter) {
         this.respuestasExamen = respuestasExamen;
         this.adapter = adapter;
     }
@@ -46,7 +46,7 @@ public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
 
         // Obtener la de nuestra lista gracias al índice i
-        String respuesta = respuestasExamen.get(i);
+        String respuesta = respuestasExamen[i];
 
         int letraRespuesta = 0;
 
@@ -75,7 +75,9 @@ public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHo
 
         // Y poner a los TextView los datos con setText
                 myViewHolder.tVNumeroPregunta.setText(numeroPregunta);
-        //        String[] hola = {respuesta.toString()};
+                String[] hola = {respuesta.toString()};
+
+
         //        hola[i] = adapter.getItem(i);
         //        System.out.println(Arrays.toString(hola));
 
@@ -84,7 +86,8 @@ public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHo
 
     @Override
     public int getItemCount() {
-        return respuestasExamen.size();
+        int tamano = respuestasExamen.length;
+        return tamano;
     }
 
 

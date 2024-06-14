@@ -54,13 +54,15 @@ public class PlantillaFragment extends Fragment {
 
             ArreglosBD arreglosBD = new ArreglosBD();
             ArrayList<String> listaExamen = arreglosBD.existePlantillaEnDB(getContext(), codigo);
+            ExamenFragment examenFragment = new ExamenFragment();
+            String[] listaNueva = examenFragment.cambiarLista(listaExamen);
 
             // 1. get a reference to recyclerView
             RecyclerView rvExamen = rootView.findViewById(R.id.RVExamen);
             // 2. set layoutManger
             rvExamen.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             // 3. create an adapter
-            ExamenAdapters mAdapter = new ExamenAdapters(listaExamen, adapter);
+            ExamenAdapters mAdapter = new ExamenAdapters(listaNueva, adapter);
             // 4. set adapter
             rvExamen.setAdapter(mAdapter);
             // 5. set item animator to DefaultAnimator

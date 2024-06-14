@@ -22,16 +22,16 @@
         android:layout_width="283dp"
         android:layout_height="39dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="40dp"
         android:hint="hint"
         app:layout_constraintStart_toEndOf="@+id/tVCodigo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RVExamen"
-        android:layout_width="404dp"
-        android:layout_height="504dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="398dp"
+        android:layout_height="671dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

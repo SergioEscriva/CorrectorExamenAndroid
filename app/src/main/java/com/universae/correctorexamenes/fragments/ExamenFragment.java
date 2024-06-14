@@ -55,13 +55,13 @@ public class ExamenFragment extends Fragment {
 
             ArreglosBD arreglosBD = new ArreglosBD();
             ArrayList<String> listaExamen = arreglosBD.existeAlumnoEnDB(getContext(), identificacion, codigo);
-
+            String[] listaNueva = cambiarLista(listaExamen);
             // 1. get a reference to recyclerView
             RecyclerView rvExamen = rootView.findViewById(R.id.RVExamen);
             // 2. set layoutManger
             rvExamen.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             // 3. create an adapter
-            ExamenAdapters mAdapter = new ExamenAdapters(listaExamen, adapter);
+            ExamenAdapters mAdapter = new ExamenAdapters(listaNueva, adapter);
             // 4. set adapter
             rvExamen.setAdapter(mAdapter);
             // 5. set item animator to DefaultAnimator
@@ -69,6 +69,18 @@ public class ExamenFragment extends Fragment {
         }
 
         return rootView;
+    }
+    public String[] cambiarLista(ArrayList<String> listaExamen){
+        String[] listaNueva = new String[40];
+
+
+        for (int i = 0; i <= 39; i++){
+            System.out.println("tamaño " + listaExamen.get(i));
+            listaNueva[i] = listaExamen.get(i);
+
+        }
+
+        return listaNueva;
     }
 
 }
