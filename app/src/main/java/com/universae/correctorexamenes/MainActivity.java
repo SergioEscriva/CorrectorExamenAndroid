@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
 
-                    crearToast(String.format("Plantilla de correción %s", codigo));
+                    crearToast(String.format("Examen corregido"));
                     image_capture_button.setText("Escanear Examen");
 
                     calcularNota(examenDB);

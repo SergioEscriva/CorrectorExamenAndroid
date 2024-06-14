@@ -59,7 +59,7 @@ public class ExamenFragment extends Fragment {
             // 1. get a reference to recyclerView
             RecyclerView rvExamen = rootView.findViewById(R.id.RVExamen);
             // 2. set layoutManger
-            rvExamen.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            rvExamen.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             // 3. create an adapter
             ExamenAdapters mAdapter = new ExamenAdapters(listaExamen, adapter);
             // 4. set adapter
