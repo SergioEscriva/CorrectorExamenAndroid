@@ -203,12 +203,12 @@ public class BuscarCirculos {
             // Calculate radius based on your requirements (e.g., constant radius or dynamic radius calculation)
             double radius = calculateRadius(x, y); // Replace with your radius calculation logic
 
-            // Draw the circle
+            // Dibuja círculo
             Point center = new Point(x, y);
-            Imgproc.circle(imgOriginalMat, center, (int) Math.round(radius + 10), new Scalar(250, 0, 0), 3);
+            Imgproc.circle(imgOriginalMat, center, (int) Math.round(radius + 20), new Scalar(0, 255, 0), 3);
         }
-   
-        //Save the modified image
+
+        //Guardar Imagen
         String rutaCirculosCorregidos = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
         Imgcodecs.imwrite(rutaCirculosCorregidos, imgOriginalMat);
 

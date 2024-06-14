@@ -38,6 +38,7 @@ public class PlantillaAppController {
 
         valoresParaInsertar.put("codigo", plantilla.getCodigo());
         valoresParaInsertar.put("respuestas", plantilla.getRespuestas());
+        valoresParaInsertar.put("coordenadas", plantilla.getCoordenadas());
 
         // Agregamos a la BD
         long resultado = baseDeDatos.insert(NOMBRE_TABLA, null, valoresParaInsertar);
@@ -54,7 +55,7 @@ public class PlantillaAppController {
         // Los plantillas son tods.
         String selection = "codigo= ?";
         String[] selectionArgs = {codigo};
-        String[] columnasAConsultar = {"codigo", "respuestas", "id"};
+        String[] columnasAConsultar = {"codigo", "respuestas", "coordenadas", "id"};
 
         // Los plantillas son de toda la app.
 
@@ -84,8 +85,9 @@ public class PlantillaAppController {
 
         String codigoObtenidoDeBD = cursor.getString(0);
         String respuestasObtenidoDeBD = cursor.getString(1);
-        Long plantillaIdObtenidoDeBD = cursor.getLong(2);
-        Plantilla usuarioObtenidaDeBD = new Plantilla(codigoObtenidoDeBD, respuestasObtenidoDeBD, plantillaIdObtenidoDeBD);
+        String coordenadasObtenidoDeBD = cursor.getString(2);
+        Long plantillaIdObtenidoDeBD = cursor.getLong(3);
+        Plantilla usuarioObtenidaDeBD = new Plantilla(codigoObtenidoDeBD, respuestasObtenidoDeBD, coordenadasObtenidoDeBD, plantillaIdObtenidoDeBD);
         plantillas.add(usuarioObtenidaDeBD);
 
         // Fin del ciclo. Cerramos cursor y regresamos la lista

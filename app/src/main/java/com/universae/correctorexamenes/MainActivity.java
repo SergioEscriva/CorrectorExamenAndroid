@@ -205,19 +205,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // marca los circulos que no se detectaron como marcados
-                buscarCirculos.correcionCirculos(listaMarcadosExamen, imagenMat1);
                 cuentaMarcadosExamen();
                 plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigo);
 
                 if (codigo.contains("Error") || textDNINum.getText().toString().contains("Error")) {
-                    crearToast("NO GUARDADO, Error en el código, volver a Escanear.");
+                    crearToast("NO GUARDADO, Error en el código, o DNI, volver a Escanear.");
                     repetirFoto();
                 } else if (plantillaDB.isEmpty()) {
                     image_capture_button.setText("Escanear Plantilla");
+                    crearToast("DETECTADA PLANTILLA NUEVA");
                     botones("plantilla");
 
                 } else {
+
                     crearToast(String.format("Plantilla de correción %s", codigo));
                     image_capture_button.setText("Escanear Examen");
 
@@ -269,8 +269,8 @@ public class MainActivity extends AppCompatActivity {
         textCodigoNum.setText(codigo);
 
         // muestra la imagen corregida con los circulos por colores.
-        String imagePath = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        String imagePathCorregido = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePathCorregido);
         Bitmap croppedBitmap = imagenRecortada(bitmap);
         imageViewMuestra.setImageBitmap(croppedBitmap);
 
@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
             crearToast("NO GUARDADO, Error de identificación, volver a Escanear.");
         } else {
             // Guarda la Examen en DB
-            arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcadosExamen, arrayDatosArriba, "examen");
+            arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcadosExamen, listaMarcadosExamen, arrayDatosArriba, "examen");
             plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigo);
         }
 
@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
             // Obtener las dimensiones de la imagen original
             int width = bitmap.getWidth();
             int height = bitmap.getHeight();
-            System.out.println("Width: " + width + ", Height: " + height);
+
             // Calcular las coordenadas para recortar la mitad inferior
             int x = 0;
             int y = 2200;//height / 2;
@@ -321,7 +321,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void calcularNota(ArrayList<String> examenDB) {
+        // marca los circulos que no se detectaron como marcados
+        List<Par> listadoMarcadosPlantilla = arreglosBD.coordenadasPlantillaEnDB(getBaseContext(), codigo);
 
+        buscarCirculos.correcionCirculos(listadoMarcadosPlantilla, imagenMat1);
         Double penalizacion = Double.valueOf(textPenaNum.getText().toString());
         // Calcula nota examen
         nota = buscarCirculos.calcularNota(plantillaDB, examenDB, penalizacion);
@@ -380,7 +383,7 @@ public class MainActivity extends AppCompatActivity {
         imageViewMuestra.setImageBitmap(bitmap);
 
         // Guardar examen Plantilla BD
-        String codigoPlantilla = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, arrayDatosArriba, "plantilla");
+        String codigoPlantilla = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, listaMarcadosPlantilla, arrayDatosArriba, "plantilla");
         plantillaDB = arreglosBD.existePlantillaEnDB(getBaseContext(), codigoPlantilla);
 
     }

@@ -4,6 +4,7 @@ public class Plantilla {
 
     private String codigo;
     private String respuestas;
+    private String coordenadas;
     private long id;
 
     public Plantilla(long id) {
@@ -14,15 +15,17 @@ public class Plantilla {
         this.codigo = codigo;
     }
 
-    public Plantilla(String codigo, String respuestas) {
+    public Plantilla(String codigo, String respuestas, String coordenadas) {
         this.codigo = codigo;
         this.respuestas = respuestas;
+        this.coordenadas = coordenadas;
     }
 
     // Constructor para cuando instanciamos desde la BD
-    public Plantilla(String codigo, String respuestas, long id) {
+    public Plantilla(String codigo, String respuestas, String coordenadas, long id) {
         this.codigo = codigo;
         this.respuestas = respuestas;
+        this.coordenadas = coordenadas;
         this.id = id;
     }
 
@@ -50,12 +53,21 @@ public class Plantilla {
         this.respuestas = respuestas;
     }
 
+    public String getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(String coordenadas) {
+        this.coordenadas = coordenadas;
+    }
+
     @Override
     public String toString() {
         return "Plantilla{" +
                 ", codigo='" + codigo + '\'' +
                 ", id='" + id + '\'' +
                 ", respuestas='" + respuestas +
+                ", coordenadas='" + coordenadas +
                 "'}";
 
     }

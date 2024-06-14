@@ -26,7 +26,7 @@ public class AyudanteBaseDeDatos extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL(String.format("CREATE TABLE IF NOT EXISTS %s(id integer primary key autoincrement, codigo text unique, respuestas text)", NOMBRE_TABLA_PLANTILLA));
+        db.execSQL(String.format("CREATE TABLE IF NOT EXISTS %s(id integer primary key autoincrement, codigo text unique, respuestas text,coordenadas text)", NOMBRE_TABLA_PLANTILLA));
 
         db.execSQL(String.format("CREATE TABLE IF NOT EXISTS %s(id integer primary key autoincrement, identificacion text, codigo text, respuestas text)", NOMBRE_TABLA_ALUMNO));
 

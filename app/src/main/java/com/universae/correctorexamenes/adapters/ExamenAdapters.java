@@ -74,8 +74,10 @@ public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHo
         String numeroPregunta = String.valueOf(i + 1);
 
         // Y poner a los TextView los datos con setText
-        myViewHolder.tVNumeroPregunta.setText(numeroPregunta);
-
+        //        myViewHolder.tVNumeroPregunta.setText(numeroPregunta);
+        //        String[] hola = {respuesta.toString()};
+        //        hola[i] = adapter.getItem(i);
+        //        System.out.println(Arrays.toString(hola));
 
     }
 
