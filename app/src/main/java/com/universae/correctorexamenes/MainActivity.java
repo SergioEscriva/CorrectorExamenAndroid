@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +36,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.universae.correctorexamenes.models.Par;
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private ArreglosBD arreglosBD = new ArreglosBD();
     private int metodo = 0;
 
-    private View view;
+
     private Map<String, String> nota = new HashMap<>();
 
     private String codigo;
@@ -109,12 +111,15 @@ public class MainActivity extends AppCompatActivity {
         });
         OpenCVLoader.initDebug();
 
+
         verificarPermisos();
         previewView = findViewById(R.id.preview_view);
         btnCorregir = findViewById(R.id.BttnCorregir);
         btnRepetir = findViewById(R.id.BttnRepetir);
         imagePreview = findViewById(R.id.imageView2);
         imageViewMuestra = findViewById(R.id.imgViewMuestra);
+        imageViewMuestra.setImageDrawable(getDrawable(R.drawable.logounfondopng));
+
         textCodigo = findViewById(R.id.textCodigo);
         textCodigoNum = findViewById(R.id.textCodigoNum);
         notaFinal = findViewById(R.id.textNota);
@@ -132,26 +137,26 @@ public class MainActivity extends AppCompatActivity {
         textPenaNum = findViewById(R.id.textPenaNum);
         textPena = findViewById(R.id.textPena);
         progressBar = findViewById(R.id.progressBar);
+        progressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
         textDNI = findViewById(R.id.textDNI);
         textDNINum = findViewById(R.id.textDNINum);
         fabEditar = findViewById(R.id.fab_editar);
+        image_capture_button = findViewById(R.id.image_capture_button);
+        spinner = findViewById(R.id.spinner);
+        spinnerPena = findViewById(R.id.spinnerPena);
 
 
         //Spinner
-        spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.4", "0.8", "0.9", "1"});
         spinner.setAdapter(adapter);
         spinner.setSelection(2);
 
         //Spinner Penalizacion
-        spinnerPena = findViewById(R.id.spinnerPena);
         ArrayAdapter<String> adapterPena = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.10", "0.15", "0.20", "0.25", "0.33"});
         spinnerPena.setAdapter(adapterPena);
         spinnerPena.setSelection(0);
         textPenaNum.setText(spinnerPena.getSelectedItem().toString());
 
-
-        image_capture_button = findViewById(R.id.image_capture_button);
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(() -> {
@@ -466,7 +471,14 @@ public class MainActivity extends AppCompatActivity {
                 image_capture_button.setText("Procesando Plantilla...");
                 takePhoto("plantilla");
                 imageViewMuestra.setVisibility(View.VISIBLE);
-                imageViewMuestra.setImageDrawable(getDrawable(R.drawable.icono_examen));
+
+                //Muestra imagen de espera
+                Glide.with(this)
+                        .load("app/cosas/escudos.gif") // or URL for remote GIF
+                        .into(imageViewMuestra);
+
+
+                //imageViewMuestra.setImageDrawable(getDrawable(R.drawable.icono_examen));
                 progressBar.setVisibility(View.VISIBLE);
                 previewView.setVisibility(View.INVISIBLE);
                 imagePreview.setVisibility(View.INVISIBLE);
