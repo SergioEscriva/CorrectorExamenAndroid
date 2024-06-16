@@ -5,7 +5,6 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/universae"
     tools:context=".fragments.ExamenFragment">
 
     <TextView
@@ -78,8 +77,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="35dp"
+        android:background="@color/white"
         android:clickable="true"
         android:src="@android:drawable/ic_menu_save"
+        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

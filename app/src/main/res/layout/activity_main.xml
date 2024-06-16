@@ -313,14 +313,14 @@
             android:layout_width="30dp"
             android:layout_height="33dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="95dp"
+            android:layout_marginTop="-15dp"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:foregroundTint="@color/white"
             android:spinnerMode="dropdown"
             android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/textPenaNum"
-            app:layout_constraintTop_toBottomOf="@+id/BttnCorregir" />
+            app:layout_constraintTop_toTopOf="@+id/textPenaNum" />
 
 
         <TextView

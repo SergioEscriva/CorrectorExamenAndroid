@@ -1,9 +1,7 @@
 package com.universae.correctorexamenes;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TabHost;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +39,9 @@ public class EditarActivity extends AppCompatActivity {
         });
 
         tab = findViewById(R.id.tabLayout);
+        tab.setSelectedTabIndicatorColor(Color.WHITE);
+        tab.setTabTextColors(Color.parseColor("#FFBDBFBC"), Color.WHITE);
+        tab.setBackgroundColor(Color.parseColor("#221F73"));
 
 
         tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
