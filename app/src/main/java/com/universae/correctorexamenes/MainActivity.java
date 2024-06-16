@@ -273,11 +273,6 @@ public class MainActivity extends AppCompatActivity {
         textDNINum.setText(identificacion);
         textCodigoNum.setText(codigo);
 
-        // muestra la imagen corregida con los circulos por colores.
-        String imagePathCorregido = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePathCorregido);
-        Bitmap croppedBitmap = imagenRecortada(bitmap);
-        imageViewMuestra.setImageBitmap(croppedBitmap);
 
         // Si es nulo los datos, no guarda.
         if (arrayDatosArriba.containsValue("Error")) {
@@ -338,6 +333,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             notaFinalNum.setTextColor(Color.GREEN);
         }
+
+        // muestra la imagen corregida con los circulos por colores.
+        String imagePathCorregido = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePathCorregido);
+        Bitmap croppedBitmap = imagenRecortada(bitmap);
+        imageViewMuestra.setImageBitmap(croppedBitmap);
 
         // Setea las notas
         notaFinalNum.setText(nota.get("notaFinal"));

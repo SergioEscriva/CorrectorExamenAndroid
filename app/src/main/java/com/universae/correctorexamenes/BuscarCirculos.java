@@ -205,7 +205,7 @@ public class BuscarCirculos {
 
             // Dibuja círculo
             Point center = new Point(x, y);
-            Imgproc.circle(imgOriginalMat, center, (int) Math.round(radius + 20), new Scalar(0, 255, 0), 3);
+            Imgproc.circle(imgOriginalMat, center, (int) Math.round(radius + 10), new Scalar(0, 0, 255), 3);
         }
 
         //Guardar Imagen
