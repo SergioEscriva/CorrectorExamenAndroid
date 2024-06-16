@@ -77,6 +77,8 @@ dependencies {
     implementation("androidx.camera:camera-view:1.0.0-alpha11")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
+    implementation("com.davemorrissey.labs:subsampling-scale-image-view:3.10.0")
+
     //implementation (project(":opencv"))
 
 }

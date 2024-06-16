@@ -36,7 +36,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.bumptech.glide.Glide;
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.universae.correctorexamenes.models.Par;
@@ -54,6 +55,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
+
 public class MainActivity extends AppCompatActivity {
     int codigo_permiso = 200;
     private PreviewView previewView;
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnCorregir;
     private Button btnRepetir;
     private ImageView imagePreview;
-    private ImageView imageViewMuestra;
+    private SubsamplingScaleImageView imageViewMuestra;
 
     private TextView textDNI, textDNINum, textCodigo, textCodigoNum;
     private List<Par> listaMarcadosExamen;
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         btnRepetir = findViewById(R.id.BttnRepetir);
         imagePreview = findViewById(R.id.imageView2);
         imageViewMuestra = findViewById(R.id.imgViewMuestra);
-        imageViewMuestra.setImageDrawable(getDrawable(R.drawable.logounfondopng));
+        imageViewMuestra.setImage(ImageSource.resource(R.drawable.logounfondopng));
 
         textCodigo = findViewById(R.id.textCodigo);
         textCodigoNum = findViewById(R.id.textCodigoNum);
@@ -338,7 +340,9 @@ public class MainActivity extends AppCompatActivity {
         String imagePathCorregido = "/data/data/com.universae.correctorexamenes/files/corregido.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePathCorregido);
         Bitmap croppedBitmap = imagenRecortada(bitmap);
-        imageViewMuestra.setImageBitmap(croppedBitmap);
+        // imageViewMuestra.setImageBitmap(croppedBitmap);
+        imageViewMuestra.setImage(ImageSource.uri(imagePathCorregido));
+
 
         // Setea las notas
         notaFinalNum.setText(nota.get("notaFinal"));
@@ -386,7 +390,8 @@ public class MainActivity extends AppCompatActivity {
         // muestra la imagen corregida con los circulos por colores.
         String imagePath = "/data/data/com.universae.correctorexamenes/files/corregidoPlantilla.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        imageViewMuestra.setImageBitmap(bitmap);
+        //imageViewMuestra.setImageBitmap(bitmap);
+        imageViewMuestra.setImage(ImageSource.uri(imagePath));
 
         // Guardar examen Plantilla BD
         String codigoPlantilla = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, listaMarcadosPlantilla, arrayDatosArriba, "plantilla");
@@ -473,13 +478,10 @@ public class MainActivity extends AppCompatActivity {
                 takePhoto("plantilla");
                 imageViewMuestra.setVisibility(View.VISIBLE);
 
-                //Muestra imagen de espera
-                Glide.with(this)
-                        .load("app/cosas/escudos.gif") // or URL for remote GIF
-                        .into(imageViewMuestra);
 
+                // muestra logo durante la carga y correción del examen.
+                imageViewMuestra.setImage(ImageSource.resource(R.drawable.logounfondopng));
 
-                //imageViewMuestra.setImageDrawable(getDrawable(R.drawable.icono_examen));
                 progressBar.setVisibility(View.VISIBLE);
                 previewView.setVisibility(View.INVISIBLE);
                 imagePreview.setVisibility(View.INVISIBLE);
@@ -552,13 +554,14 @@ public class MainActivity extends AppCompatActivity {
 
         /// Busca los círculos en la imagen TODO Para Pruebas jpg del directorio.
         //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraPlantilla.jpg";  /// Imagen principal
-        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
-        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
+        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
+        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
         //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMal.jpg";
         Mat imagenMat = Imgcodecs.imread(imagePathPrueba);
         imagenMat1 = Imgcodecs.imread(imagePathPrueba);
+
         /// Todo descomentar para utilizar cámara.
-        // Mat mat = processImageData(bytes);
+        //Mat imagenMat = processImageData(bytes);
 
 
         if (plantillaExamen.equals("plantilla")) {
@@ -595,7 +598,8 @@ public class MainActivity extends AppCompatActivity {
         // muestra la imagen con los circulos
         String imagePath = "/data/data/com.universae.correctorexamenes/files/todos.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        imageViewMuestra.setImageBitmap(bitmap);
+        //imageViewMuestra.setImageBitmap(bitmap);
+        imageViewMuestra.setImage(ImageSource.uri(imagePath));
 
 
         // Reorganiza la pantalla
@@ -644,7 +648,7 @@ public class MainActivity extends AppCompatActivity {
         spinner.setVisibility(View.VISIBLE);
         image_capture_button.setText("Escanear Examen");
         image_capture_button.setVisibility(View.VISIBLE);
-        imageViewMuestra.setImageDrawable(getDrawable(R.drawable.icono_examen));
+        imageViewMuestra.setImage(ImageSource.resource(R.drawable.icono_examen));
         imageViewMuestra.setVisibility(View.INVISIBLE);
         previewView.setVisibility(View.VISIBLE);
         imagePreview.setVisibility(View.VISIBLE);

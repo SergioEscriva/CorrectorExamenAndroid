@@ -175,7 +175,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/plantillatransroja" />
 
-        <ImageView
+        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
             android:id="@+id/imgViewMuestra"
             android:layout_width="355dp"
             android:layout_height="496dp"
