@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
@@ -121,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
         imagePreview = findViewById(R.id.imageView2);
         imageViewMuestra = findViewById(R.id.imgViewMuestra);
         imageViewMuestra.setImage(ImageSource.resource(R.drawable.logounfondopng));
+        // Configurar el nivel de zoom inicial
+        imageViewMuestra.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
+        imageViewMuestra.setMinScale(10.0f); // Establecer el nivel de zoom inicial
+        imageViewMuestra.setMaxScale(25.0f); // Opcional: establecer el nivel de zoom máximo
+
 
         textCodigo = findViewById(R.id.textCodigo);
         textCodigoNum = findViewById(R.id.textCodigoNum);
@@ -343,6 +349,47 @@ public class MainActivity extends AppCompatActivity {
         // imageViewMuestra.setImageBitmap(croppedBitmap);
         imageViewMuestra.setImage(ImageSource.uri(imagePathCorregido));
 
+        // Configurar el nivel de zoom inicial
+        imageViewMuestra.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
+        imageViewMuestra.setMinScale(0.5f); // Establecer el nivel de zoom inicial
+        imageViewMuestra.setMaxScale(1.0f); // Opcional: establecer el nivel de zoom máximo
+
+        // Esperar hasta que la imagen esté cargada para configurar la vista inicial
+        imageViewMuestra.setOnImageEventListener(new SubsamplingScaleImageView.OnImageEventListener() {
+            @Override
+            public void onReady() {
+                // Imagen cargada
+                float initialScale = imageViewMuestra.getMinScale(); // Obtener el nivel de zoom inicial
+
+                // Calcular la posición inicial para mostrar la parte inferior de la imagen
+                int imageHeight = imageViewMuestra.getSHeight(); // Altura de la imagen
+                PointF center = new PointF(imageViewMuestra.getSWidth() / 2, imageHeight);
+
+                // Aplicar el nivel de zoom y centrar en la parte inferior
+                imageViewMuestra.setScaleAndCenter(initialScale, center);
+            }
+
+            @Override
+            public void onImageLoaded() {
+            }
+
+            @Override
+            public void onPreviewLoadError(Exception e) {
+            }
+
+            @Override
+            public void onImageLoadError(Exception e) {
+            }
+
+            @Override
+            public void onTileLoadError(Exception e) {
+            }
+
+            @Override
+            public void onPreviewReleased() {
+            }
+        });
+
 
         // Setea las notas
         notaFinalNum.setText(nota.get("notaFinal"));
@@ -392,6 +439,7 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         //imageViewMuestra.setImageBitmap(bitmap);
         imageViewMuestra.setImage(ImageSource.uri(imagePath));
+
 
         // Guardar examen Plantilla BD
         String codigoPlantilla = arreglosBD.guardarDB(getBaseContext(), listaAbajoMarcados, listaMarcadosPlantilla, arrayDatosArriba, "plantilla");
@@ -481,6 +529,11 @@ public class MainActivity extends AppCompatActivity {
 
                 // muestra logo durante la carga y correción del examen.
                 imageViewMuestra.setImage(ImageSource.resource(R.drawable.logounfondopng));
+                // Configurar el nivel de zoom inicial
+                imageViewMuestra.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
+                imageViewMuestra.setMinScale(10.0f); // Establecer el nivel de zoom inicial
+                imageViewMuestra.setMaxScale(25.0f); // Opcional: establecer el nivel de zoom máximo
+
 
                 progressBar.setVisibility(View.VISIBLE);
                 previewView.setVisibility(View.INVISIBLE);
@@ -600,6 +653,7 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         //imageViewMuestra.setImageBitmap(bitmap);
         imageViewMuestra.setImage(ImageSource.uri(imagePath));
+        imageViewMuestra.setMinScale(0.0f); // Establecer el nivel de zoom inicial
 
 
         // Reorganiza la pantalla
@@ -648,7 +702,12 @@ public class MainActivity extends AppCompatActivity {
         spinner.setVisibility(View.VISIBLE);
         image_capture_button.setText("Escanear Examen");
         image_capture_button.setVisibility(View.VISIBLE);
-        imageViewMuestra.setImage(ImageSource.resource(R.drawable.icono_examen));
+        // muestra logo durante la carga y correción del examen.
+        imageViewMuestra.setImage(ImageSource.resource(R.drawable.logounfondopng));
+        // Configurar el nivel de zoom inicial
+        imageViewMuestra.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
+        imageViewMuestra.setMinScale(10.0f); // Establecer el nivel de zoom inicial
+        imageViewMuestra.setMaxScale(25.0f); // Opcional: establecer el nivel de zoom máximo
         imageViewMuestra.setVisibility(View.INVISIBLE);
         previewView.setVisibility(View.VISIBLE);
         imagePreview.setVisibility(View.VISIBLE);
