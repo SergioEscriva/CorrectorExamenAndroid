@@ -1,12 +1,14 @@
 package com.universae.correctorexamenes.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -84,8 +86,9 @@ public class ExamenFragment extends Fragment {
 
             // Get the activity context
             Context context = getActivity();
-            adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
-
+            //adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
+            // Adaptador personalizado para poder cambiar el texto del spinner
+            adapter = new MyColorizedArrayAdapter(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
 
             ArreglosBD arreglosBD = new ArreglosBD();
             ArrayList<String> listaExamen = arreglosBD.existeAlumnoEnDB(getContext(), identificacion, codigo);
@@ -118,13 +121,31 @@ public class ExamenFragment extends Fragment {
         return listaNueva;
     }
 
-
     public String[] getLista() {
         return lista;
     }
 
     public void setLista(String[] lista) {
         ExamenFragment.lista = lista;
+    }
+
+    public class MyColorizedArrayAdapter extends ArrayAdapter<String> {
+
+        public MyColorizedArrayAdapter(Context context, int layoutResource, String[] items) {
+            super(context, layoutResource, items);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView textView = (TextView) super.getView(position, convertView, parent);
+
+            // Establecer color de texto rojo
+            textView.setTextColor(Color.WHITE);
+            textView.setTextSize(20);
+
+            return textView;
+        }
+
     }
 
 

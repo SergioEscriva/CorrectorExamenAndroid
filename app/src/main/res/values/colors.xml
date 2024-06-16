@@ -10,4 +10,5 @@
     <color name="azul">#221F73</color>
     <color name="universae">#0a2648</color>
     <color name="my_spinner_text_color">@color/white</color>
+    <color name="splash_background">#0a2648</color>
 </resources>

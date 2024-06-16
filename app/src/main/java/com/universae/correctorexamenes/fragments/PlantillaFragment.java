@@ -1,12 +1,14 @@
 package com.universae.correctorexamenes.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -16,10 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.universae.correctorexamenes.ArreglosBD;
 import com.universae.correctorexamenes.R;
-import com.universae.correctorexamenes.SQLiteDB.AlumnoAppController;
 import com.universae.correctorexamenes.SQLiteDB.PlantillaAppController;
 import com.universae.correctorexamenes.adapters.ExamenAdapters;
-import com.universae.correctorexamenes.models.Alumno;
 import com.universae.correctorexamenes.models.Plantilla;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.Arrays;
 public class PlantillaFragment extends Fragment {
 
     private String codigo;
-    private EditText  etCodigo;
+    private EditText etCodigo;
 
     private FloatingActionButton guardarFAB;
 
@@ -60,11 +60,11 @@ public class PlantillaFragment extends Fragment {
                     String coordenadas = p.getCoordenadas();
                     long id = p.getId();
                     ExamenFragment examenFragment = new ExamenFragment();
-                        String lista = Arrays.toString(examenFragment.getLista());
-                        lista =lista.replace("[]", "");
-                        Plantilla plantillaCambiado = new Plantilla(codigo, lista, coordenadas, id);
+                    String lista = Arrays.toString(examenFragment.getLista());
+                    lista = lista.replace("[]", "");
+                    Plantilla plantillaCambiado = new Plantilla(codigo, lista, coordenadas, id);
 
-                        plantillaAppController.guardarCambios(plantillaCambiado);
+                    plantillaAppController.guardarCambios(plantillaCambiado);
 
 
                 }
@@ -74,16 +74,16 @@ public class PlantillaFragment extends Fragment {
         });
 
 
-
         // Set the values from the arguments
         etCodigo.setText(codigo);
 
 
-        if ( codigo != null) {
+        if (codigo != null) {
 
             // Get the activity context
             Context context = getActivity();
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
+            ArrayAdapter<String> adapter = new MyColorizedArrayAdapter(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
+
 
             ArreglosBD arreglosBD = new ArreglosBD();
             ArrayList<String> listaExamen = arreglosBD.existePlantillaEnDB(getContext(), codigo);
@@ -103,6 +103,25 @@ public class PlantillaFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    public class MyColorizedArrayAdapter extends ArrayAdapter<String> {
+
+        public MyColorizedArrayAdapter(Context context, int layoutResource, String[] items) {
+            super(context, layoutResource, items);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView textView = (TextView) super.getView(position, convertView, parent);
+
+            // Establecer color de texto rojo
+            textView.setTextColor(Color.WHITE);
+            textView.setTextSize(20);
+
+            return textView;
+        }
+
     }
 
 }

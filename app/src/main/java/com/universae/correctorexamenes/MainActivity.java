@@ -607,8 +607,8 @@ public class MainActivity extends AppCompatActivity {
 
         /// Busca los círculos en la imagen TODO Para Pruebas jpg del directorio.
         //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraPlantilla.jpg";  /// Imagen principal
-        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
-        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
+        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
+        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
         //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMal.jpg";
         Mat imagenMat = Imgcodecs.imread(imagePathPrueba);
         imagenMat1 = Imgcodecs.imread(imagePathPrueba);

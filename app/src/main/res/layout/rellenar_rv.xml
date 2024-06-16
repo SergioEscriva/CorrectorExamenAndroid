@@ -17,6 +17,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             android:text="TextView"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,9 +25,9 @@
             android:id="@+id/spinnerExamen"
             android:layout_width="110dp"
             android:layout_height="24dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/white"
-            android:foregroundTint="@color/white"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/universae"
+            android:foregroundTint="@color/universae"
             android:spinnerMode="dropdown"
             android:textSize="16dp"
 
