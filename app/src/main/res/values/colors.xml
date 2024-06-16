@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="azul">#221F73</color>
     <color name="universae">#0a2648</color>
+    <color name="my_spinner_text_color">@color/white</color>
 </resources>

@@ -5,15 +5,17 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.PlantillaFragment" >
+    tools:context=".fragments.PlantillaFragment">
 
     <TextView
         android:id="@+id/tVCodigo"
-        android:layout_width="58dp"
-        android:layout_height="28dp"
+        android:layout_width="89dp"
+        android:layout_height="32dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="45dp"
         android:text="Código"
+        android:textColor="@color/my_spinner_text_color"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +25,9 @@
         android:layout_height="39dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="40dp"
+        android:backgroundTint="@color/white"
         android:hint="hint"
+        android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/tVCodigo"
         app:layout_constraintTop_toTopOf="parent" />
 

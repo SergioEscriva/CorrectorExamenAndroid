@@ -47,7 +47,6 @@ public class ExamenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_examen, container, false);
-        View rootView2 = inflater.inflate(R.layout.rellenar_rv, container, false);
 
         etIdentificacion = rootView.findViewById(R.id.eTIdentificacion);
         etCodigo = rootView.findViewById(R.id.eTCodigo);
@@ -63,7 +62,7 @@ public class ExamenFragment extends Fragment {
                     if (a.getCodigo().equals(codigo) && a.getIdentificacion().equals(identificacion)) {
                         Long id = a.getId();
                         String lista = Arrays.toString(getLista());
-                        lista.replace("[", "").replace("]","");
+                        lista.replace("[", "").replace("]", "");
                         Alumno examenCambiado = new Alumno(identificacion, codigo, lista, id);
 
                         alumnoAppController.guardarCambios(examenCambiado);

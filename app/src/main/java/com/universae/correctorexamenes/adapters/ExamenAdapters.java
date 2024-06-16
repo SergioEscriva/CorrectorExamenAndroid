@@ -1,5 +1,6 @@
 package com.universae.correctorexamenes.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,13 +79,15 @@ public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHo
         //Spinner
         myViewHolder.spinner.setAdapter(adapter);
         myViewHolder.spinner.setSelection(letraRespuesta);
-        String letra1 = myViewHolder.spinner.getSelectedItem().toString();
 
         // Obtener los datos de la lista
         String numeroPregunta = String.valueOf(i + 1);
 
         // Y poner a los TextView los datos con setText
         myViewHolder.tVNumeroPregunta.setText(numeroPregunta);
+        myViewHolder.tVNumeroPregunta.setTextColor(Color.WHITE);
+        myViewHolder.spinner.setBackgroundColor(Color.WHITE);
+
         myViewHolder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -125,6 +128,7 @@ public class ExamenAdapters extends RecyclerView.Adapter<ExamenAdapters.MyViewHo
             this.tVNumeroPregunta = itemView.findViewById(R.id.tVNumeroPregunta);
 
             this.spinner = itemView.findViewById(R.id.spinnerExamen);
+
 
         }
 

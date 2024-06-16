@@ -17,8 +17,10 @@
         android:background="#0A2648"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         tools:context=".MainActivity">
 
 
@@ -29,6 +31,7 @@
             android:layout_marginStart="100dp"
             android:text="Nota Final"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/BttnCorregir" />
@@ -40,6 +43,7 @@
             android:layout_marginStart="100dp"
             android:text="Aciertos"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textNota" />
@@ -51,6 +55,7 @@
             android:layout_marginStart="100dp"
             android:text="Fallos"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textAciertos" />
@@ -62,6 +67,7 @@
             android:layout_marginStart="100dp"
             android:text="En blanco"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFallos" />
@@ -73,6 +79,7 @@
             android:layout_marginStart="100dp"
             android:text="Nulas"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textBlancos" />
@@ -84,6 +91,7 @@
             android:layout_marginStart="8dp"
             android:text="0"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +104,7 @@
             android:layout_marginStart="8dp"
             android:text="0"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,6 +117,7 @@
             android:layout_marginStart="8dp"
             android:text="0"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -120,6 +130,7 @@
             android:layout_marginStart="8dp"
             android:text="0"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -132,6 +143,7 @@
             android:layout_marginStart="8dp"
             android:text="0"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -237,6 +249,7 @@
             android:layout_marginEnd="16dp"
             android:text="Afinar"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_capture_button"
@@ -250,6 +263,7 @@
             android:layout_marginEnd="18dp"
             android:text="0.8"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_capture_button"
@@ -274,24 +288,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="5dp"
             android:text="Penalizacion:  "
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/BttnCorregir" />
+            app:layout_constraintTop_toBottomOf="@+id/textNulos" />
 
         <TextView
             android:id="@+id/textPenaNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="100dp"
             android:text="0.25"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/textPena"
-            app:layout_constraintTop_toBottomOf="@+id/BttnCorregir" />
+            app:layout_constraintTop_toTopOf="@+id/textPena" />
 
         <Spinner
             android:id="@+id/spinnerPena"
@@ -316,6 +331,7 @@
             android:layout_marginTop="4dp"
             android:text="Código Examen: "
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textDNI" />
@@ -327,6 +343,7 @@
             android:layout_marginStart="8dp"
             android:text="000"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/textCodigo"
             app:layout_constraintTop_toTopOf="@+id/textCodigo" />
@@ -339,7 +356,7 @@
             android:layout_marginTop="8dp"
             android:text="Identificación: "
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textPena" />
@@ -351,7 +368,7 @@
             android:layout_marginStart="8dp"
             android:text="12345678A"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/textDNI"
             app:layout_constraintTop_toTopOf="@+id/textDNI" />
