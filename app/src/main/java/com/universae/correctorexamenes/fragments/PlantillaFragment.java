@@ -1,5 +1,6 @@
 package com.universae.correctorexamenes.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,9 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.universae.correctorexamenes.ArreglosBD;
+import com.universae.correctorexamenes.MainActivity;
 import com.universae.correctorexamenes.R;
 import com.universae.correctorexamenes.SQLiteDB.PlantillaAppController;
 import com.universae.correctorexamenes.adapters.ExamenAdapters;
+import com.universae.correctorexamenes.models.Alumno;
 import com.universae.correctorexamenes.models.Plantilla;
 
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ public class PlantillaFragment extends Fragment {
     private String codigo;
     private EditText etCodigo;
 
-    private FloatingActionButton guardarFAB;
+    private FloatingActionButton guardarFAB, borrarFAB;
 
 
     @Override
@@ -46,13 +49,39 @@ public class PlantillaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_plantilla, container, false);
+        PlantillaAppController plantillaAppController = new PlantillaAppController(getContext());
         etCodigo = rootView.findViewById(R.id.eTCodigo);
         guardarFAB = rootView.findViewById(R.id.fabGuardarP);
+        borrarFAB = rootView.findViewById(R.id.fabBorrarP);
+
+        borrarFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ArrayList<Plantilla> plantilla = plantillaAppController.obtenerPlantillaId(codigo);
+
+                        AlertDialog alertDialog = new AlertDialog
+                                .Builder(getContext())
+                                .setMessage("Esta seguro que desea borrar \nla Plantilla " + codigo + ".")
+                                .setPositiveButton("Aceptar", (dialog, which) -> {
+                                    plantillaAppController.eliminarPlantilla(plantilla.get(0));
+                                    MainActivity mainActivity = new MainActivity();
+                                    mainActivity.repetirFoto();
+                                })
+                                .setNegativeButton("Cerrar",(dialog, which) -> {
+                                    dialog.dismiss();
+                                })
+                                .create();
+                        alertDialog.show();
+                    }
+
+
+
+        });
 
         guardarFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PlantillaAppController plantillaAppController = new PlantillaAppController(getContext());
                 ArrayList<Plantilla> plantilla = plantillaAppController.obtenerPlantillaId(codigo);
 
 
@@ -72,6 +101,7 @@ public class PlantillaFragment extends Fragment {
 
             }
         });
+
 
 
         // Set the values from the arguments
@@ -123,5 +153,6 @@ public class PlantillaFragment extends Fragment {
         }
 
     }
+
 
 }

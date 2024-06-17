@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.universae.correctorexamenes.ArreglosBD;
+import com.universae.correctorexamenes.MainActivity;
 import com.universae.correctorexamenes.R;
 import com.universae.correctorexamenes.SQLiteDB.ExamenAppController;
 import com.universae.correctorexamenes.adapters.ExamenAdapters;
@@ -66,9 +67,11 @@ public class ExamenFragment extends Fragment {
                     if (a.getCodigo().equals(codigo) && a.getIdentificacion().equals(identificacion)) {
                         AlertDialog alertDialog = new AlertDialog
                                 .Builder(getContext())
-                                .setMessage("Esta seguro que desea borrar el Examen " + codigo + "\ndel alumno " + identificacion + ".")
+                                .setMessage("Esta seguro que desea borrar \nel Examen " + codigo + "\ndel alumno " + identificacion + ".")
                                 .setPositiveButton("Aceptar", (dialog, which) -> {
                                     examenAppController.eliminarAlumno(a);
+                                    MainActivity mainActivity = new MainActivity();
+                                    mainActivity.repetirFoto();
                                 })
                                 .setNegativeButton("Cerrar",(dialog, which) -> {
                                     dialog.dismiss();
@@ -172,10 +175,7 @@ public class ExamenFragment extends Fragment {
         }
 
     }
-    public void crearDialog() {
 
-
-    }
 
 
 }
