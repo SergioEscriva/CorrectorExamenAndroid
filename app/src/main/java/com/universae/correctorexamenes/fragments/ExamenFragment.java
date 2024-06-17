@@ -1,5 +1,7 @@
 package com.universae.correctorexamenes.fragments;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.universae.correctorexamenes.ArreglosBD;
 import com.universae.correctorexamenes.R;
-import com.universae.correctorexamenes.SQLiteDB.AlumnoAppController;
+import com.universae.correctorexamenes.SQLiteDB.ExamenAppController;
 import com.universae.correctorexamenes.adapters.ExamenAdapters;
 import com.universae.correctorexamenes.models.Alumno;
 
@@ -29,7 +31,7 @@ public class ExamenFragment extends Fragment {
     private static String[] lista;
     private String identificacion, codigo;
     private EditText etIdentificacion, etCodigo;
-    private FloatingActionButton guardarFAB;
+    private FloatingActionButton guardarFAB, borrarFAB;
     private ExamenAdapters mAdapter;
     private RecyclerView rvExamen;
     private ArrayAdapter<String> adapter;
@@ -49,17 +51,41 @@ public class ExamenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_examen, container, false);
+        ExamenAppController examenAppController = new ExamenAppController(getContext());
 
         etIdentificacion = rootView.findViewById(R.id.eTIdentificacion);
         etCodigo = rootView.findViewById(R.id.eTCodigo);
         guardarFAB = rootView.findViewById(R.id.fabGuardarE);
+        borrarFAB = rootView.findViewById(R.id.fabBorrarE);
+
+        borrarFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Alumno> alumno = examenAppController.obtenerAlumno(identificacion);
+                for (Alumno a : alumno) {
+                    if (a.getCodigo().equals(codigo) && a.getIdentificacion().equals(identificacion)) {
+                        AlertDialog alertDialog = new AlertDialog
+                                .Builder(getContext())
+                                .setMessage("Esta seguro que desea borrar el Examen " + codigo + "\ndel alumno " + identificacion + ".")
+                                .setPositiveButton("Aceptar", (dialog, which) -> {
+                                    examenAppController.eliminarAlumno(a);
+                                })
+                                .setNegativeButton("Cerrar",(dialog, which) -> {
+                                    dialog.dismiss();
+                                })
+                                .create();
+                        alertDialog.show();
+                    }
+                }
+
+            }
+        });
 
 
         guardarFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlumnoAppController alumnoAppController = new AlumnoAppController(getContext());
-                ArrayList<Alumno> alumno = alumnoAppController.obtenerAlumno(identificacion);
+                ArrayList<Alumno> alumno = examenAppController.obtenerAlumno(identificacion);
                 for (Alumno a : alumno) {
                     if (a.getCodigo().equals(codigo) && a.getIdentificacion().equals(identificacion)) {
                         Long id = a.getId();
@@ -67,7 +93,7 @@ public class ExamenFragment extends Fragment {
                         lista.replace("[", "").replace("]", "");
                         Alumno examenCambiado = new Alumno(identificacion, codigo, lista, id);
 
-                        alumnoAppController.guardarCambios(examenCambiado);
+                        examenAppController.guardarCambios(examenCambiado);
 
                     }
                 }
@@ -86,7 +112,6 @@ public class ExamenFragment extends Fragment {
 
             // Get the activity context
             Context context = getActivity();
-            //adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
             // Adaptador personalizado para poder cambiar el texto del spinner
             adapter = new MyColorizedArrayAdapter(context, android.R.layout.simple_spinner_item, new String[]{"A", "B", "C", "D", "Null", "Empty"});
 
@@ -145,6 +170,10 @@ public class ExamenFragment extends Fragment {
 
             return textView;
         }
+
+    }
+    public void crearDialog() {
+
 
     }
 

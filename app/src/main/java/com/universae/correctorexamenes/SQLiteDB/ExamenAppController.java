@@ -10,13 +10,13 @@ import com.universae.correctorexamenes.models.Alumno;
 import java.util.ArrayList;
 
 
-public class AlumnoAppController {
+public class ExamenAppController {
 
     private AyudanteBaseDeDatos ayudanteBaseDeDatos;
     private java.lang.String NOMBRE_TABLA = "alumno";
 
 
-    public AlumnoAppController(Context contexto) {
+    public ExamenAppController(Context contexto) {
         ayudanteBaseDeDatos = new AyudanteBaseDeDatos(contexto);
     }
 
@@ -24,8 +24,8 @@ public class AlumnoAppController {
     public int eliminarAlumno(Alumno alumno) {
 
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
-        java.lang.String[] argumentos = {java.lang.String.valueOf(alumno.getIdentificacion())};
-        return baseDeDatos.delete(NOMBRE_TABLA, "identificacion = ?", argumentos);
+        String[] argumentos = {String.valueOf(alumno.getId())};
+        return baseDeDatos.delete(NOMBRE_TABLA, "id = ?", argumentos);
     }
 
 

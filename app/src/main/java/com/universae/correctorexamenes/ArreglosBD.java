@@ -2,7 +2,7 @@ package com.universae.correctorexamenes;
 
 import android.content.Context;
 
-import com.universae.correctorexamenes.SQLiteDB.AlumnoAppController;
+import com.universae.correctorexamenes.SQLiteDB.ExamenAppController;
 import com.universae.correctorexamenes.SQLiteDB.PlantillaAppController;
 import com.universae.correctorexamenes.models.Alumno;
 import com.universae.correctorexamenes.models.Par;
@@ -17,7 +17,7 @@ public class ArreglosBD {
 
     public String guardarDB(Context context, ArrayList<String> listaAbajoMarcados, List<Par> listaMarcadosPlantilla, Map<String, String> arrayDatosArriba, String examenPlantilla) {
         PlantillaAppController appController = new PlantillaAppController(context);
-        AlumnoAppController alumnoAppController = new AlumnoAppController(context);
+        ExamenAppController examenAppController = new ExamenAppController(context);
         String codigo = "";
         String plantilla = "";
         String identificacion = "";
@@ -45,7 +45,7 @@ public class ArreglosBD {
         switch (examenPlantilla) {
             case "examen":
                 Alumno introducirDBalumno = new Alumno(identificacion, codigo, plantilla);
-                alumnoAppController.nuevoAlumno(introducirDBalumno);
+                examenAppController.nuevoAlumno(introducirDBalumno);
                 break;
             case "plantilla":
                 Plantilla introducirDBplantilla = new Plantilla(codigo, plantilla, coordenadas);
@@ -115,7 +115,7 @@ public class ArreglosBD {
     }
 
     public ArrayList<String> existeAlumnoEnDB(Context context, String identificacion, String codigo) {
-        AlumnoAppController alumnoDB = new AlumnoAppController(context);
+        ExamenAppController alumnoDB = new ExamenAppController(context);
         ArrayList<Alumno> alumnoList = alumnoDB.obtenerAlumno(identificacion);
         ArrayList<String> examenDB = new ArrayList<>();
 
