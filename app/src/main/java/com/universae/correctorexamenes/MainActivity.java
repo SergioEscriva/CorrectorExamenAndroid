@@ -34,9 +34,6 @@ import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
@@ -109,11 +106,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainA), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
         OpenCVLoader.initDebug();
 
 
@@ -123,8 +116,11 @@ public class MainActivity extends AppCompatActivity {
         btnRepetir = findViewById(R.id.BttnRepetir);
         imagePreview = findViewById(R.id.imageView2);
         imageViewMuestra = findViewById(R.id.imgViewMuestra);
-        imageViewMuestra.setImage(ImageSource.resource(R.drawable.iconouniversaesinchange));
 
+        // Configurar el nivel de zoom inicial
+        imageViewMuestra.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
+        imageViewMuestra.setMinScale(0.5f); // Establecer el nivel de zoom inicial
+        imageViewMuestra.setMaxScale(1.0f); // Opcional: establecer el nivel de zoom máximo
 
         textCodigo = findViewById(R.id.textCodigo);
         textCodigoNum = findViewById(R.id.textCodigoNum);
@@ -360,6 +356,8 @@ public class MainActivity extends AppCompatActivity {
 
                 // Aplicar el nivel de zoom y centrar en la parte inferior
                 imageViewMuestra.setScaleAndCenter(initialScale, center);
+
+
             }
 
             @Override
@@ -490,11 +488,13 @@ public class MainActivity extends AppCompatActivity {
         previewView.setVisibility(View.VISIBLE);
         imagePreview.setVisibility(View.VISIBLE);
         textAfinar.setVisibility(View.VISIBLE);
+        imageViewMuestra.setMinScale(0.0f); // Establecer el nivel de zoom inicial
 
         switch (examenPlantilla) {
             case "examen":
                 // muestra logo durante la carga y correción del examen.
-                imageViewMuestra.setImage(ImageSource.resource(R.drawable.iconouniversaesinchange));
+                imageViewMuestra.setImage(ImageSource.resource(R.drawable.universaesinchangereducida));
+                imageViewMuestra.setMinScale(0.0f); // Establecer el nivel de zoom inicial
                 image_capture_button.setText("Procesando...");
                 takePhoto("examen");
                 imageViewMuestra.setVisibility(View.VISIBLE);
@@ -503,7 +503,8 @@ public class MainActivity extends AppCompatActivity {
                 imagePreview.setVisibility(View.INVISIBLE);
                 break;
             case "plantilla":
-                imageViewMuestra.setImage(ImageSource.resource(R.drawable.iconouniversaesinchange));
+                imageViewMuestra.setImage(ImageSource.resource(R.drawable.universaesinchangereducida));
+                imageViewMuestra.setMinScale(0.0f); // Establecer el nivel de zoom inicial
                 image_capture_button.setVisibility(View.VISIBLE);
                 btnRepetir.setVisibility(View.INVISIBLE);
                 btnCorregir.setVisibility(View.INVISIBLE);
@@ -518,7 +519,8 @@ public class MainActivity extends AppCompatActivity {
                 takePhoto("plantilla");
 
                 // muestra logo durante la carga y correción del examen.
-                imageViewMuestra.setImage(ImageSource.resource(R.drawable.iconouniversaesinchange));
+                imageViewMuestra.setImage(ImageSource.resource(R.drawable.universaesinchangereducida));
+                imageViewMuestra.setMinScale(0.0f); // Establecer el nivel de zoom inicial
                 imageViewMuestra.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
                 previewView.setVisibility(View.INVISIBLE);
