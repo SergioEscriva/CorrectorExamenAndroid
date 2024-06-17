@@ -493,7 +493,9 @@ public class MainActivity extends AppCompatActivity {
 
         switch (examenPlantilla) {
             case "examen":
-                image_capture_button.setText("Procesando Examen...");
+                // muestra logo durante la carga y correción del examen.
+                imageViewMuestra.setImage(ImageSource.resource(R.drawable.iconouniversaesinchange));
+                image_capture_button.setText("Procesando...");
                 takePhoto("examen");
                 imageViewMuestra.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
@@ -501,6 +503,7 @@ public class MainActivity extends AppCompatActivity {
                 imagePreview.setVisibility(View.INVISIBLE);
                 break;
             case "plantilla":
+                imageViewMuestra.setImage(ImageSource.resource(R.drawable.iconouniversaesinchange));
                 image_capture_button.setVisibility(View.VISIBLE);
                 btnRepetir.setVisibility(View.INVISIBLE);
                 btnCorregir.setVisibility(View.INVISIBLE);
@@ -511,16 +514,12 @@ public class MainActivity extends AppCompatActivity {
                 image_capture_button.setText("Escanear Plantilla");
                 break;
             case "fotoPlantilla":
-                image_capture_button.setText("Procesando Plantilla...");
+                image_capture_button.setText("Procesando...");
                 takePhoto("plantilla");
-                imageViewMuestra.setVisibility(View.VISIBLE);
-
 
                 // muestra logo durante la carga y correción del examen.
                 imageViewMuestra.setImage(ImageSource.resource(R.drawable.iconouniversaesinchange));
-
-
-
+                imageViewMuestra.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
                 previewView.setVisibility(View.INVISIBLE);
                 imagePreview.setVisibility(View.INVISIBLE);
@@ -686,8 +685,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerAfinar.setVisibility(View.VISIBLE);
         image_capture_button.setText("Escanear Examen");
         image_capture_button.setVisibility(View.VISIBLE);
-        // muestra logo durante la carga y correción del examen.
-        imageViewMuestra.setImage(ImageSource.resource(R.drawable.iconouniversaesinchange));
+
         imageViewMuestra.setVisibility(View.INVISIBLE);
         previewView.setVisibility(View.VISIBLE);
         imagePreview.setVisibility(View.VISIBLE);
