@@ -45,7 +45,6 @@ import com.universae.correctorexamenes.models.Par;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -269,7 +268,6 @@ public class MainActivity extends AppCompatActivity {
         String identificacion = arrayDatosArriba.get("identificacion");
         textDNINum.setText(identificacion);
         textCodigoNum.setText(codigo);
-
 
         // Si es nulo los datos, no guarda.
         if (arrayDatosArriba.containsValue("Error")) {
@@ -594,13 +592,13 @@ public class MainActivity extends AppCompatActivity {
         /// Busca los círculos en la imagen TODO Para Pruebas jpg del directorio.
         //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraPlantilla.jpg";  /// Imagen principal
         //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenBien.jpg";
-        String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
+        //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMalas.jpg";
         //String imagePathPrueba = "/data/data/com.universae.correctorexamenes/files/muestraExamenMal.jpg";
-        Mat imagenMat = Imgcodecs.imread(imagePathPrueba);
-        imagenMat1 = Imgcodecs.imread(imagePathPrueba);
+        // Mat imagenMat = Imgcodecs.imread(imagePathPrueba);
+        //imagenMat1 = Imgcodecs.imread(imagePathPrueba);
 
         /// Todo descomentar para utilizar cámara.
-        //Mat imagenMat = processImageData(bytes);
+        Mat imagenMat = processImageData(bytes);
 
 
         if (plantillaExamen.equals("plantilla")) {

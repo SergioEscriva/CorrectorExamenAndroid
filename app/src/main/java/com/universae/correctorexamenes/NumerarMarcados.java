@@ -254,6 +254,7 @@ public class NumerarMarcados {
             if (i == 0 && valor.equals("Empty")) {
                 for (int j = 1; j < 10; j++) {
                     String valorDni = circulosMarcados.get(j);
+
                     if (valorDni.contains("Nula") || valorDni.contains("Empty")) {
                         dniNieExamen.put("identificacion", "Error");
                     } else {
