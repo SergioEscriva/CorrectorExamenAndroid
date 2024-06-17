@@ -123,11 +123,7 @@ public class MainActivity extends AppCompatActivity {
         btnRepetir = findViewById(R.id.BttnRepetir);
         imagePreview = findViewById(R.id.imageView2);
         imageViewMuestra = findViewById(R.id.imgViewMuestra);
-        imageViewMuestra.setImage(ImageSource.resource(R.drawable.logounfondopng));
-        // Configurar el nivel de zoom inicial
-        imageViewMuestra.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
-        imageViewMuestra.setMinScale(10.0f); // Establecer el nivel de zoom inicial
-        imageViewMuestra.setMaxScale(25.0f); // Opcional: establecer el nivel de zoom máximo
+        imageViewMuestra.setImage(ImageSource.resource(R.drawable.iconouniversaesinchange));
 
 
         textCodigo = findViewById(R.id.textCodigo);
@@ -521,11 +517,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                 // muestra logo durante la carga y correción del examen.
-                imageViewMuestra.setImage(ImageSource.resource(R.drawable.logounfondopng));
-                // Configurar el nivel de zoom inicial
-                imageViewMuestra.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
-                imageViewMuestra.setMinScale(10.0f); // Establecer el nivel de zoom inicial
-                imageViewMuestra.setMaxScale(25.0f); // Opcional: establecer el nivel de zoom máximo
+                imageViewMuestra.setImage(ImageSource.resource(R.drawable.iconouniversaesinchange));
+
 
 
                 progressBar.setVisibility(View.VISIBLE);
@@ -694,11 +687,7 @@ public class MainActivity extends AppCompatActivity {
         image_capture_button.setText("Escanear Examen");
         image_capture_button.setVisibility(View.VISIBLE);
         // muestra logo durante la carga y correción del examen.
-        imageViewMuestra.setImage(ImageSource.resource(R.drawable.logounfondopng));
-        // Configurar el nivel de zoom inicial
-        imageViewMuestra.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
-        imageViewMuestra.setMinScale(10.0f); // Establecer el nivel de zoom inicial
-        imageViewMuestra.setMaxScale(25.0f); // Opcional: establecer el nivel de zoom máximo
+        imageViewMuestra.setImage(ImageSource.resource(R.drawable.iconouniversaesinchange));
         imageViewMuestra.setVisibility(View.INVISIBLE);
         previewView.setVisibility(View.VISIBLE);
         imagePreview.setVisibility(View.VISIBLE);
