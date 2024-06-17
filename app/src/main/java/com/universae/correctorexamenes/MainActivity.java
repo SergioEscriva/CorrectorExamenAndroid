@@ -2,6 +2,7 @@ package com.universae.correctorexamenes;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -77,11 +79,11 @@ public class MainActivity extends AppCompatActivity {
     private List<Par> listaTodosPlantilla;
 
     private TextView notaFinal, aciertos, fallos, blancos, nulas;
-    private TextView notaFinalNum, aciertosNum, fallosNum, blancosNum, nulasNum, textPena, textPenaNum;
+    private TextView notaFinalNum, aciertosNum, fallosNum, blancosNum, nulasNum, textPena;
 
-    private TextView textAfinar, textAfinarNum;
+    private TextView textAfinar;
     private ProgressBar progressBar;
-    private Spinner spinner, spinnerPena;
+    private Spinner spinnerAfinar, spinnerPena;
 
     private FloatingActionButton fabEditar;
 
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Map<String, String> nota = new HashMap<>();
 
-    private String codigo;
+    private String codigo, seleccionPenalizacion, seleccionAfinar;
 
     private ArrayList<String> examenDB = new ArrayList<>();
     private Mat imagenMat1;
@@ -141,8 +143,6 @@ public class MainActivity extends AppCompatActivity {
         blancosNum = findViewById(R.id.textBlancosNum);
         nulasNum = findViewById(R.id.textNulosNum);
         textAfinar = findViewById(R.id.textAfinar);
-        textAfinarNum = findViewById(R.id.textAfinarNum);
-        textPenaNum = findViewById(R.id.textPenaNum);
         textPena = findViewById(R.id.textPena);
         progressBar = findViewById(R.id.progressBar);
         progressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
@@ -150,20 +150,20 @@ public class MainActivity extends AppCompatActivity {
         textDNINum = findViewById(R.id.textDNINum);
         fabEditar = findViewById(R.id.fab_editar);
         image_capture_button = findViewById(R.id.image_capture_button);
-        spinner = findViewById(R.id.spinner);
+        spinnerAfinar = findViewById(R.id.spinner);
         spinnerPena = findViewById(R.id.spinnerPena);
 
-
         //Spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.4", "0.8", "0.9", "1"});
-        spinner.setAdapter(adapter);
-        spinner.setSelection(2);
+        ArrayAdapter<String> adapter = new MyColorizedArrayAdapter(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.4", "0.8", "0.9", "1"});
+        spinnerAfinar.setAdapter(adapter);
+        spinnerAfinar.setSelection(2);
+        seleccionAfinar = spinnerAfinar.getSelectedItem().toString();
 
         //Spinner Penalizacion
-        ArrayAdapter<String> adapterPena = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.10", "0.15", "0.20", "0.25", "0.33"});
+        ArrayAdapter<String> adapterPena = new MyColorizedArrayAdapter(this, android.R.layout.simple_spinner_item, new String[]{"0.0", "0.10", "0.15", "0.20", "0.25", "0.33"});
         spinnerPena.setAdapter(adapterPena);
         spinnerPena.setSelection(0);
-        textPenaNum.setText(spinnerPena.getSelectedItem().toString());
+        seleccionPenalizacion = spinnerPena.getSelectedItem().toString();
 
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
@@ -180,12 +180,10 @@ public class MainActivity extends AppCompatActivity {
         }, getExecutor());
 
         //Spinner
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerAfinar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String seleccion = parent.getItemAtPosition(position).toString();
-                textAfinarNum.setText(seleccion);
-
+                seleccionAfinar = parent.getItemAtPosition(position).toString();
                 // Aquí puedes hacer algo con la selección
             }
 
@@ -198,8 +196,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerPena.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String seleccion = parent.getItemAtPosition(position).toString();
-                textPenaNum.setText(seleccion);
+                seleccionPenalizacion = parent.getItemAtPosition(position).toString();
                 if (! examenDB.isEmpty()) {
                     calcularNota(examenDB);
                 }
@@ -333,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
         List<Par> listadoMarcadosPlantilla = arreglosBD.coordenadasPlantillaEnDB(getBaseContext(), codigo);
 
         buscarCirculos.correcionCirculos(listadoMarcadosPlantilla, imagenMat1);
-        Double penalizacion = Double.valueOf(textPenaNum.getText().toString());
+        Double penalizacion = Double.valueOf(seleccionPenalizacion);
         // Calcula nota examen
         nota = buscarCirculos.calcularNota(plantillaDB, examenDB, penalizacion);
         if (Double.valueOf(nota.get("notaFinal")) <= 4f) {
@@ -420,7 +417,6 @@ public class MainActivity extends AppCompatActivity {
         textCodigo.setVisibility(View.VISIBLE);
         textCodigoNum.setVisibility(View.VISIBLE);
         textPena.setVisibility(View.VISIBLE);
-        textPenaNum.setVisibility(View.VISIBLE);
         spinnerPena.setVisibility(View.VISIBLE);
         fabEditar.setVisibility(View.VISIBLE);
 
@@ -494,13 +490,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void botones(String examenPlantilla) {
 
-        spinner.setVisibility(View.VISIBLE);
-
+        spinnerAfinar.setVisibility(View.VISIBLE);
         previewView.setVisibility(View.VISIBLE);
         imagePreview.setVisibility(View.VISIBLE);
         textAfinar.setVisibility(View.VISIBLE);
-        textAfinarNum.setVisibility(View.VISIBLE);
-
 
         switch (examenPlantilla) {
             case "examen":
@@ -544,8 +537,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         textAfinar.setVisibility(View.INVISIBLE);
-        textAfinarNum.setVisibility(View.INVISIBLE);
-        spinner.setVisibility(View.INVISIBLE);
+        spinnerAfinar.setVisibility(View.INVISIBLE);
 
     }
 
@@ -618,16 +610,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (plantillaExamen.equals("plantilla")) {
-            listaTodosPlantilla = buscarCirculos.rebuscarCirculos(imagenMat, "all", textAfinarNum.getText().toString());
-            listaMarcadosPlantilla = buscarCirculos.rebuscarCirculos(imagenMat, "blancos", textAfinarNum.getText().toString());
+            listaTodosPlantilla = buscarCirculos.rebuscarCirculos(imagenMat, "all", seleccionAfinar);
+            listaMarcadosPlantilla = buscarCirculos.rebuscarCirculos(imagenMat, "blancos", seleccionAfinar);
             cuentaMarcadosPlantilla();
             mostrarExamen();
 
 
         } else if (plantillaExamen.equals("examen")) {
 
-            listaTodosExamen = buscarCirculos.rebuscarCirculos(imagenMat, "all", textAfinarNum.getText().toString());
-            listaMarcadosExamen = buscarCirculos.rebuscarCirculos(imagenMat, "blancos", textAfinarNum.getText().toString());
+            listaTodosExamen = buscarCirculos.rebuscarCirculos(imagenMat, "all", seleccionAfinar);
+            listaMarcadosExamen = buscarCirculos.rebuscarCirculos(imagenMat, "blancos", seleccionAfinar);
             // Save the modified image
 
 
@@ -698,8 +690,7 @@ public class MainActivity extends AppCompatActivity {
     public void repetirFoto() {
         //Repetir la foto
         textAfinar.setVisibility(View.VISIBLE);
-        textAfinarNum.setVisibility(View.VISIBLE);
-        spinner.setVisibility(View.VISIBLE);
+        spinnerAfinar.setVisibility(View.VISIBLE);
         image_capture_button.setText("Escanear Examen");
         image_capture_button.setVisibility(View.VISIBLE);
         // muestra logo durante la carga y correción del examen.
@@ -725,13 +716,31 @@ public class MainActivity extends AppCompatActivity {
         blancosNum.setVisibility(View.INVISIBLE);
         nulasNum.setVisibility(View.INVISIBLE);
         textPena.setVisibility(View.INVISIBLE);
-        textPenaNum.setVisibility(View.INVISIBLE);
         spinnerPena.setVisibility(View.INVISIBLE);
         textDNI.setVisibility(View.INVISIBLE);
         textDNINum.setVisibility(View.INVISIBLE);
         textCodigo.setVisibility(View.INVISIBLE);
         textCodigoNum.setVisibility(View.INVISIBLE);
         fabEditar.setVisibility(View.INVISIBLE);
+    }
+
+    public class MyColorizedArrayAdapter extends ArrayAdapter<String> {
+
+        public MyColorizedArrayAdapter(Context context, int layoutResource, String[] items) {
+            super(context, layoutResource, items);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView textView = (TextView) super.getView(position, convertView, parent);
+
+
+            textView.setTextColor(Color.WHITE);
+            textView.setTextSize(16);
+
+            return textView;
+        }
+
     }
 
 

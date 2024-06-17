@@ -258,33 +258,16 @@
             app:layout_constraintStart_toEndOf="@+id/image_capture_button"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-        <TextView
-            android:id="@+id/textAfinarNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="18dp"
-            android:text="0.8"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_capture_button"
-            app:layout_constraintTop_toBottomOf="@+id/textAfinar" />
-
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="43dp"
-            android:layout_height="39dp"
-            android:layout_marginTop="-10dp"
+            android:layout_width="103dp"
+            android:layout_height="35dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/white"
-            android:foregroundTint="@color/white"
             android:spinnerMode="dropdown"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textAfinarNum"
-            app:layout_constraintTop_toTopOf="@+id/textAfinarNum" />
+            android:textAlignment="viewStart"
+            android:theme="@style/mySpinnerItemStyle"
+            app:layout_constraintStart_toEndOf="@+id/image_capture_button"
+            app:layout_constraintTop_toBottomOf="@+id/textAfinar" />
 
         <TextView
             android:id="@+id/textPena"
@@ -299,32 +282,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textNulos" />
 
-        <TextView
-            android:id="@+id/textPenaNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="0.25"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:visibility="invisible"
-            app:layout_constraintStart_toEndOf="@+id/textPena"
-            app:layout_constraintTop_toTopOf="@+id/textPena" />
 
         <Spinner
             android:id="@+id/spinnerPena"
-            android:layout_width="30dp"
-            android:layout_height="33dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="-15dp"
+            android:layout_width="113dp"
+            android:layout_height="21dp"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:foregroundTint="@color/white"
             android:spinnerMode="dropdown"
+            android:theme="@style/mySpinnerItemStyle"
             android:visibility="invisible"
-            app:layout_constraintStart_toEndOf="@+id/textPenaNum"
-            app:layout_constraintTop_toTopOf="@+id/textPenaNum" />
-
+            app:layout_constraintStart_toEndOf="@+id/textPena"
+            app:layout_constraintTop_toTopOf="@+id/textPena" />
 
         <TextView
             android:id="@+id/textCodigo"

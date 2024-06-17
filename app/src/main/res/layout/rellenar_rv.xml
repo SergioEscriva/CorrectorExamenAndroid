@@ -27,10 +27,14 @@
             android:layout_height="24dp"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/universae"
-            android:foregroundTint="@color/universae"
+            android:forceDarkAllowed="false"
+            android:foregroundTint="@color/white"
+            android:outlineAmbientShadowColor="@color/white"
+
+            android:outlineSpotShadowColor="@color/white"
             android:spinnerMode="dropdown"
             android:textSize="16dp"
-
+            android:theme="@style/mySpinnerItemStyle"
             app:layout_constraintStart_toEndOf="@+id/tVNumeroPregunta"
             app:layout_constraintTop_toTopOf="parent" />
 
